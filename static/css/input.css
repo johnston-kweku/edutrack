@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+
+@layer {
+    @keyframes fadeInLeft {
+        from{
+            transform: translateX(200px);
+            opacity: 0;
+        }
+        to{
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    .showToast {
+        animation: fadeInLeft 1s ease forwards;
+    }
+
+    @keyframes fadeOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(200px);
+            opacity: 0;
+        }
+    }
+    .removeToast {
+        animation: fadeOutRight  0.5s ease forwards;
+    }
+
+}

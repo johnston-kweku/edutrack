@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout, get_user_model
 from django.http import JsonResponse
 from django.views.generic import ListView
@@ -6,14 +7,17 @@ from django.utils.decorators import method_decorator
 from .decorators import role_required
 from .models import Invitation
 from .forms import UserCreationForm
+import json
 User = get_user_model()
 # Create your views here.
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST.get('username', '')
-        password = request.POST.get('password', '')
-        role = request.POST.get('role', '')
+        data = json.loads(request.body)
+        username = data.get('username', '') 
+        password = data.get('password', '')
+        role = data.get('role', '')
+        print(data)
 
         user = authenticate(request, username=username, password=password)
 
@@ -28,7 +32,11 @@ def login_view(request):
                 auth_login(request, user)
 
                 if user.is_admin():
-                    pass
+                    return JsonResponse({
+                        'success': True,
+                        'message': 'Login success',
+                        'redirect_url': reverse('dashboards:admin_dashboard')
+                    })
                 elif user.is_teaching_staff():
                     pass
                 elif user.is_non_teaching_staff():

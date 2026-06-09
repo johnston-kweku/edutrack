@@ -7,14 +7,24 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tailwindcss -i ./static/css/input.css -o .static/css/output.css --watch",
-    "build": "tailwindcss -i ./static/css/input.css -o .static/css/output.css --minify"
+    "dev": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --watch",
+    "build": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --minify"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnston-kweku/edutrack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/johnston-kweku/edutrack/issues"
+  },
+  "homepage": "https://github.com/johnston-kweku/edutrack#readme",
+  "optionalDependencies": {
+    "lightningcss-darwin-x64": "^1.32.0"
+  }
 }
