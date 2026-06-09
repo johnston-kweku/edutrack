@@ -55,7 +55,7 @@ def login_view(request):
         else: 
             return JsonResponse({
                 'success': False,
-                'message': 'User does not exist'
+                'message': 'Invalid username/password'
             })
     
     return render(request, 'accounts/login.html')

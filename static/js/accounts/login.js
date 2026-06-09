@@ -30,7 +30,7 @@ async function submitLogin() {
 
 
     if(!role) {
-        toast.show('Role is missing', 'error')
+        toast.show('Select a role', 'error')
         return
     }
     loginBtn.innerHTML = `
@@ -48,9 +48,10 @@ async function submitLogin() {
     const data = await response.json()
 
     if(data.success) {
-        toast.show(data.message)
+        window.location.href = data.redirect_url
     }else {
-        toast.show(data.message)
+        toast.show(data.message, 'error')
+        loginBtn.innerHTML = `Login`
     }
 }
 
