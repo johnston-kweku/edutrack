@@ -71,7 +71,8 @@ def login_view(request):
 @role_required('ADMIN')
 def generate_invite_link(request):
     if request.method  == 'POST':
-        role = request.POST.get('role')
+        data = json.loads(request.body)
+        role = data.get('role', '')
         if not role:
             return JsonResponse({
                 'success': False,
@@ -91,10 +92,11 @@ def generate_invite_link(request):
 
         return JsonResponse({
             'success': True,
+            'message': 'Invite link generated successfully',
             'invitation_link': invitation_link
         })
     
-    return render(request, 'accounts/create_user.html')
+    return render(request, 'accounts/invite_link.html')
 
 
 @role_required('ADMIN')
