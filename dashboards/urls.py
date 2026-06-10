@@ -3,5 +3,7 @@ from . import views
 
 app_name = 'dashboards'
 urlpatterns = [
-    path('admin/', views.admin_dashboard, name='admin_dashboard')
+    path('admin/', views.admin_dashboard, name='admin_dashboard'),
+    path('teachers/', views.teachers_dashboard, name='teachers_dashboard'),
+    path('parents/', views.parents_dashboard, name='parents_dashboard')
 ]

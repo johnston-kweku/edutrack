@@ -1,0 +1,53 @@
+<nav class="bg-sky-50 border-b fixed top-0 right-0 shadow border-gray-200 w-full md:w-10/12 px-3 py-3 flex gap-3 items-center justify-between">
+        <span class="text-blue-700 font-bold tracking-wide text-lg">
+            <p>
+                {% if request.user.is_admin %}
+                    Admin Dashboard
+                {% elif request.user.is_parent %}
+                    Parent Dashboard
+                {% elif request.user.is_teaching_staff %}
+                    Teachers' Dashboard
+                {% endif %}
+            </p>
+        </span>
+        <div class="flex gap-6">
+            {% if request.user.is_admin %}
+            <span class="gap-2 hidden md:flex items-center text-gray-500 text-sm font-light">
+                <a href="#" class="cursor-pointer hover:text-blue-600 transition-all active:scale-95">
+                    Term Report
+                </a>
+                <a href="#" class="cursor-pointer hover:text-blue-600 transition-all active:scale-95">
+                    Fee Status
+                </a>
+                <a href="#" class="cursor-pointer hover:text-blue-600 transition-all active:scale-95">
+                    Class Schedule
+                </a>
+            </span>
+            {% endif %}
+
+            <span class="h-8 border hidden md:block border-gray-400"></span>
+            <div class="flex items-center gap-3">
+                {% if request.user.is_admin %}
+                <a href="#" class="bg-blue-600 text-white active:scale-95 transition-all hidden md:flex gap-2 items-center px-3 py-1 rounded-2xl">
+                    <svg class="w-4 h-4 stroke-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    <p class="text-sm">Add Student</p>
+                </a>
+                {% endif %}
+                
+                <svg class="w-6 h-6 hidden md:block stroke-2 stroke-gray-400 cursor-pointer active:scale-95 transition-all" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                </svg>
+                
+                <span class="items-center gap-2 hidden md:flex">
+                    <!-- <p class="bg-blue-700 text-white font-bold text-center p-2 rounded-full">
+                        {{request.user.full_name|truncatechars:2}}
+                    </p> -->
+                    <p class="text-sm font-bold text-gray-400">
+                        {{request.user.full_name}}
+                    </p>
+                </span>
+            </div>
+        </div>
+    </nav>

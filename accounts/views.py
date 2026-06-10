@@ -37,14 +37,21 @@ def login_view(request):
                         'message': 'Login success',
                         'redirect_url': reverse('dashboards:admin_dashboard')
                     })
+                
                 elif user.is_teaching_staff():
-                    pass
-                elif user.is_non_teaching_staff():
-                    pass
+                    return JsonResponse({
+                        'success': True,
+                        'message': 'Login success',
+                        'redirect_url': reverse('dashboards:teachers_dashboard')
+                    })
+                
+
                 elif user.is_parent():
-                    pass
-                elif user.is_student():
-                    pass
+                    return JsonResponse({
+                        'success': True,
+                        'message': 'Login success',
+                        'redirect_url': reverse('dashboards:parents_dashboard')
+                    })
             
             else:
                 return JsonResponse({

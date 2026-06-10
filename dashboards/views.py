@@ -8,3 +8,12 @@ User = get_user_model()
 @role_required('ADMIN')
 def admin_dashboard(request):
     return render(request, 'dashboards/admin_dashboard.html')
+
+
+@role_required('TEACHING_STAFF', 'ADMIN')
+def teachers_dashboard(request):
+    return render(request, 'dashboards/teacher_dashboard.html')
+
+@role_required('PARENT')
+def parents_dashboard(request):
+    return render(request, 'dashboards/parents_dashboard.html')
