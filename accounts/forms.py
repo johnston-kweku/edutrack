@@ -12,7 +12,7 @@ class UserCreationForm(forms.ModelForm):
         model = User
 
         fields = [
-            'username', 'email', 'contact', 'picture'
+            'full_name','username', 'email', 'contact', 'picture'
         ]
 
     def clean(self):

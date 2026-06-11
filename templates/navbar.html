@@ -41,9 +41,13 @@
                 </svg>
                 
                 <span class="items-center gap-2 hidden md:flex">
-                    <!-- <p class="bg-blue-700 text-white font-bold text-center p-2 rounded-full">
-                        {{request.user.full_name|truncatechars:2}}
-                    </p> -->
+                    {% if request.user.picture %}
+                        <img src="{{ request.user.picture.url }}" class="w-8 h-8 rounded-full border border-gray-200 shadow-sm object-cover" alt="{{ request.user.full_name }}">
+                    {% else %}
+                        <div class="w-8 h-8 rounded-full bg-blue-700 text-white flex items-center justify-center text-[10px] font-bold">
+                            {{ request.user.full_name|slice:":1" }}{{ request.user.full_name|slice:"1:2" }}
+                        </div>
+                    {% endif %}
                     <p class="text-sm font-bold text-gray-400">
                         {{request.user.full_name}}
                     </p>

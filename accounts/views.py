@@ -121,8 +121,8 @@ def register(request):
     token = request.GET.get('token')
     invitation = get_object_or_404(Invitation, token=token)
     
-    if not invitation.is_valid():
-        return render(request, 'accounts/invalid_invite.html')
+    if not invitation.is_valid() or not token:
+        return redirect('accounts:invalid_invite')
     
     if request.method == 'POST':
         form = UserCreationForm(request.POST, request.FILES)
@@ -132,11 +132,18 @@ def register(request):
             user.save()
             invitation.is_used = True
             invitation.save()
-            return JsonResponse({'success': True, 'message': 'Account created successfully'})
-        else:
-            return JsonResponse({'success': False, 'message': form.errors})
+            return redirect('accounts:login')
+    else:
+        form = UserCreationForm()
     
-    return render(request, 'accounts/register.html', {'invitation': invitation})
+    return render(request, 'accounts/register.html', {
+        'invitation': invitation,
+        'form': form
+    })
+
+
+def invalid_invite(request):
+    return render(request, 'accounts/invalid_invite.html')
 
 
 def logout_view(request):
