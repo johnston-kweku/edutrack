@@ -12,6 +12,14 @@ User = get_user_model()
 # Create your views here.
 
 def login_view(request):
+    if request.user.is_authenticated:
+        if request.user.is_admin():
+            return redirect('dashboards:admin_dashboard')
+        elif request.user.is_parent():
+            return redirect('dashboards:parents_dashboard')
+        elif request.user.is_teaching_staff():
+            return redirect('dashboards:teachers_dashboard')
+        
     if request.method == 'POST':
         data = json.loads(request.body)
         username = data.get('username', '') 

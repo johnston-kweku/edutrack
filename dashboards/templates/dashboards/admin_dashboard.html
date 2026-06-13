@@ -1,7 +1,218 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="w-full h-64 border bg-blue-100 rounded-xl flex items-center justify-center border-dashed border-blue-400">
-    <p class="text-blue-600 font-medium text-lg">Admin Dashboard Content</p>
+<div class="p-6 space-y-6">
+
+    <!-- Stat Cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm text-gray-500">Total Students</span>
+                <div class="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1m4-4a4 4 0 100-8 4 4 0 000 8z"/>
+                    </svg>
+                </div>
+            </div>
+            <p id="stat-students" class="text-3xl font-bold text-gray-800">—</p>
+            <p class="text-xs text-gray-400 mt-1">Currently enrolled</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm text-gray-500">Total Teachers</span>
+                <div class="w-9 h-9 bg-purple-50 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0-6l-3.5 2M12 20l3.5-2"/>
+                    </svg>
+                </div>
+            </div>
+            <p id="stat-teachers" class="text-3xl font-bold text-gray-800">—</p>
+            <p class="text-xs text-gray-400 mt-1">Teaching staff</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm text-gray-500">Active Classes</span>
+                <div class="w-9 h-9 bg-orange-50 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                </div>
+            </div>
+            <p id="stat-classes" class="text-3xl font-bold text-gray-800">—</p>
+            <p class="text-xs text-gray-400 mt-1">Across all levels</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm text-gray-500">Fees Collected</span>
+                <div class="w-9 h-9 bg-green-50 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+            </div>
+            <p id="stat-fees" class="text-3xl font-bold text-gray-800">—</p>
+            <p id="stat-fees-percent" class="text-xs text-green-500 mt-1">— of target</p>
+        </div>
+
+    </div>
+
+    <!-- Main content row -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Fee Collection Status -->
+        <div class="lg:col-span-2 bg-white rounded-xl border border-gray-100 shadow-sm p-6 space-y-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="font-semibold text-gray-800 text-base">Fee Collection Status</h2>
+                    <p id="fee-term-label" class="text-sm text-gray-400 mt-0.5">—</p>
+                </div>
+                <a href="#" class="text-sm text-blue-500 font-medium flex items-center gap-1">
+                    View Report
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-sm text-gray-600">Fully Paid</span>
+                    <span class="text-sm font-semibold text-gray-800">
+                        <span id="fee-collected">—</span>
+                        <span id="fee-percent" class="text-gray-400 font-normal ml-1">(—%)</span>
+                    </span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-3">
+                    <div id="fee-progress-bar" class="bg-green-500 h-3 rounded-full transition-all duration-700" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-500 mb-1">Partially Paid</p>
+                    <p id="fee-partial-amount" class="text-xl font-bold text-orange-500">—</p>
+                    <p id="fee-partial-count" class="text-xs text-gray-400 mt-1">— Students</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-500 mb-1">Outstanding</p>
+                    <p id="fee-outstanding" class="text-xl font-bold text-red-500">—</p>
+                    <p id="fee-outstanding-count" class="text-xs text-gray-400 mt-1">— Students</p>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">Recent Transactions</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-500 text-xs">
+                                <th class="text-left py-2 px-3 rounded-l-lg">Student Name</th>
+                                <th class="text-left py-2 px-3">Class</th>
+                                <th class="text-left py-2 px-3">Amount</th>
+                                <th class="text-left py-2 px-3 rounded-r-lg">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-body">
+                            <tr>
+                                <td colspan="4" class="text-center py-6 text-gray-400 text-xs">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="font-semibold text-gray-800 text-base">Recent Activity</h2>
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            <div id="activity-list" class="space-y-4">
+                <p class="text-xs text-gray-400 text-center py-4">Loading...</p>
+            </div>
+            <button class="w-full mt-4 py-2 text-sm text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-50 transition">
+                View All Activity
+            </button>
+        </div>
+
+    </div>
 </div>
+
+<script>
+async function loadDashboard() {
+    try {
+        const res = await fetch('/finances/dashboard/summary/');
+        if (!res.ok) throw new Error('Failed to fetch dashboard data');
+        const data = await res.json();
+
+        document.getElementById('stat-students').textContent = data.stats.total_students;
+        document.getElementById('stat-teachers').textContent = data.stats.total_teachers;
+        document.getElementById('stat-classes').textContent = data.stats.total_classes;
+        document.getElementById('stat-fees').textContent = 'GHS ' + parseFloat(data.stats.fees_collected).toLocaleString();
+        document.getElementById('stat-fees-percent').textContent = data.fee_status.collection_percentage + '% of target';
+
+        document.getElementById('fee-term-label').textContent = `Term ${data.current_term} · Academic Year ${data.academic_year}`;
+
+        document.getElementById('fee-collected').textContent = 'GHS ' + parseFloat(data.fee_status.collected).toLocaleString();
+        document.getElementById('fee-percent').textContent = `(${data.fee_status.collection_percentage}%)`;
+        document.getElementById('fee-progress-bar').style.width = data.fee_status.collection_percentage + '%';
+
+        document.getElementById('fee-partial-amount').textContent = 'GHS ' + parseFloat(data.fee_status.partially_paid_amount).toLocaleString();
+        document.getElementById('fee-partial-count').textContent = data.fee_status.partially_paid_count + ' Students';
+        document.getElementById('fee-outstanding').textContent = 'GHS ' + parseFloat(data.fee_status.outstanding_amount).toLocaleString();
+        document.getElementById('fee-outstanding-count').textContent = data.fee_status.outstanding_count + ' Students';
+
+        const tbody = document.getElementById('transactions-body');
+        if (data.recent_transactions.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-gray-400 text-xs">No transactions yet</td></tr>`;
+        } else {
+            tbody.innerHTML = data.recent_transactions.map(tx => `
+                <tr class="border-t border-gray-50">
+                    <td class="py-2.5 px-3 font-medium text-gray-700">${tx.student_name}</td>
+                    <td class="py-2.5 px-3 text-gray-500">${tx.student_class}</td>
+                    <td class="py-2.5 px-3 text-gray-700">GHS ${parseFloat(tx.amount).toLocaleString()}</td>
+                    <td class="py-2.5 px-3">
+                        <span class="px-2 py-0.5 rounded-full text-xs font-medium ${tx.status === 'Paid' ? 'bg-green-100 text-green-600' : 'bg-orange-100 text-orange-500'}">
+                            ${tx.status}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        const activityList = document.getElementById('activity-list');
+        if (data.recent_transactions.length === 0) {
+            activityList.innerHTML = `<p class="text-xs text-gray-400 text-center py-4">No recent activity</p>`;
+        } else {
+            activityList.innerHTML = data.recent_transactions.slice(0, 4).map(tx => `
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-700">Fee Payment</p>
+                        <p class="text-xs text-gray-400">${tx.student_name} · GHS ${parseFloat(tx.amount).toLocaleString()}</p>
+                        <p class="text-xs text-gray-300 mt-0.5">${tx.paid_at}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+    } catch (err) {
+        console.error('Dashboard load error:', err);
+    }
+}
+
+loadDashboard();
+</script>
+
 {% endblock content %}
