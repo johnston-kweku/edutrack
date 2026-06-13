@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.generic import ListView
 from django.utils.decorators import method_decorator
@@ -76,6 +77,7 @@ def login_view(request):
     return render(request, 'accounts/login.html')
 
 
+@login_required
 @role_required('ADMIN')
 def generate_invite_link(request):
     if request.method  == 'POST':
@@ -159,21 +161,3 @@ def logout_view(request):
     return redirect('accounts:login')
 
 
-@method_decorator(role_required('ADMIN'), name='dispatch')
-class TeacherListView(ListView):
-    model = User
-    template_name = 'accounts/teachers_list.html'
-    context_object_name = 'teachers'
-
-    def get_queryset(self):
-        return User.objects.filter(role='TEACHING_STAFF')
-
-
-@method_decorator(role_required('ADMIN'), name='dispatch')
-class ParentListView(ListView):
-    model = User
-    template_name = 'accounts/parents_list.html'
-    context_object_name = 'parents'
-
-    def get_queryset(self):
-        return User.objects.filter(role='PARENT')

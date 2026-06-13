@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+import sentry_sdk
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -133,3 +137,16 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 LOGIN_URL = 'accounts:login'
 LOGOUT_URL = 'accounts:login'
+
+
+
+SENTRY_DSN = os.getenv('SENTRY_DSN')
+
+
+
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    # Add data like request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    send_default_pii=True,
+)

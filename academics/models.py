@@ -30,6 +30,8 @@ class Class(models.Model):
     
     class Meta:
         verbose_name_plural = 'Classes'
+        unique_together = ['level', 'stage']
+        ordering = ['stage']
 
     def clean(self):
         valid_stages = {
