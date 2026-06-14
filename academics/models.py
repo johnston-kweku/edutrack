@@ -24,9 +24,10 @@ class Class(models.Model):
     stage = models.CharField(max_length=20, choices=Stage.choices)
     level = models.CharField(max_length=20, choices=Level.choices)
     class_teacher = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.level} {self.stage}'
+        return f'{self.level} {self.stage} – {'Active' if self.is_active else 'No Teacher'}'
     
     class Meta:
         verbose_name_plural = 'Classes'
