@@ -2,6 +2,7 @@ from decimal import Decimal
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Count
+from django.core.cache import cache
 from academics.models import Student, Term, Class
 from finances.models import Fee, FeePayment
 from accounts.models import User
@@ -11,6 +12,12 @@ from accounts.decorators import role_required
 @login_required
 @role_required('ADMIN')
 def dashboard_summary(request):
+    cached_data = cache.get('dashboard_summary')
+    if cached_data:
+        print('Cache hit, returning immediately')
+        return JsonResponse(cached_data)
+    
+    print('Cache miss, computing from memory')
     try:
         current_term = Term.objects.select_related('academic_year').get(is_current=True)
     except Term.DoesNotExist:
@@ -94,7 +101,7 @@ def dashboard_summary(request):
             'paid_at': payment.paid_at.strftime('%Y-%m-%d %H:%M'),
         })
 
-    return JsonResponse({
+    dashboard_data = {
         'current_term': current_term.term,
         'academic_year': str(academic_year),
         'stats': {
@@ -114,4 +121,8 @@ def dashboard_summary(request):
             'outstanding_count': outstanding_count,
         },
         'recent_transactions': transactions,
-    })
+    }
+
+    cache.set(key='dashboard_summary', value=dashboard_data, timeout=300)
+
+    return JsonResponse(dashboard_data)
