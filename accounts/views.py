@@ -12,6 +12,23 @@ import json
 User = get_user_model()
 # Create your views here.
 
+def landing(request):
+    if request.user.is_authenticated:
+        if request.user.is_admin():
+            return redirect('dashboards:admin_dashboard')
+        elif request.user.is_parent():
+            return redirect('dashboards:parents_dashboard')
+        elif request.user.is_teaching_staff():
+            return redirect('dashboards:teachers_dashboard')
+            
+    from academics.models import Student, Class
+    context = {
+        'student_count': Student.objects.count(),
+        'class_count': Class.objects.count(),
+    }
+    return render(request, 'accounts/landing.html', context)
+
+
 def login_view(request):
     if request.user.is_authenticated:
         if request.user.is_admin():

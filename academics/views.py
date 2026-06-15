@@ -7,9 +7,9 @@ from .models import Class
 
 
 @login_required
-@role_required('ADMIN', 'TEACHING_STAFF')
+@role_required('ADMIN')
 def classes_list(request):
-    classes = Class.objects.all().select_related('class_teacher')
+    classes = Class.objects.all().select_related('class_teacher').annotate(students_count=Count('student'))
     class_segregagtion = {
         'kindergarten': [],
         'lower_primary': [],
@@ -26,7 +26,7 @@ def classes_list(request):
         elif unchecked.level == Class.Level.JHS:
             class_segregagtion['JHS'].append(unchecked)
 
-    classes_count = Class.objects.count()
+    classes_count = classes.count()
 
     context = {
         'classes': class_segregagtion,
