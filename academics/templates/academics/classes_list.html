@@ -33,7 +33,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {% for class in classes.kindergarten %}
-                <div class="group relative bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-200 p-5 flex flex-col justify-between min-h-40 cursor-pointer">
+                <div onclick="window.location.href=`{% url 'academics:class' class.id %}`" class="group relative bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-200 p-5 flex flex-col justify-between min-h-40 cursor-pointer">
                     <div>
                         <div class="flex items-start justify-between gap-2 mb-2">
                             <h3 class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
@@ -79,7 +79,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {% for class in classes.lower_primary %}
-                <div class="group relative bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-200 p-5 flex flex-col justify-between min-h-40 cursor-pointer">
+                <div onclick="window.location.href=`{% url 'academics:class' class.id %}`" class="group relative bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-200 p-5 flex flex-col justify-between min-h-40 cursor-pointer">
                     <div>
                         <div class="flex items-start justify-between gap-2 mb-2">
                             <h3 class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
@@ -125,7 +125,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {% for class in classes.upper_primary %}
-                <div class="group relative bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-200 p-5 flex flex-col justify-between min-h-40 cursor-pointer">
+                <div onclick="window.location.href=`{% url 'academics:class' class.id %}`" class="group relative bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-200 p-5 flex flex-col justify-between min-h-40 cursor-pointer">
                     <div>
                         <div class="flex items-start justify-between gap-2 mb-2">
                             <h3 class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
@@ -171,7 +171,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {% for class in classes.JHS %}
-                <div class="group relative bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-200 p-5 flex flex-col justify-between min-h-40 cursor-pointer">
+                <div onclick="window.location.href=`{% url 'academics:class' class.id %}`" class="group relative bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-200 p-5 flex flex-col justify-between min-h-40 cursor-pointer">
                     <div>
                         <div class="flex items-start justify-between gap-2 mb-2">
                             <h3 class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">

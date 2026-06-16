@@ -17,7 +17,7 @@ class Class(models.Model):
 
     class Level(models.TextChoices):
         JHS = 'JHS'
-        KINDERGARTEN = 'KINDERGARTEN', 'Kindergarten'
+        KINDERGARTEN = 'KINDERGARTEN', 'KG'
         LOWER_PRIMARY = 'LOWER_PRIMARY', 'Lower Primary'
         UPPER_PRIMARY = 'UPPER_PRIMARY', 'Upper Primary'
         
@@ -123,7 +123,7 @@ class Student(models.Model):
 
     student_id = models.CharField(max_length=50, unique=True, blank=True)
     name = models.CharField(max_length=500)
-    student_class = models.ForeignKey(Class, on_delete=models.PROTECT)
+    student_class = models.ForeignKey(Class, on_delete=models.PROTECT, related_name='student')
     date_of_birth = models.DateField()
     enrollment_date = models.DateField(auto_now_add=True)
     gender = models.CharField(max_length=20, choices=Gender.choices)

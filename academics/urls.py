@@ -3,5 +3,6 @@ from . import views
 app_name = 'academics'
 
 urlpatterns = [
-    path('classes/', views.classes_list, name='classes_list')
+    path('classes/', views.classes_list, name='classes_list'),
+    path('class/<int:class_id>/', views.class_view, name='class')
 ]

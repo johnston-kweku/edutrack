@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from django.contrib.auth import get_user_model
 from accounts.decorators import role_required
 from .models import Class
+User = get_user_model()
 # Create your views here.
 
 
@@ -33,3 +35,24 @@ def classes_list(request):
         'classes_count': classes_count,
     }
     return render(request, 'academics/classes_list.html', context)
+
+
+@login_required
+@role_required('ADMIN')
+def class_view(request, class_id): 
+    class_requested = get_object_or_404(Class.objects.select_related('class_teacher').prefetch_related('student', 'student__parent'), id=class_id)
+
+
+
+    context = {
+        'class': class_requested
+    }
+
+    return render(request, 'academics/class.html', context)
+
+
+
+@login_required
+@role_required('ADMIN')
+def teachers_view(request):
+    teachers = User.objects.filter(role='TEACHING_STAFF')

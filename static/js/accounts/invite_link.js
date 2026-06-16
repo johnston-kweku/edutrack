@@ -12,14 +12,25 @@ generateLinkBtn.addEventListener('click', () => {
 })
 
 
-roles = document.querySelectorAll('#roles span')
+roles = document.querySelectorAll('#roles > div')
 
 roles.forEach(role => {
     role.addEventListener('click', () => {
-        roles.forEach(role => {role.classList.remove('bg-blue-50')});
-        role.classList.add('bg-blue-50');
-        roleInput.value = role.id
-
+        roles.forEach(role => {
+            role.classList.remove('border-blue-600', 'bg-blue-50', 'ring-4', 'ring-blue-50/50', 'shadow-sm');
+            const iconContainer = role.querySelector('div');
+            if (iconContainer) iconContainer.classList.remove('shadow-blue-100', 'scale-110');
+            const roleText = role.querySelector('p.font-bold');
+            if (roleText) roleText.classList.remove('text-blue-700');
+        });
+        
+        role.classList.add('border-blue-600', 'bg-blue-50', 'ring-4', 'ring-blue-50/50', 'shadow-sm');
+        const iconContainer = role.querySelector('div');
+        if (iconContainer) iconContainer.classList.add('shadow-blue-100', 'scale-110');
+        const roleText = role.querySelector('p.font-bold');
+        if (roleText) roleText.classList.add('text-blue-700');
+        
+        roleInput.value = role.id;
     })
 })
 
