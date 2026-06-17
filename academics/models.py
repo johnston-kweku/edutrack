@@ -23,7 +23,7 @@ class Class(models.Model):
         
     stage = models.CharField(max_length=20, choices=Stage.choices)
     level = models.CharField(max_length=20, choices=Level.choices)
-    class_teacher = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
+    class_teacher = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, limit_choices_to={'role': 'TEACHING_STAFF'})
     is_active = models.BooleanField(default=False)
 
     def __str__(self):

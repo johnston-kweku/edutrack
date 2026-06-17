@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-8 space-y-8">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div class="space-y-1">
+            <h1 class="text-3xl font-black text-gray-900 tracking-tight">Create New Class</h1>
+            <p class="text-sm font-medium text-gray-500 uppercase tracking-widest">Academic Management</p>
+        </div>
+        <a href="{% url 'academics:classes_list' %}" class="p-2.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all border border-transparent hover:border-blue-100">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </a>
+    </div>
+
+    <!-- Main Form Card -->
+    <div class="bg-white rounded-4xl border border-gray-200 shadow-sm overflow-hidden">
+        <form method="post" class="p-8 lg:p-12 space-y-8">
+            {% csrf_token %}
+
+            
+            {% if form.errors %}
+                <div class="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-3">
+                    <svg class="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div class="text-sm text-red-700 font-medium">
+                        Please correct the errors below.
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if form.non_field_errors %}
+                <div class="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-3">
+                    <svg class="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div class="text-sm text-red-700 font-medium">
+                        {{form.non_field_errors}}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Level Selection -->
+                <div class="space-y-2">
+                    <label for="{{ form.level.id_for_label }}" class="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Educational Level</label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                        </div>
+                        <select name="{{ form.level.name }}" id="{{ form.level.id_for_label }}" class="block w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-bold appearance-none transition-all cursor-pointer">
+                            {% for value, label in form.level.field.choices %}
+                                <option value="{{ value }}" {% if form.level.value == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                    {% if form.level.errors %}
+                        <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.level.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Stage Selection -->
+                <div class="space-y-2">
+                    <label for="{{ form.stage.id_for_label }}" class="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Class Stage</label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                            </svg>
+                        </div>
+                        <select name="{{ form.stage.name }}" id="{{ form.stage.id_for_label }}" class="block w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-bold appearance-none transition-all cursor-pointer">
+                            {% for value, label in form.stage.field.choices %}
+                                <option value="{{ value }}" {% if form.stage.value == value %}selected{% endif %}>Stage {{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                    {% if form.stage.errors %}
+                        <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.stage.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Teacher Selection -->
+            <div class="space-y-2">
+                <label for="{{ form.class_teacher.id_for_label }}" class="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Assign Class Teacher</label>
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <select name="{{ form.class_teacher.name }}" id="{{ form.class_teacher.id_for_label }}" class="block w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-bold appearance-none transition-all cursor-pointer">
+                        <option value="">Select a teacher (Optional)</option>
+                        {% for choice in form.class_teacher.field.queryset %}
+                            <option value="{{ choice.id }}" {% if form.class_teacher.value|add:"0" == choice.id %}selected{% endif %}>{{ choice.full_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+                {% if form.class_teacher.errors %}
+                    <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.class_teacher.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="pt-6 flex flex-col sm:flex-row gap-4">
+                <button type="submit" class="flex-1 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95 flex items-center justify-center gap-3">
+                    <span>Finalize Class Creation</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </button>
+                <a href="{% url 'academics:classes_list' %}" class="px-8 py-4 bg-white border border-gray-200 text-gray-500 font-bold rounded-2xl hover:bg-gray-50 hover:text-gray-700 transition-all text-center">
+                    Discard
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Info Box -->
+    <div class="p-6 bg-blue-50 border border-blue-100 rounded-3xl flex items-start gap-4">
+        <div class="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center shrink-0 text-blue-600 font-black text-lg">!</div>
+        <div class="space-y-1">
+            <p class="text-sm font-bold text-blue-900">Important Note</p>
+            <p class="text-xs text-blue-700 leading-relaxed">
+                Classes are automatically set to "Active" upon creation. You can change this status later from the class management dashboard. Ensure the Level and Stage mapping is correct before finalizing.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
