@@ -64,7 +64,7 @@ class Subject(models.Model):
 class ClassSubject(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     subject_class = models.ForeignKey(Class, on_delete=models.PROTECT)
-    teacher = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
+    teacher = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, limit_choices_to={'role': 'TEACHING_STAFF'})
     
 
     class Meta:

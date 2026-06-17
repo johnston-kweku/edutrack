@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-8 space-y-8">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div class="space-y-1">
+            <h1 class="text-3xl font-black text-gray-900 tracking-tight">Edit Student</h1>
+            <p class="text-sm font-medium text-gray-500 uppercase tracking-widest">{{ student.name }} • {{ student.student_id }}</p>
+        </div>
+        <a href="{% url 'academics:class' student.student_class.id %}" class="p-2.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all border border-transparent hover:border-blue-100">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </a>
+    </div>
+
+    <!-- Main Form Card -->
+    <div class="bg-white rounded-4xl border border-gray-200 shadow-sm overflow-hidden">
+        <form method="post" class="p-8 lg:p-12 space-y-10">
+            {% csrf_token %}
+            
+            {% if form.errors %}
+                <div class="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-3">
+                    <svg class="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div class="text-sm text-red-700 font-medium">
+                        Please correct the errors highlighting in red.
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if form.non_field_errors %}
+                <div class="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-3">
+                    <svg class="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div class="text-sm text-red-700 font-medium">
+                        {{form.non_field_errors}}
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Section 1: Personal Information -->
+            <div class="space-y-6">
+                <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
+                    <div class="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-black text-gray-900 uppercase tracking-widest text-xs">Personal Details</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Name -->
+                    <div class="md:col-span-2 space-y-2">
+                        <label for="{{ form.name.id_for_label }}" class="text-xs font-bold text-gray-400 ml-1">Full Legal Name</label>
+                        <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" value="{{ form.name.value|default:'' }}" placeholder="e.g. Samuel Adjetey Sowah" class="block w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-bold transition-all outline-none">
+                        {% if form.name.errors %}
+                            <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- DOB -->
+                    <div class="space-y-2">
+                        <label for="{{ form.date_of_birth.id_for_label }}" class="text-xs font-bold text-gray-400 ml-1">Date of Birth</label>
+                        <input type="date" name="{{ form.date_of_birth.name }}" id="{{ form.date_of_birth.id_for_label }}" value="{{ form.date_of_birth.value|date:'Y-m-d' }}" class="block w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-bold transition-all outline-none">
+                        {% if form.date_of_birth.errors %}
+                            <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.date_of_birth.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="space-y-2">
+                        <label for="{{ form.gender.id_for_label }}" class="text-xs font-bold text-gray-400 ml-1">Gender</label>
+                        <div class="relative">
+                            <select name="{{ form.gender.name }}" id="{{ form.gender.id_for_label }}" class="block w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-bold appearance-none transition-all cursor-pointer outline-none">
+                                {% for value, label in form.gender.field.choices %}
+                                    <option value="{{ value }}" {% if form.gender.value == value %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                        {% if form.gender.errors %}
+                            <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.gender.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Academic Assignment -->
+            <div class="space-y-6">
+                <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
+                    <div class="w-8 h-8 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <h3 class="font-black text-gray-900 uppercase tracking-widest text-xs">Academic & Guardianship</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Class -->
+                    <div class="space-y-2">
+                        <label for="{{ form.student_class.id_for_label }}" class="text-xs font-bold text-gray-400 ml-1">Assigned Class</label>
+                        <div class="relative">
+                            <select name="{{ form.student_class.name }}" id="{{ form.student_class.id_for_label }}" class="block w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-bold appearance-none transition-all cursor-pointer outline-none">
+                                <option value="">Select a class</option>
+                                {% for choice in form.student_class.field.queryset %}
+                                    <option value="{{ choice.id }}" {% if form.student_class.value|add:"0" == choice.id or form.initial.student_class == choice.id %}selected{% endif %}>{{ choice }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                        {% if form.student_class.errors %}
+                            <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.student_class.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Parent -->
+                    <div class="space-y-2">
+                        <label for="{{ form.parent.id_for_label }}" class="text-xs font-bold text-gray-400 ml-1">Parent / Guardian</label>
+                        <div class="relative">
+                            <select name="{{ form.parent.name }}" id="{{ form.parent.id_for_label }}" class="block w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-bold appearance-none transition-all cursor-pointer outline-none">
+                                <option value="">Select a parent (Optional)</option>
+                                {% for choice in form.parent.field.queryset %}
+                                    <option value="{{ choice.id }}" {% if form.parent.value|add:"0" == choice.id or form.initial.parent == choice.id %}selected{% endif %}>{{ choice.full_name }} ({{ choice.contact }})</option>
+                                {% endfor %}
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                        {% if form.parent.errors %}
+                            <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.parent.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="pt-10 flex flex-col sm:flex-row gap-4 border-t border-gray-100">
+                <button type="submit" class="flex-1 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95 flex items-center justify-center gap-3">
+                    <span>Save Changes</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </button>
+                <a href="{% url 'academics:class' student.student_class.id %}" class="px-8 py-4 bg-white border border-gray-200 text-gray-500 font-bold rounded-2xl hover:bg-gray-50 hover:text-gray-700 transition-all text-center">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

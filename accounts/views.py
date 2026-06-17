@@ -39,11 +39,17 @@ def login_view(request):
             return redirect('dashboards:teachers_dashboard')
         
     if request.method == 'POST':
-        data = json.loads(request.body)
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'success': False,
+                'message': 'Invalid JSON data'
+            }, status=400)
+
         username = data.get('username', '') 
         password = data.get('password', '')
         role = data.get('role', '')
-        print(data)
 
         user = authenticate(request, username=username, password=password)
 
@@ -98,7 +104,14 @@ def login_view(request):
 @role_required('ADMIN')
 def generate_invite_link(request):
     if request.method  == 'POST':
-        data = json.loads(request.body)
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'success': False,
+                'message': 'Invalid JSON data'
+            }, status=400)
+
         role = data.get('role', '')
         if not role:
             return JsonResponse({
@@ -142,6 +155,11 @@ def delete_user(request, username):
             'success': True,
             'message': 'User deleted successfully'
         })
+    
+    return JsonResponse({
+        'success': False,
+        'message': 'Invalid request method'
+    }, status=405)
 
 
 def register(request):

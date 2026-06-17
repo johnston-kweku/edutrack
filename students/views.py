@@ -58,14 +58,14 @@ def student_detail(request, student_id):
     
 @role_required('ADMIN')
 def edit_student(request, student_id):
-    student = get_object_or_404(Student,  student_id=student_id)
+    student = get_object_or_404(Student, student_id=student_id)
     if request.method == 'POST':
         form = StudentCreationForm(request.POST, instance=student)
         if form.is_valid():
             form.save()
             return JsonResponse({
                 'success': True, 
-                'message': 'Student added succesfully'
+                'message': 'Student updated successfully'
             })
         
         return JsonResponse({
@@ -77,7 +77,7 @@ def edit_student(request, student_id):
         form = StudentCreationForm(instance=student)
 
     
-    return render(request, 'student/edit_student.html')
+    return render(request, 'students/edit_student.html', {'form': form, 'student': student})
 
 @require_POST
 @role_required('ADMIN')
@@ -92,7 +92,7 @@ def delete_student(request, student_id):
 
 @require_POST
 @role_required('ADMIN', 'TEACHING_STAFF')
-def mark_attendace(request):
+def mark_attendance(request):
     present_ids = request.POST.getlist('present_ids')
     class_id = request.POST.get('class_id')
     student_class = get_object_or_404(Class, id=class_id)
@@ -110,7 +110,7 @@ def mark_attendace(request):
 
     return JsonResponse({
         'success': True,
-        'message': 'Attendace marked successflly'
+        'message': 'Attendance marked successfully'
     })
 
 
