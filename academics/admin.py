@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Class, Subject, ClassSubject, AcademicYear, Term, Student, Result, Attendance
+from .models import Class, Subject, ClassSubject, AcademicYear, Term, Student, Result, Attendance, AttendanceRecord
 
 @admin.register(Class)
 class ClassAdmin(admin.ModelAdmin):
@@ -37,8 +37,32 @@ class ResultAdmin(admin.ModelAdmin):
     list_filter = ['term', 'subject']
     search_fields = ['student__name']
 
+
+
+
+class AttendanceRecordInline(admin.TabularInline):
+    model = AttendanceRecord
+    extra = 0
+    fields = ('student', 'is_present')
+
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super().get_formset(request, obj, **kwargs)
+        
+        # 'obj' is the parent Attendance instance being edited
+        if obj and obj.class_marked:
+            # Filter the student queryset dynamically to only match this class
+            # Adjust 'student_class' to match the actual ForeignKey field name on your Student model
+            formset.form.base_fields['student'].queryset = formset.form.base_fields['student'].queryset.filter(
+                student_class=obj.class_marked
+            )
+        else:
+            # If it's a brand new attendance session and no class is selected yet,
+            # show an empty queryset so the admin doesn't load thousands of irrelevant students.
+            formset.form.base_fields['student'].queryset = formset.form.base_fields['student'].queryset.none()
+            
+        return formset
+
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
-    list_display = ['student', 'date', 'is_present', 'marked_by']
-    list_filter = ['date', 'is_present']
-    search_fields = ['student__name']
+    list_display = ('date', 'class_marked', 'marked_by')
+    inlines = [AttendanceRecordInline]

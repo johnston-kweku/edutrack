@@ -165,17 +165,33 @@ class Result(models.Model):
 
 
 class Attendance(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.PROTECT)
-    date = models.DateField(default=timezone.now)
-    is_present = models.BooleanField(default=False)
-    marked_by = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role': 'TEACHING_STAFF'})
+    date = models.DateTimeField(auto_now_add=True)
+    class_marked = models.ForeignKey(Class, on_delete=models.PROTECT, null=True)
+    marked_by = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role__in': ['TEACHING_STAFF', 'ADMIN']})
 
     def __str__(self):
-        first_name = self.student.name.split(' ')[0]
-        status = 'Present' if self.is_present else 'Absent'
-        return f'{first_name} - {status}'
+        return f'Attendance on {self.date} for {self.class_marked} by {self.marked_by}'
     
+
     class Meta:
-        unique_together = ['student', 'date']
         verbose_name_plural = 'Attendance'
+        unique_together = ['class_marked', 'date']
+
+
+
+class AttendanceRecord(models.Model):
+    attendance = models.ForeignKey(Attendance, on_delete=models.PROTECT)
+    student = models.ForeignKey(Student, on_delete=models.PROTECT)
+    is_present = models.BooleanField(default=False)
+
+
+
+    def __str__(self):
+        student_name = self.student.name.split(' ')[0]
+        status = 'Present' if self.is_present else 'Absent'
+        return f'{student_name} – {status}'
+    
+
+    class Meta:
+        unique_together = ['student', 'attendance'] 
 

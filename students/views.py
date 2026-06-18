@@ -7,7 +7,7 @@ from django.utils.dateparse import parse_date
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.db.models import Q
-from academics.models import Student, Class, Attendance
+from academics.models import Student, Class#, Attendance
 from accounts.decorators import role_required
 from .forms import StudentCreationForm
 from accounts.models import User
@@ -67,38 +67,33 @@ def edit_student(request, student_id):
 
 
 
-@require_POST
-@role_required('ADMIN', 'TEACHING_STAFF')
-def mark_attendance(request):
-    present_ids = request.POST.getlist('present_ids')
-    class_id = request.POST.get('class_id')
-    student_class = get_object_or_404(Class, id=class_id)
-    students = Student.objects.filter(student_class=student_class)
+# @require_POST
+# @role_required('ADMIN', 'TEACHING_STAFF')
+# def mark_attendance(request):
+#     present_ids = request.POST.getlist('present_ids')
+#     class_id = request.POST.get('class_id')
+#     student_class = get_object_or_404(Class, id=class_id)
+#     students = Student.objects.filter(student_class=student_class)
 
-    for student in students:
-        Attendance.objects.update_or_create(
-            student=student,
-            date=timezone.now().date(),
-            defaults={
-                'is_present': str(student.id) in present_ids,
-                'marked_by': request.user
-            }
-        )
+#     for student in students:
+#         Attendance.objects.update_or_create(
+#             student=student,
+#             date=timezone.now().date(),
+#             defaults={
+#                 'is_present': str(student.id) in present_ids,
+#                 'marked_by': request.user
+#             }
+#         )
 
-    return JsonResponse({
-        'success': True,
-        'message': 'Attendance marked successfully'
-    })
+#     return JsonResponse({
+#         'success': True,
+#         'message': 'Attendance marked successfully'
+#     })
 
 
 
 @role_required('ADMIN', 'TEACHING_STAFF')
 def attendance_list(request):
-    if request.method == 'POST':
-        date = request.POST.get('date')
-        attendance = Attendance.objects.filter(
-            
-        )
     return render(request, 'students/attendance_list.html',)
 
 
