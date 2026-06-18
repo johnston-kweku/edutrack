@@ -7,7 +7,7 @@ from django.utils.dateparse import parse_date
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.db.models import Q
-from academics.models import Student, Class#, Attendance
+from academics.models import Student, Class, Attendance, AttendanceRecord
 from accounts.decorators import role_required
 from .forms import StudentCreationForm
 from accounts.models import User
@@ -67,28 +67,29 @@ def edit_student(request, student_id):
 
 
 
-# @require_POST
-# @role_required('ADMIN', 'TEACHING_STAFF')
-# def mark_attendance(request):
-#     present_ids = request.POST.getlist('present_ids')
-#     class_id = request.POST.get('class_id')
-#     student_class = get_object_or_404(Class, id=class_id)
-#     students = Student.objects.filter(student_class=student_class)
+@require_POST
+@role_required('ADMIN', 'TEACHING_STAFF')
+def mark_attendance(request, class_id):
+    present_ids = request.POST.getlist('present_ids')
+    class_marked = get_object_or_404(Class, id=class_id)
 
-#     for student in students:
-#         Attendance.objects.update_or_create(
-#             student=student,
-#             date=timezone.now().date(),
-#             defaults={
-#                 'is_present': str(student.id) in present_ids,
-#                 'marked_by': request.user
-#             }
-#         )
+    attendance, _ = Attendance.objects.update_or_create(
+        date=timezone.now().date(),
+        class_marked=class_marked,
+        defaults={'marked_by': request.user}
+    )
 
-#     return JsonResponse({
-#         'success': True,
-#         'message': 'Attendance marked successfully'
-#     })
+    for student in class_marked.student.all():
+        AttendanceRecord.objects.update_or_create(
+            attendance=attendance,
+            student=student,
+            defaults={'is_present': str(student.id) in present_ids}
+        )
+
+    return JsonResponse({
+        'success': True,
+        'message': 'Class Attendance marked successfully'
+    })
 
 
 
