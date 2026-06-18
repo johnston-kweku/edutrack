@@ -177,4 +177,5 @@ class Attendance(models.Model):
     
     class Meta:
         unique_together = ['student', 'date']
+        verbose_name_plural = 'Attendance'
 

@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.dateparse import parse_date
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
+from django.db.models import Q
 from academics.models import Student, Class, Attendance
 from accounts.decorators import role_required
 from .forms import StudentCreationForm
@@ -93,7 +94,12 @@ def mark_attendance(request):
 
 @role_required('ADMIN', 'TEACHING_STAFF')
 def attendance_list(request):
-    return render(request, 'students/attendance_list.html', context)
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        attendance = Attendance.objects.filter(
+            
+        )
+    return render(request, 'students/attendance_list.html',)
 
 
 

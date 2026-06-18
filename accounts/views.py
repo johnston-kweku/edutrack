@@ -196,3 +196,7 @@ def logout_view(request):
     return redirect('accounts:login')
 
 
+
+# @login_required
+# def user_profile(request):
+#     user = request.user
