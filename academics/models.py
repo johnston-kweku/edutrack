@@ -165,7 +165,7 @@ class Result(models.Model):
 
 
 class Attendance(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=timezone.now(), editable=False)
     class_marked = models.ForeignKey(Class, on_delete=models.PROTECT, null=True)
     marked_by = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role__in': ['TEACHING_STAFF', 'ADMIN']})
 
