@@ -95,7 +95,30 @@ def mark_attendance(request, class_id):
 
 @role_required('ADMIN', 'TEACHING_STAFF')
 def attendance_list(request):
-    return render(request, 'students/attendance_list.html',)
+    if request.method == 'POST':        
+        class_id = request.POST.get('class_id')
+        date = request.POST.get('date')
+        class_requested = get_object_or_404(Class, id=class_id)
+
+        attendance = Attendance.objects.filter(
+            date=date,
+            class_marked=class_requested
+        ).first()
+
+        if attendance:
+            attendance_records = AttendanceRecord.objects.filter(
+                attendance=attendance
+            ).select_related('student')
+        else:
+            attendance_records = []
+            
+        context = {
+            'attendance': attendance,
+            'attendance_records': attendance_records
+        }
+        return render(request, 'students/attendance_list.html', context)
+    
+    return render(request, 'students/attendance_list.html')
 
 
 
