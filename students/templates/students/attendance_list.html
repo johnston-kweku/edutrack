@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 py-8 space-y-8">
+
+    <!-- Header -->
+    <div class="space-y-1">
+        <h1 class="text-2xl font-bold text-gray-900">Attendance</h1>
+        <p class="text-sm text-gray-500">View attendance records by class and date</p>
+    </div>
+
+    <!-- Filter Form -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <form method="POST" class="flex flex-col sm:flex-row gap-4 items-end">
+            {% csrf_token %}
+
+            <div class="flex-1 space-y-1.5">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-widest">Class</label>
+                <div class="relative">
+                    <select name="class_id" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium appearance-none transition-all outline-none cursor-pointer">
+                        <option value="">Select a class</option>
+                        {% for class in classes %}
+                            <option value="{{ class.id }}" {% if attendance and attendance.class_marked.id == class.id %}selected{% endif %}>
+                                {{ class.get_level_display }} {{ class.stage }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 space-y-1.5">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-widest">Date</label>
+                <input type="date" name="date" value="{% if attendance %}{{ attendance.date|date:'Y-m-d' }}{% endif %}" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium transition-all outline-none">
+            </div>
+
+            <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-sm transition-all active:scale-95 whitespace-nowrap">
+                View Attendance
+            </button>
+        </form>
+    </div>
+
+    <!-- Results -->
+    {% if request.method == 'POST' %}
+        {% if attendance %}
+            <!-- Attendance Header Info -->
+            <div class="flex flex-wrap items-center gap-4 px-1">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span class="text-sm font-medium text-gray-600">
+                        {{ attendance_records|length }} record{{ attendance_records|length|pluralize }}
+                    </span>
+                </div>
+                <div class="flex items-center gap-2 text-sm text-gray-500">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                    Marked by <span class="font-medium text-gray-700 ml-1">{{ attendance.marked_by.full_name }}</span>
+                </div>
+                <div class="flex items-center gap-2 text-sm text-gray-500">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    {{ attendance.date|date:'D, d M Y' }}
+                </div>
+            </div>
+
+            <!-- Records Table -->
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+                    <h3 class="font-bold text-gray-800 text-sm">
+                        {{ attendance.class_marked.get_level_display }} {{ attendance.class_marked.stage }} — Roll Call
+                    </h3>
+                    <div class="flex items-center gap-3 text-xs font-medium">
+                        <span class="flex items-center gap-1.5 text-green-600">
+                            <span class="w-2 h-2 rounded-full bg-green-500 inline-block"></span>
+                            {{ attendance_records|dictsortreversed:"is_present"|slice:":999"|length }} Present
+                        </span>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">
+                                <th class="text-left px-6 py-3">Student</th>
+                                <th class="text-left px-6 py-3">Student ID</th>
+                                <th class="text-left px-6 py-3">Status</th>
+                                <th class="text-left px-6 py-3">Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            {% for record in attendance_records %}
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-3">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold
+                                                {% if record.is_present %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-500{% endif %}">
+                                                {{ record.student.name|slice:":1" }}
+                                            </div>
+                                            <span class="font-medium text-gray-800">{{ record.student.name }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-3">
+                                        <span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs font-mono rounded-lg">
+                                            {{ record.student.student_id }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-3">
+                                        {% if record.is_present %}
+                                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-50 text-green-700 text-xs font-bold rounded-full border border-green-100">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                                Present
+                                            </span>
+                                        {% else %}
+                                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-red-50 text-red-600 text-xs font-bold rounded-full border border-red-100">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                                                Absent
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-3 text-xs text-gray-400">
+                                        {{ record.updated_at|date:'h:i A' }}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="4" class="px-6 py-12 text-center text-gray-400 text-sm">
+                                        No attendance records found for this session.
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        {% else %}
+            <!-- No Attendance Found -->
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12 text-center space-y-3">
+                <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto">
+                    <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <p class="font-bold text-gray-700">No attendance found</p>
+                <p class="text-sm text-gray-400">Attendance hasn't been marked for this class on the selected date.</p>
+            </div>
+        {% endif %}
+
+    {% else %}
+        <!-- Initial Empty State -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12 text-center space-y-3">
+            <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto">
+                <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+            </div>
+            <p class="font-bold text-gray-700">Select a class and date</p>
+            <p class="text-sm text-gray-400">Use the filters above to view attendance records.</p>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock content %}
