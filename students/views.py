@@ -4,6 +4,8 @@ from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.utils.dateparse import parse_date
+from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
 from academics.models import Student, Class, Attendance
 from accounts.decorators import role_required
 from .forms import StudentCreationForm
@@ -23,23 +25,6 @@ def students_list_per_class(request, class_id):
 
     return render(request, 'students/students_list_per_class.html', context)
 
-@role_required('ADMIN', 'TEACHING_STAFF')
-def enroll_student(request):
-    if request.method == 'POST':
-        form = StudentCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({
-                'success': True, 
-                'message': 'Student added succesfully'
-            })
-        
-        return JsonResponse({
-            'success': False,
-            'message': f'{form.errors}'
-        })
-    
-    render(request, 'students/enroll.html')
 
 
 @role_required('ADMIN', 'TEACHING_STAFF', 'PARENT')
@@ -55,39 +40,30 @@ def student_detail(request, student_id):
 
     return render(request, 'students/student_detail.html', context)
         
-    
+
+
+@login_required
 @role_required('ADMIN')
 def edit_student(request, student_id):
-    student = get_object_or_404(Student, student_id=student_id)
+    student = get_object_or_404(Student, id=student_id)
     if request.method == 'POST':
         form = StudentCreationForm(request.POST, instance=student)
         if form.is_valid():
+            cache.delete('dashboard_summary')
             form.save()
-            return JsonResponse({
-                'success': True, 
-                'message': 'Student updated successfully'
-            })
-        
-        return JsonResponse({
-            'success': False,
-            'message': f'{form.errors}'
-        })
+            return redirect('academics:class', student.student_class.id )
     
     else:
         form = StudentCreationForm(instance=student)
 
     
-    return render(request, 'students/edit_student.html', {'form': form, 'student': student})
+    context = {
+        'form' : form,
+        'student': student
+    }
 
-@require_POST
-@role_required('ADMIN')
-def delete_student(request, student_id):
-    student = get_object_or_404(Student, student_id=student_id)
-    student.delete()
-    return JsonResponse({
-        'success': True,
-        'message': 'Student deleted successfully'
-    })
+    return render(request, 'students/edit_student.html', context)
+
 
 
 @require_POST
@@ -117,22 +93,42 @@ def mark_attendance(request):
 
 @role_required('ADMIN', 'TEACHING_STAFF')
 def attendance_list(request):
-    class_id = request.GET.get('class_id')
-    students_class = get_object_or_404(Class, id=class_id)
-    date = request.GET.get('date')
-    attendance = Attendance.objects.filter(
-        student__student_class=students_class,
-        date=parse_date(date)
-    )
-
-
-    context = {'attendance': [
-            {
-                'student': record.student.name,
-                'is_present': record.is_present
-            }
-            for record in attendance
-        ]
-    }
-
     return render(request, 'students/attendance_list.html', context)
+
+
+
+
+@login_required
+@role_required('ADMIN')
+def add_student(request):
+    if request.method == 'POST':
+        form = StudentCreationForm(request.POST)
+        if form.is_valid():
+            cache.delete('dashboard_summary')
+            form.save()
+            return redirect('academics:classes_list')
+    else:
+        form = StudentCreationForm()
+    
+    context = {
+        'form': form
+    }
+    return render(request, 'students/add_student.html', context)
+
+
+
+
+@require_POST
+@login_required
+@role_required('ADMIN')
+def delete_student(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    cache.delete('dashboard_summary')
+    student.delete()
+
+    return JsonResponse({
+        'success': True,
+        'message': 'Student deleted successfully'
+    })
+
+

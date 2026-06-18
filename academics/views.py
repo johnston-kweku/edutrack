@@ -60,38 +60,7 @@ def teachers_view(request):
 
 
 
-@login_required
-@role_required('ADMIN')
-def add_student(request):
-    if request.method == 'POST':
-        form = StudentCreationForm(request.POST)
-        if form.is_valid():
-            cache.delete('dashboard_summary')
-            form.save()
-            return redirect('academics:classes_list')
-    else:
-        form = StudentCreationForm()
-    
-    context = {
-        'form': form
-    }
-    return render(request, 'academics/add_student.html', context)
 
-
-from django.views.decorators.http import require_POST
-
-@require_POST
-@login_required
-@role_required('ADMIN')
-def delete_student(request, student_id):
-    student = get_object_or_404(Student, id=student_id)
-    cache.delete('dashboard_summary')
-    student.delete()
-
-    return JsonResponse({
-        'success': True,
-        'message': 'Student deleted successfully'
-    })
 
 @login_required
 @role_required('ADMIN')
@@ -114,27 +83,6 @@ def add_class(request):
 
 
 
-@login_required
-@role_required('ADMIN')
-def edit_student(request, student_id):
-    student = get_object_or_404(Student, id=student_id)
-    if request.method == 'POST':
-        form = StudentCreationForm(request.POST, instance=student)
-        if form.is_valid():
-            form.save()
-            return redirect('academics:class', student.student_class.id )
-    
-    else:
-        form = StudentCreationForm(instance=student)
-
-    
-    context = {
-        'form' : form,
-        'student': student
-    }
-
-    return render(request, 'academics/edit_student.html', context)
-
 
 @login_required
 @role_required('ADMIN')
@@ -142,6 +90,7 @@ def edit_class(request, class_id):
     class_to_edit = get_object_or_404(Class, id=class_id)
     if request.method == 'POST':
         form = ClassCreationForm(request.POST, instance=class_to_edit)
+        cache.delete('dashboard_summary')
         if form.is_valid():
             form.save()
             return redirect('academics:class', class_to_edit.id)
