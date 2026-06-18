@@ -101,6 +101,15 @@ def attendance_list(request):
     if request.method == 'POST':        
         class_id = request.POST.get('class_id')
         date = request.POST.get('date')
+
+        if not class_id or not date:
+            context = {
+                'attendance': None,
+                'attendance_records': [],
+                'classes': classes,
+                'error': 'Please select a class and date.'
+            }
+            return render(request, 'students/attendance_list.html', context)
         class_requested = get_object_or_404(Class, id=class_id)
 
         attendance = Attendance.objects.filter(
