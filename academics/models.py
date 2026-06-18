@@ -165,7 +165,7 @@ class Result(models.Model):
 
 
 class Attendance(models.Model):
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True)
     class_marked = models.ForeignKey(Class, on_delete=models.PROTECT, null=True)
     marked_by = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role__in': ['TEACHING_STAFF', 'ADMIN']})
 
@@ -183,6 +183,7 @@ class AttendanceRecord(models.Model):
     attendance = models.ForeignKey(Attendance, on_delete=models.PROTECT)
     student = models.ForeignKey(Student, on_delete=models.PROTECT)
     is_present = models.BooleanField(default=False)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 
