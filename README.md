@@ -1,32 +1,37 @@
 # EduTrack - School Management System
 
-EduTrack is a comprehensive School Management System built with Django and Tailwind CSS. It is designed to streamline academic administration, student tracking, and financial management for educational institutions.
+EduTrack is a robust, enterprise-grade School Management System built with a **"System-First"** engineering philosophy. It prioritizes architectural integrity, scalability, and a high-fidelity user experience, leveraging the power of Django 6 and Tailwind CSS 4.
+
+## 🏛️ Design Philosophy
+
+- **System-First Architecture**: Every feature is designed with scalability and structural integrity in mind, ensuring that the backend logic is as resilient as the frontend is polished.
+- **High-Fidelity UI/UX**: A modern, aesthetic-driven interface that avoids "default" styling. Every form, table, and dashboard is custom-crafted for clarity and professional flair.
+- **Narrative Depth**: Documentation and code structure follow a logical narrative, making the system easy to maintain and evolve.
 
 ## 🚀 Features
 
-### 👤 User & Access Management
-- **Role-Based Access Control**: Tailored experiences for Admins, Teaching Staff, and Parents.
-- **Invitation System**: Secure, token-based invitation system for registering new users with specific roles.
-- **Custom User Profiles**: Support for profile pictures, contact information, and professional titles.
+### 🛡️ Security & Access Integrity
+- **Decorator-Based RBAC**: Secure Role-Based Access Control enforced at the view level through custom, authenticated decorators.
+- **Invitation System**: Secure, token-based invitation system for registering new users with specific roles, preventing unauthorized registration.
+- **Secure Data Handling**: Robust input validation and sanitized logging to protect sensitive user credentials.
 
 ### 📚 Academic Administration
-- **Class Management**: Organize the school into Levels (KG, Primary, JHS) and Stages.
-- **Subject Tracking**: Define subjects and assign them to specific classes and teachers.
-- **Student Enrollment**: Automated Student ID generation and comprehensive student records.
-- **Academic Calendar**: Manage academic years and terms.
+- **High-Fidelity Record Management**: Custom-built interfaces for enrolling and editing students and classes, featuring real-time validation feedback.
+- **Intelligent Organization**: School structure organized into Levels (KG, Primary, JHS) and Stages with automated ID generation.
+- **Subject & Teacher Mapping**: Dynamic assignment of subjects to classes and educators.
 
 ### 📊 Performance & Attendance
-- **Grading System**: Record and track student results (Class Scores and Exam Scores).
-- **Attendance Tracking**: Daily attendance monitoring for students, marked by teaching staff.
+- **Integrated Grading**: Seamless tracking of Class and Exam scores with automated total calculations.
+- **Daily Attendance**: Real-time attendance monitoring with historical tracking.
 
 ### 💰 Finance Management
-- **Fee Configuration**: Define fees per class and term.
-- **Payment Tracking**: Record fee payments with automated balance calculations and payment history.
+- **Automated Fee Tracking**: Class-based fee configuration with automated balance calculations and payment histories.
+- **Financial Transparency**: Real-time status updates for parents and admins regarding payment progress.
 
 ### 🖥️ Interactive Dashboards
-- **Admin Dashboard**: Overview of school statistics and management tools.
-- **Teacher Dashboard**: Access to class lists, attendance marking, and result entry.
-- **Parent Dashboard**: Monitor student progress, attendance, and financial status.
+- **Admin Command Center**: Holistic overview of school metrics and management tools.
+- **Teacher Workspace**: Streamlined access to class lists, attendance, and grading.
+- **Parent Portal**: Direct insight into student progress and financial status.
 
 ## 🛠️ Tech Stack
 
