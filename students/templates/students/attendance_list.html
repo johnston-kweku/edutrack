@@ -11,7 +11,7 @@
 
     <!-- Filter Form -->
     <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-        <form method="POST" class="flex flex-col sm:flex-row gap-4 items-end">
+        <form method="POST" class="flex flex-col sm:flex-row gap-4 ">
             {% csrf_token %}
 
             <div class="flex-1 space-y-1.5">
@@ -38,9 +38,11 @@
                 <input type="date" name="date" value="{% if attendance %}{{ attendance.date|date:'Y-m-d' }}{% endif %}" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium transition-all outline-none">
             </div>
 
-            <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-sm transition-all active:scale-95 whitespace-nowrap">
-                View Attendance
-            </button>
+            <div class="flex items-end">
+                <button type="submit" class="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 focus:ring-4 focus:ring-blue-50 focus:outline-none transition-all">
+                    View Attendance
+                </button>
+            </div>
         </form>
         {% if error %}
             <div class="p-4 bg-red-50 border border-red-100 rounded-2xl text-sm text-red-700 font-medium">
@@ -83,7 +85,7 @@
                     <div class="flex items-center gap-3 text-xs font-medium">
                         <span class="flex items-center gap-1.5 text-green-600">
                             <span class="w-2 h-2 rounded-full bg-green-500 inline-block"></span>
-                            {{ attendance_records|dictsortreversed:"is_present"|slice:":999"|length }} Present
+                            {{ present_count }}/{{ attendance_records|length }} Present
                         </span>
                     </div>
                 </div>

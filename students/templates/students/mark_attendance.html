@@ -68,6 +68,7 @@
         </div>
 
         <!-- Attendance Stats / Summary Bar -->
+
         <div class="grid grid-cols-3 border-b border-gray-100 bg-gray-50/30 text-center divide-x divide-gray-100">
             <div class="py-4">
                 <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Class Size</p>
@@ -154,6 +155,9 @@
 <!-- Interactive Client-side Scripting -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        {% if attendance_today %}
+            toast.show('Attendance Marked for today')
+        {% endif %}
         // Date formatting
         const dateEl = document.getElementById('current-date');
         if (dateEl) {
@@ -287,7 +291,7 @@
                             alert(data.message || 'Attendance submitted successfully!');
                         }
                         setTimeout(() => {
-                            window.location.href = "{% if request.user.is_admin %}{% url 'dashboards:admin_dashboard' %}{% elif request.user.is_teaching_staff %}{% url 'dashboards:teachers_dashboard' %}{% endif %}";
+                            window.location.reload();
                         }, 1500);
                     } else {
                         if (window.toast) {

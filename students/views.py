@@ -118,15 +118,18 @@ def attendance_list(request):
             class_marked=class_requested
         ).first()
 
-        if attendance:
-            attendance_records = AttendanceRecord.objects.filter(
-                attendance=attendance
-            ).select_related('student')
+    if attendance:
+        attendance_records = AttendanceRecord.objects.filter(
+            attendance=attendance
+        ).select_related('student')
+
+        present_count = attendance_records.filter(is_present=True).count()
 
     context = {
         'attendance': attendance,
         'attendance_records': attendance_records,
-        'classes': classes
+        'classes': classes,
+        'present_count': present_count if attendance else None
     }
     return render(request, 'students/attendance_list.html', context)
 
@@ -137,10 +140,15 @@ def mark_attendance_form(request):
         class_assigned = request.user.class_assigned
     except Class.DoesNotExist:
         class_assigned = None
+
+    if class_assigned:
+        attendance_today = Attendance.objects.filter(class_marked=class_assigned, date=timezone.now().date())
     
 
     context = {
-        'class_assigned': class_assigned
+        'class_assigned': class_assigned,
+        'attendance_today': attendance_today if class_assigned else None
+
     }
     return render(request, 'students/mark_attendance.html', context)
 
