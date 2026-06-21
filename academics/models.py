@@ -141,25 +141,49 @@ class Student(models.Model):
 
 
 
-class Result(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.PROTECT)
+class Assessment(models.Model):
+    class AssessmentType(models.TextChoices):
+        QUIZ = 'QUIZ', 'Quiz'
+        CLASS_TEST = 'CLASS TEST', 'Class Test'
+        EXAM = 'EXAM', 'Exam'
+        EXERCISE = 'EXERCISE', 'Exercise'
+    date = models.DateTimeField(default=timezone.now)
+    assessment_type = models.CharField(max_length=30, choices=AssessmentType.choices)
+    recorded_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     term = models.ForeignKey(Term, on_delete=models.PROTECT)
     academic_year = models.ForeignKey(AcademicYear, on_delete=models.PROTECT)
-    class_score = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(0) ,MaxValueValidator(30)])
-    exam_score = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(0) ,MaxValueValidator(70)])
-    total = models.DecimalField(max_digits=5, decimal_places=2, editable=False)
-    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+    student_class = models.ForeignKey(Class, on_delete=models.PROTECT)
+    max_score = models.DecimalField(max_digits=5, decimal_places=2) 
 
     def __str__(self):
-        return f"{self.student} - {self.subject} - {self.term}"
+        return f'{self.assessment_type} – {self.term} – {self.academic_year}'
 
+
+class AssessmentRecord(models.Model):
+    assessment = models.ForeignKey(Assessment, on_delete=models.PROTECT)
+    student = models.ForeignKey(Student, on_delete=models.PROTECT)
+    score = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return f'{self.student} – {self.score}'
+    
     class Meta:
-        unique_together = ['student', 'subject', 'term']
+        unique_together = ['student', 'assessment', 'score']
 
     def save(self, *args, **kwargs):
-        self.total = self.class_score + self.exam_score
+        max_scores = {
+            'Quiz': 10,
+            'Class Test': 25,
+            'Exams': 100,
+            'exercise': 30
+        }
+        max_score = max_scores.get(self.assessment.assessment_type, 100)
+        if self.score < 0 or self.score > max_score:
+            raise ValidationError(f'Score must be between 0 and {max_score} for {self.assessment.assessment_type}')
 
-        super().save(*args, **kwargs)
+        
+
 
 
 

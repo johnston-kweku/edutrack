@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Class, Subject, ClassSubject, AcademicYear, Term, Student, Result, Attendance, AttendanceRecord
+from .models import Class, Subject, ClassSubject, AcademicYear, Term, Student, Assessment, Attendance, AttendanceRecord
 
 @admin.register(Class)
 class ClassAdmin(admin.ModelAdmin):
@@ -31,11 +31,7 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = ['student_class', 'gender']
     search_fields = ['name', 'student_id']
 
-@admin.register(Result)
-class ResultAdmin(admin.ModelAdmin):
-    list_display = ['student', 'subject', 'term', 'class_score', 'exam_score', 'total']
-    list_filter = ['term', 'subject']
-    search_fields = ['student__name']
+admin.site.register(Assessment)
 
 
 
