@@ -32,6 +32,9 @@ DEBUG = os.getenv('DEBUG')
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
 
 
+
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
+
 # Application definition
 
 INSTALLED_APPS = [

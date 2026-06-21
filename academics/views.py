@@ -57,7 +57,12 @@ def class_view(request, class_id):
 @login_required
 @role_required('ADMIN')
 def teachers_view(request):
-    pass
+    teachers = User.objects.filter(role='TEACHING_STAFF').select_related('class_assigned')
+
+    context = {
+        'teachers': teachers
+    }
+    return render(request, 'academics/teachers.html', context)
 
 
 

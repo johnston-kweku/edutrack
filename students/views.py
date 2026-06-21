@@ -66,7 +66,7 @@ def mark_attendance(request, class_id):
             'success': False,
             'message': 'Cannot mark attendance for this class. Not assigned class'
         })    
-    except (Class.DoesNotExist, PermissionDenied):
+    except Class.DoesNotExist:
         return JsonResponse({
             'success': False,
             'message': 'You have not been assigned a class. Please contact an administrator.'
