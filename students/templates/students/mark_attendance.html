@@ -1,0 +1,341 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <!-- Breadcrumbs / Back Navigation -->
+    <nav class="flex mb-4" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+                <a href="{% if request.user.is_admin %}{% url 'dashboards:admin_dashboard' %}{% elif request.user.is_teaching_staff %}{% url 'dashboards:teachers_dashboard' %}{% endif %}" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="ml-1 text-sm font-bold text-gray-900 md:ml-2">Mark Attendance</span>
+                </div>
+            </li>
+        </ol>
+    </nav>
+
+    {% if not class_assigned %}
+    <!-- Alert State: No Class Assigned -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center space-y-4">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-50 text-amber-500 mb-2">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+        </div>
+        <h2 class="text-2xl font-black text-gray-950">No Class Assigned</h2>
+        <p class="text-gray-500 max-w-md mx-auto">
+            You are currently not assigned as a class teacher. Please contact the administration department to get a class assignment.
+        </p>
+        <div class="pt-4">
+            <a href="{% url 'dashboards:teachers_dashboard' %}" class="inline-flex items-center justify-center px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm rounded-xl transition-all">
+                Return to Dashboard
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <!-- Main Content: Mark Attendance -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div class="p-6 lg:p-8 bg-linear-to-r from-blue-50/50 via-white to-white border-b border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-2">
+                <div class="flex items-center gap-3">
+                    <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-extrabold rounded-full border border-blue-100 uppercase tracking-wider">
+                        {{ class_assigned.get_level_display }} {{ class_assigned.stage }}
+                    </span>
+                    <h1 class="text-2xl font-black text-gray-900 tracking-tight">Mark Attendance</h1>
+                </div>
+                <p class="text-sm text-gray-500 font-medium">
+                    Mark the daily student attendance registry. Ensure accurate verification before submitting.
+                </p>
+            </div>
+            
+            <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-200 shadow-sm self-start md:self-auto">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-sm font-bold text-gray-900" id="current-date"></span>
+            </div>
+        </div>
+
+        <!-- Attendance Stats / Summary Bar -->
+        <div class="grid grid-cols-3 border-b border-gray-100 bg-gray-50/30 text-center divide-x divide-gray-100">
+            <div class="py-4">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Class Size</p>
+                <p class="text-2xl font-black text-gray-900 mt-1" id="total-count">{{ class_assigned.student.count }}</p>
+            </div>
+            <div class="py-4">
+                <p class="text-xs font-bold text-green-500 uppercase tracking-widest">Present</p>
+                <p class="text-2xl font-black text-green-600 mt-1" id="present-count">0</p>
+            </div>
+            <div class="py-4">
+                <p class="text-xs font-bold text-red-400 uppercase tracking-widest">Absent</p>
+                <p class="text-2xl font-black text-red-500 mt-1" id="absent-count">0</p>
+            </div>
+        </div>
+
+        <!-- Search & Control Header -->
+        <div class="px-6 py-4 border-b border-gray-100 bg-white flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3 self-stretch">
+                <label class="relative flex items-center gap-2 cursor-pointer select-none">
+                    <input type="checkbox" id="select-all" class="peer rounded border-gray-300 text-blue-600 focus:ring-blue-500 w-5 h-5 transition-all">
+                    <span class="text-sm font-bold text-gray-700">Select All Present</span>
+                </label>
+            </div>
+            <div class="relative w-full sm:w-64">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </span>
+                <input type="text" id="student-search" placeholder="Search students..." class="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-all">
+            </div>
+        </div>
+
+        <!-- Student List Form -->
+        <form id="attendance-form" method="POST" class="divide-y divide-gray-100">
+            {% csrf_token %}
+            <div id="student-list" class="divide-y divide-gray-100">
+                {% for student in class_assigned.student.all %}
+                <div class="student-row flex items-center justify-between p-4 sm:px-6 hover:bg-gray-50/50 transition-colors" data-name="{{ student.name|lower }}">
+                    <div class="flex items-center gap-3">
+                        <!-- Profile Initial Avatar -->
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white avatar-bg" data-seed="{{ student.id }}">
+                            <span class="initials"></span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900 text-sm sm:text-base student-fullname">{{ student.name }}</p>
+                            <p class="text-xs font-semibold text-gray-400">{{ student.student_id|default:"No ID Assigned" }} • <span class="capitalize text-gray-500">{{ student.get_gender_display }}</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Modern Switch / Toggle -->
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" name="present_ids" value="{{ student.id }}" class="sr-only peer attendance-checkbox">
+                        <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                        <span class="ml-3 text-xs font-extrabold tracking-wide uppercase select-none w-16 text-center text-gray-400 peer-checked:text-green-600 status-label">Absent</span>
+                    </label>
+                </div>
+                {% empty %}
+                <div class="p-8 text-center text-gray-500">
+                    No students currently enrolled in this class.
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Sticky/Floating Actions Bottom Bar -->
+            {% if class_assigned.student.exists %}
+            <div class="p-6 bg-gray-50/50 border-t border-gray-100 flex items-center justify-end gap-3">
+                <a href="{% url 'dashboards:teachers_dashboard' %}" class="px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-700 font-bold text-sm rounded-xl border border-gray-200 shadow-sm transition-all active:scale-95">
+                    Cancel
+                </a>
+                <button type="submit" id="submit-btn" class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-100 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Submit Attendance</span>
+                </button>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Interactive Client-side Scripting -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Date formatting
+        const dateEl = document.getElementById('current-date');
+        if (dateEl) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateEl.textContent = new Date().toLocaleDateString('en-US', options);
+        }
+
+        // Avatars random pastel colors by ID seed
+        const avatars = document.querySelectorAll('.avatar-bg');
+        const pastelColors = [
+            'bg-indigo-400', 'bg-blue-400', 'bg-emerald-400', 'bg-teal-400', 
+            'bg-amber-400', 'bg-orange-400', 'bg-rose-400', 'bg-pink-400', 'bg-purple-400'
+        ];
+        avatars.forEach(avatar => {
+            const seed = parseInt(avatar.dataset.seed) || 0;
+            const colorClass = pastelColors[seed % pastelColors.length];
+            avatar.classList.add(colorClass);
+            
+            // Extract initials from fullname
+            const nameEl = avatar.closest('.student-row').querySelector('.student-fullname');
+            if (nameEl) {
+                const parts = nameEl.textContent.trim().split(/\s+/);
+                let initials = parts[0] ? parts[0][0] : '';
+                if (parts.length > 1) {
+                    initials += parts[parts.length - 1][0];
+                }
+                avatar.querySelector('.initials').textContent = initials.toUpperCase();
+            }
+        });
+
+        // Dynamic statistics computation
+        const totalCount = parseInt(document.getElementById('total-count')?.textContent || '0');
+        const presentCountEl = document.getElementById('present-count');
+        const absentCountEl = document.getElementById('absent-count');
+        const checkboxes = document.querySelectorAll('.attendance-checkbox');
+        const selectAllCheckbox = document.getElementById('select-all');
+
+        function updateStats() {
+            let present = 0;
+            checkboxes.forEach(cb => {
+                const label = cb.closest('label').querySelector('.status-label');
+                if (cb.checked) {
+                    present++;
+                    label.textContent = "Present";
+                } else {
+                    label.textContent = "Absent";
+                }
+            });
+            const absent = totalCount - present;
+            if (presentCountEl) presentCountEl.textContent = present;
+            if (absentCountEl) absentCountEl.textContent = absent;
+            
+            // Sync Select All checkbox state
+            if (selectAllCheckbox) {
+                selectAllCheckbox.checked = (present === checkboxes.length && checkboxes.length > 0);
+            }
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', updateStats);
+        });
+
+        // Initialize counts
+        updateStats();
+
+        // Select All handler
+        if (selectAllCheckbox) {
+            selectAllCheckbox.addEventListener('change', function() {
+                checkboxes.forEach(cb => {
+                    // Only click if it doesn't match target state to trigger change events
+                    if (cb.checked !== selectAllCheckbox.checked) {
+                        cb.checked = selectAllCheckbox.checked;
+                    }
+                });
+                updateStats();
+            });
+        }
+
+        // Live student search
+        const searchInput = document.getElementById('student-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase().trim();
+                document.querySelectorAll('.student-row').forEach(row => {
+                    const name = row.dataset.name || '';
+                    if (name.includes(query)) {
+                        row.classList.remove('hidden');
+                    } else {
+                        row.classList.add('hidden');
+                    }
+                });
+            });
+        }
+
+        // Form submission via AJAX
+        const form = document.getElementById('attendance-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.getElementById('submit-btn');
+                const submitBtnSpan = submitBtn.querySelector('span');
+                const originalText = submitBtnSpan.textContent;
+                
+                submitBtn.disabled = true;
+                submitBtnSpan.textContent = 'Saving...';
+                
+                const formData = new FormData(form);
+                
+                // Construct url dynamically using class_assigned.id to handle custom url design if corrected
+                const url = "{% if class_assigned %}{% url 'students:mark_attendance' class_assigned.id %}{% endif %}"; 
+                
+                fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        if (window.toast) {
+                            window.toast.show(data.message || 'Attendance submitted successfully!', 'success');
+                        } else {
+                            alert(data.message || 'Attendance submitted successfully!');
+                        }
+                        setTimeout(() => {
+                            window.location.href = "{% if request.user.is_admin %}{% url 'dashboards:admin_dashboard' %}{% elif request.user.is_teaching_staff %}{% url 'dashboards:teachers_dashboard' %}{% endif %}";
+                        }, 1500);
+                    } else {
+                        if (window.toast) {
+                            window.toast.show(data.message || 'Failed to submit attendance.', 'error');
+                        } else {
+                            alert(data.message || 'Failed to submit attendance.');
+                        }
+                        submitBtn.disabled = false;
+                        submitBtnSpan.textContent = originalText;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    if (window.toast) {
+                        window.toast.show('An error occurred. Please try again.', 'error');
+                    } else {
+                        alert('An error occurred. Please try again.');
+                    }
+                    submitBtn.disabled = false;
+                    submitBtnSpan.textContent = originalText;
+                });
+            });
+        }
+    });
+</script>
+
+<style>
+    /* Smooth toggle transition overrides */
+    .peer:checked ~ div:after {
+        transform: translateX(100%);
+    }
+    .removeToast {
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .showToast {
+        animation: slideDown 0.3s ease forwards;
+    }
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock content %}

@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            
+            {% if request.user.is_admin %}
             <div class="flex items-center gap-3">
                 <a href="{% url 'academics:edit_class' class.id %}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white hover:bg-gray-50 text-gray-700 font-bold text-sm rounded-xl border border-gray-200 shadow-sm transition-all active:scale-95">
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,6 +70,7 @@
                     Add Student
                 </a>
             </div>
+            {% endif %}
         </div>
     </div>
 

@@ -4,6 +4,7 @@ from django.db.models import Count
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.core.cache import cache
+from django.core.exceptions import PermissionDenied
 from accounts.decorators import role_required
 from .forms import StudentCreationForm, ClassCreationForm
 from .models import Class, Student
@@ -41,7 +42,7 @@ def classes_list(request):
 
 
 @login_required
-@role_required('ADMIN')
+@role_required('ADMIN', 'TEACHING_STAFF')
 def class_view(request, class_id): 
     class_requested = get_object_or_404(Class.objects.select_related('class_teacher').prefetch_related('student', 'student__parent'), id=class_id)
 

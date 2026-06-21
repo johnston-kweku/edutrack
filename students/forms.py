@@ -5,6 +5,6 @@ class StudentCreationForm(forms.ModelForm):
     class Meta: 
         model = Student
         fields = [
-            'name', 'student_class', 'date_of_birth', 'gender'
+            'name', 'student_class', 'date_of_birth', 'gender', 'parent'
         ]
 

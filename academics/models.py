@@ -23,11 +23,11 @@ class Class(models.Model):
         
     stage = models.CharField(max_length=20, choices=Stage.choices)
     level = models.CharField(max_length=20, choices=Level.choices)
-    class_teacher = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, limit_choices_to={'role': 'TEACHING_STAFF'})
+    class_teacher = models.OneToOneField(User, on_delete=models.PROTECT, null=True, blank=True, limit_choices_to={'role__in': ['TEACHING_STAFF', 'ADMIN']}, related_name='class_assigned')
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.level} {self.stage} – {'Active' if self.is_active else 'No Teacher'}'
+        return f'{self.level} {self.stage}'
     
     class Meta:
         verbose_name_plural = 'Classes'
@@ -64,7 +64,7 @@ class Subject(models.Model):
 class ClassSubject(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     subject_class = models.ForeignKey(Class, on_delete=models.PROTECT)
-    teacher = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, limit_choices_to={'role': 'TEACHING_STAFF'})
+    teacher = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, limit_choices_to={'role__in': ['TEACHING_STAFF', 'ADMIN']})
     
 
     class Meta:
@@ -165,7 +165,7 @@ class Result(models.Model):
 
 
 class Attendance(models.Model):
-    date = models.DateField(default=timezone.now(), editable=False)
+    date = models.DateField(default=timezone.now, editable=False)
     class_marked = models.ForeignKey(Class, on_delete=models.PROTECT, null=True)
     marked_by = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role__in': ['TEACHING_STAFF', 'ADMIN']})
 

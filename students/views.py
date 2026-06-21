@@ -15,19 +15,6 @@ from accounts.models import User
 
 # Create your views here.
 
-@role_required('ADMIN', 'TEACHING_STAFF')
-def students_list_per_class(request, class_id):
-    _class = get_object_or_404(Class, id=class_id)
-    students = _class.student_set.select_related('parent')
-
-    context = {
-        'students': students
-    }
-
-    return render(request, 'students/students_list_per_class.html', context)
-
-
-
 @role_required('ADMIN', 'TEACHING_STAFF', 'PARENT')
 def student_detail(request, student_id):
     student = get_object_or_404(Student.objects.select_related('parent', 'student_class'), student_id=student_id)
@@ -70,16 +57,30 @@ def edit_student(request, student_id):
 @require_POST
 @role_required('ADMIN', 'TEACHING_STAFF')
 def mark_attendance(request, class_id):
+    class_to_mark = get_object_or_404(Class, id=class_id)
+
+    try:
+        class_check = request.user.class_assigned
+        if not request.user.is_admin() and class_to_mark != class_check:
+            return JsonResponse({
+            'success': False,
+            'message': 'Cannot mark attendance for this class. Not assigned class'
+        })    
+    except (Class.DoesNotExist, PermissionDenied):
+        return JsonResponse({
+            'success': False,
+            'message': 'You have not been assigned a class. Please contact an administrator.'
+        })    
+    
     present_ids = request.POST.getlist('present_ids')
-    class_marked = get_object_or_404(Class, id=class_id)
 
     attendance, _ = Attendance.objects.update_or_create(
         date=timezone.now().date(),
-        class_marked=class_marked,
+        class_marked=class_to_mark,
         defaults={'marked_by': request.user}
     )
 
-    for student in class_marked.student.all():
+    for student in class_to_mark.student.all():
         AttendanceRecord.objects.update_or_create(
             attendance=attendance,
             student=student,
@@ -92,7 +93,7 @@ def mark_attendance(request, class_id):
     })
 
 
-@role_required('ADMIN', 'TEACHING_STAFF')
+@role_required('ADMIN')
 def attendance_list(request):
     classes = Class.objects.all()
     attendance = None
@@ -129,6 +130,19 @@ def attendance_list(request):
     }
     return render(request, 'students/attendance_list.html', context)
 
+
+@role_required('TEACHING_STAFF', 'ADMIN')
+def mark_attendance_form(request):
+    try:
+        class_assigned = request.user.class_assigned
+    except Class.DoesNotExist:
+        class_assigned = None
+    
+
+    context = {
+        'class_assigned': class_assigned
+    }
+    return render(request, 'students/mark_attendance.html', context)
 
 
 
