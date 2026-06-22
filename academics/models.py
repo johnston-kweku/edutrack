@@ -169,22 +169,14 @@ class AssessmentRecord(models.Model):
         return f'{self.student} – {self.score}'
     
     class Meta:
-        unique_together = ['student', 'assessment', 'score']
+        unique_together = ['student', 'assessment']
 
     def save(self, *args, **kwargs):
-        max_scores = {
-            'Quiz': 10,
-            'Class Test': 25,
-            'Exams': 100,
-            'exercise': 30
-        }
-        max_score = max_scores.get(self.assessment.assessment_type, 100)
-        if self.score < 0 or self.score > max_score:
-            raise ValidationError(f'Score must be between 0 and {max_score} for {self.assessment.assessment_type}')
 
+        if self.score < 0 or self.score > self.assessment.max_score:
+            raise ValidationError(f'Score must be between 0 and {self.assessment.max_score} for {self.assessment.assessment_type}')
+        super().save(*args, **kwargs)
         
-
-
 
 
 
