@@ -45,8 +45,13 @@ def classes_list(request):
 @login_required
 @role_required('ADMIN', 'TEACHING_STAFF')
 def class_view(request, class_id): 
+
+    query = request.GET.get('query', '')
     class_requested = get_object_or_404(Class.objects.select_related('class_teacher'),id=class_id)
     students = class_requested.student.all().select_related('parent')
+
+    if query:
+        students = students.filter(name__icontains=query)
 
     paginator = Paginator(students, 10)
     page_number = request.GET.get('page')
@@ -54,7 +59,8 @@ def class_view(request, class_id):
 
     context = {
         'class': class_requested,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'query': query
     }
 
     return render(request, 'academics/class.html', context)
