@@ -149,7 +149,7 @@ class Assessment(models.Model):
         EXERCISE = 'EXERCISE', 'Exercise'
     date = models.DateTimeField(default=timezone.now)
     assessment_type = models.CharField(max_length=30, choices=AssessmentType.choices)
-    recorded_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    recorded_by = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role__in': ['TEACHING_STAFF', 'ADMIN']})
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     term = models.ForeignKey(Term, on_delete=models.PROTECT)
     academic_year = models.ForeignKey(AcademicYear, on_delete=models.PROTECT)

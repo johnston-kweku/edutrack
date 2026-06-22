@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Class, Subject, ClassSubject, AcademicYear, Term, Student, Assessment, Attendance, AttendanceRecord
+from .models import Class, Subject, ClassSubject, AcademicYear, Term, Student, Assessment, AssessmentRecord, Attendance, AttendanceRecord
 
 @admin.register(Class)
 class ClassAdmin(admin.ModelAdmin):
@@ -31,7 +31,34 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = ['student_class', 'gender']
     search_fields = ['name', 'student_id']
 
-admin.site.register(Assessment)
+
+class AssessmentRecordInline(admin.TabularInline):
+    model = AssessmentRecord
+    extra = 0
+    fields = ('student', 'score')
+
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super().get_formset(request, obj, **kwargs)
+        
+        # 'obj' is the parent Assessment instance being edited
+        if obj and obj.student_class:
+            # Filter the student queryset dynamically to only match this subject's class
+            # Adjust 'student_class' to match the actual ForeignKey field name on your Student model
+            formset.form.base_fields['student'].queryset = formset.form.base_fields['student'].queryset.filter(
+                student_class=obj.student_class
+            )
+        else:
+            # If it's a brand new assessment and no subject is selected yet,
+            # show an empty queryset so the admin doesn't load thousands of irrelevant students.
+            formset.form.base_fields['student'].queryset = formset.form.base_fields['student'].queryset.none()
+            
+        return formset
+    
+@admin.register(Assessment)
+class AssessmentAdmin(admin.ModelAdmin):
+    list_display = ['assessment_type', 'subject', 'term', 'academic_year', 'recorded_by']
+    list_filter = ['assessment_type', 'subject', 'term', 'academic_year']
+    inlines = [AssessmentRecordInline]
 
 
 
