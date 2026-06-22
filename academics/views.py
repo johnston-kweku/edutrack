@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from accounts.decorators import role_required
 from .forms import StudentCreationForm, ClassCreationForm
 from .models import Class, Student
@@ -44,10 +45,16 @@ def classes_list(request):
 @login_required
 @role_required('ADMIN', 'TEACHING_STAFF')
 def class_view(request, class_id): 
-    class_requested = get_object_or_404(Class.objects.select_related('class_teacher').prefetch_related('student', 'student__parent'), id=class_id)
+    class_requested = get_object_or_404(Class.objects.select_related('class_teacher'),id=class_id)
+    students = class_requested.student.all().select_related('parent')
+
+    paginator = Paginator(students, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     context = {
-        'class': class_requested
+        'class': class_requested,
+        'page_obj': page_obj
     }
 
     return render(request, 'academics/class.html', context)

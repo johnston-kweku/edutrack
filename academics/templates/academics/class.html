@@ -101,7 +101,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
-                    {% for student in class.student.all %}
+                    {% for student in page_obj %}
                         <tr class="hover:bg-blue-50/30 transition-colors group">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2.5 py-1 bg-gray-100 text-gray-700 text-[10px] font-black rounded-lg border border-gray-200">
@@ -176,14 +176,26 @@
         
         <!-- Pagination Placeholder -->
         <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-            <span class="text-xs font-medium text-gray-500">Showing all enrolled students</span>
+            <span class="text-xs font-medium text-gray-500">Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
             <div class="flex items-center gap-2">
-                <button disabled class="p-2 bg-white rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <button disabled class="p-2 bg-white rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="p-2 bg-white rounded-lg border border-gray-500 text-gray-300 cursor-pointer active:scale-95 transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </a>
+                {% else %}
+                    <button disabled class="p-2 cursor-not-allowed bg-white rounded-lg border border-gray-200 text-gray-300">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                {% endif %}
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="p-2 bg-white rounded-lg border border-gray-500 text-gray-300 cursor-pointer active:scale-95 transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+                {% else %}
+                <button disabled class="p-2 cursor-not-allowed bg-white rounded-lg border border-gray-200 text-gray-300">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </button>
+                {% endif %}
             </div>
         </div>
     </div>
