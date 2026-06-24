@@ -33,3 +33,12 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+
+
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['full_name', 'contact', 'picture']

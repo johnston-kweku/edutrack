@@ -27,9 +27,9 @@ class TermAdmin(admin.ModelAdmin):
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ['student_id', 'name', 'student_class', 'gender', 'parent']
+    list_display = ['student_id', 'student_name', 'student_class', 'gender', 'parent']
     list_filter = ['student_class', 'gender']
-    search_fields = ['name', 'student_id']
+    search_fields = ['student_name', 'student_id']
 
 
 class AssessmentRecordInline(admin.TabularInline):

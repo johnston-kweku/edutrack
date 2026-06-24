@@ -2,13 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.contrib.auth import get_user_model
-from django.http import JsonResponse
 from django.core.cache import cache
-from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from accounts.decorators import role_required
-from .forms import StudentCreationForm, ClassCreationForm
-from .models import Class, Student
+from .forms import ClassCreationForm
+from .models import Class
 User = get_user_model()
 # Create your views here.
 

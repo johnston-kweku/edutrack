@@ -18,7 +18,7 @@
 
     <!-- Main Form Card -->
     <div class="bg-white rounded-4xl border border-gray-200 shadow-sm overflow-hidden">
-        <form method="post" class="p-8 lg:p-12 space-y-10">
+        <form method="post" enctype="multipart/form-data" class="p-8 lg:p-12 space-y-10">
             {% csrf_token %}
             
             {% if form.errors %}
@@ -54,16 +54,31 @@
                     <h3 class="font-black text-gray-900 uppercase tracking-widest text-xs">Personal Details</h3>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 items-center md:grid-cols-2 gap-8">
                     <!-- Name -->
-                    <div class="md:col-span-2 space-y-2">
-                        <label for="{{ form.name.id_for_label }}" class="text-xs font-bold text-gray-400 ml-1">Full Legal Name</label>
-                        <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" value="{{ form.name.value|default:'' }}" placeholder="e.g. Samuel Adjetey Sowah" class="block w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-bold transition-all outline-none">
-                        {% if form.name.errors %}
-                            <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.name.errors.0 }}</p>
+                    <div class="space-y-2">
+                        <label for="{{ form.student_name.id_for_label }}" class="text-xs font-bold text-gray-400 ml-1">Full Legal Name</label>
+                        <input type="text" name="{{ form.student_name.name }}" id="{{ form.student_name.id_for_label }}" value="{{ form.student_name.value|default:'' }}" placeholder="e.g. Samuel Adjetey Sowah" class="block w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-bold transition-all outline-none">
+                        {% if form.student_name.errors %}
+                            <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.student_name.errors.0 }}</p>
                         {% endif %}
                     </div>
 
+                    <!-- Picture -->
+                    <div class="w-full flex flex-col items-center justify-center">
+                        <label for="{{ form.image.id_forlabel }}" class="text-xs font-bold text-gray-400 ml-1">Picture (Optional. Can be added later)</label>
+                        <input type="file" name="image" id="picture_input" class="hidden" accept="image/*" onchange="previewImage(this)">
+                        <div id="profile_image_container" class="w-14 h-14 rounded-full border border-gray-200 shadow cursor-pointer flex items-center justify-center bg-gray-50 overflow-hidden" onclick="document.getElementById('picture_input').click()">
+                            <svg id="camera_icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-gray-400">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+                            </svg>
+                            <img id="profile_preview" class="hidden w-full h-full object-cover" alt="Profile Preview">
+                        </div>
+                        {% if form.image.errors %}
+                            <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.image.errors.0 }}</p>
+                        {% endif %}
+                    </div>
                     <!-- DOB -->
                     <div class="space-y-2">
                         <label for="{{ form.date_of_birth.id_for_label }}" class="text-xs font-bold text-gray-400 ml-1">Date of Birth</label>
@@ -153,7 +168,7 @@
 
             <!-- Action Buttons -->
             <div class="pt-10 flex flex-col sm:flex-row gap-4 border-t border-gray-100">
-                <button type="submit" class="flex-1 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95 flex items-center justify-center gap-3">
+                <button type="submit" class="flex-1 w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95 flex items-center justify-center gap-3">
                     <span>Complete Enrollment</span>
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -166,4 +181,5 @@
         </form>
     </div>
 </div>
+<script src="{% static 'js/students/students.js' %}"></script>
 {% endblock content %}

@@ -30,29 +30,6 @@ def student_detail(request, student_id):
         
 
 
-@login_required
-@role_required('ADMIN')
-def edit_student(request, student_id):
-    student = get_object_or_404(Student, id=student_id)
-    if request.method == 'POST':
-        form = StudentCreationForm(request.POST, instance=student)
-        if form.is_valid():
-            cache.delete('dashboard_summary')
-            form.save()
-            return redirect('academics:class', student.student_class.id )
-    
-    else:
-        form = StudentCreationForm(instance=student)
-
-    
-    context = {
-        'form' : form,
-        'student': student
-    }
-
-    return render(request, 'students/edit_student.html', context)
-
-
 
 @require_POST
 @role_required('ADMIN', 'TEACHING_STAFF')
@@ -158,7 +135,7 @@ def mark_attendance_form(request):
 @role_required('ADMIN')
 def add_student(request):
     if request.method == 'POST':
-        form = StudentCreationForm(request.POST)
+        form = StudentCreationForm(request.POST, request.FILES)
         if form.is_valid():
             cache.delete('dashboard_summary')
             form.save()
@@ -170,6 +147,30 @@ def add_student(request):
         'form': form
     }
     return render(request, 'students/add_student.html', context)
+
+
+@login_required
+@role_required('ADMIN')
+def edit_student(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    if request.method == 'POST':
+        form = StudentCreationForm(request.POST, request.FILES, instance=student)
+        if form.is_valid():
+            cache.delete('dashboard_summary')
+            form.save()
+            print(f'Files:{form.instance}')
+            return redirect('academics:class', student.student_class.id )
+    
+    else:
+        form = StudentCreationForm(instance=student)
+
+    
+    context = {
+        'form' : form,
+        'student': student
+    }
+
+    return render(request, 'students/edit_student.html', context)
 
 
 
@@ -188,3 +189,10 @@ def delete_student(request, student_id):
     })
 
 
+
+def student_profile(request, student_id):
+    student = get_object_or_404(Student.objects.select_related('parent', 'student_class'), id=student_id)
+    context = {
+        'student': student
+    }
+    return render(request, 'students/student_profile.html', context)

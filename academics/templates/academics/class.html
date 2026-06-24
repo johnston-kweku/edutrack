@@ -112,10 +112,15 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold">
-                                        {{ student.name|slice:":1" }}
-                                    </div>
-                                    <span class="font-bold text-gray-900">{{ student.name }}</span>
+                                    {% if student.image %}
+                                        <img src="{{student.image.url}}" class="w-8 h-8 rounded-full" alt="">
+
+                                    {% else%}
+                                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold">
+                                            {{ student.student_name|slice:":1" }}
+                                        </div>
+                                    {% endif %}
+                                    <span class="font-bold text-gray-900">{{ student.student_name }}</span>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">

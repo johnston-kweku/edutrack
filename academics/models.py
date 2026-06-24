@@ -1,8 +1,12 @@
 from django.db import models, transaction
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import FileExtensionValidator
 from django.utils import timezone
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
+import os
 User = get_user_model()
 
 # Create your models here.
@@ -122,22 +126,64 @@ class Student(models.Model):
         FEMALE = 'FEMALE', 'Female'
 
     student_id = models.CharField(max_length=50, unique=True, blank=True)
-    name = models.CharField(max_length=500)
+    student_name = models.CharField(max_length=500)
     student_class = models.ForeignKey(Class, on_delete=models.PROTECT, related_name='student')
     date_of_birth = models.DateField()
     enrollment_date = models.DateField(auto_now_add=True)
     gender = models.CharField(max_length=20, choices=Gender.choices)
     parent = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role': 'PARENT'}, blank=True, null=True)
+    image = models.ImageField(upload_to='student_images/', blank=True, null=True, validators=[FileExtensionValidator(allowed_extensions=['png', 'jpeg', 'jpg'])])
 
 
     def __str__(self):
-        return self.name
+        return self.student_name
     
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if not self.student_id:
+    # 1. Handle new instance PK generation first so we have an ID
+        is_new = self.pk is None
+        if is_new:
+            # Save initially to populate self.pk
+            super().save(*args, **kwargs)
+            
+            # Now we safely have self.pk to generate the unique student_id
             self.student_id = f'STU-{str(self.pk).zfill(5)}'
-            Student.objects.filter(pk=self.pk).update(student_id=self.student_id)
+            # Save the student_id back to the instance
+            super().save(update_fields=['student_id'])
+
+        # 2. Track if a new image was actually uploaded to avoid re-compressing
+        if self.image:
+            if not is_new:
+                # Grab the original image from the database to compare
+                orig = Student.objects.get(pk=self.pk)
+                image_changed = orig.image != self.image
+            else:
+                image_changed = True
+
+            if image_changed:
+                
+
+                img = Image.open(self.image)
+                if img.mode != 'RGB':
+                    img = img.convert('RGB')
+
+                max_size = (600, 600)
+                img.thumbnail(max_size)
+
+                buffer = BytesIO()
+                img.save(buffer, format='JPEG', quality=70, optimize=True)
+                buffer.seek(0)
+
+                name = os.path.splitext(os.path.basename(self.image.name))[0] + '.jpg'
+                self.image = ContentFile(buffer.read(), name=name)
+                
+                # If it's not a new instance, we need to make sure this gets saved
+                if not is_new:
+                    super().save(*args, **kwargs)
+
+        # 3. Final fallback save for standard updates (if not already handled)
+        if not is_new and not 'image_changed' in locals():
+            super().save(*args, **kwargs)
+
 
 
 

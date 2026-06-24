@@ -7,7 +7,7 @@ from django.views.generic import ListView
 from django.utils.decorators import method_decorator
 from .decorators import role_required
 from .models import Invitation
-from .forms import UserCreationForm
+from .forms import UserCreationForm, ProfileEditForm
 import json
 User = get_user_model()
 # Create your views here.
@@ -197,6 +197,19 @@ def logout_view(request):
 
 
 
-# @login_required
-# def user_profile(request):
-#     user = request.user
+# accounts/views.py
+
+@login_required
+def edit_my_profile(request):
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:edit_my_profile')
+    else:
+        form = ProfileEditForm(instance=request.user)
+
+    context = {
+        'form': form
+    }
+    return render(request, 'accounts/edit_my_profile.html', context)
