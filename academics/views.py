@@ -69,9 +69,14 @@ def class_view(request, class_id):
 @role_required('ADMIN')
 def teachers_view(request):
     teachers = User.objects.filter(role='TEACHING_STAFF').select_related('class_assigned')
+    teachers_count = teachers.count()
 
+    paginator = Paginator(teachers, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'teachers': teachers
+        'page_obj': page_obj,
+        'teachers_count': teachers_count
     }
     return render(request, 'academics/teachers.html', context)
 

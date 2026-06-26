@@ -13,12 +13,17 @@ class User(AbstractUser):
         TEACHING_STAFF = 'TEACHING_STAFF', 'Teaching Staff'
         PARENT = 'PARENT', 'Parent'
 
+    class Status(models.TextChoices):
+        ACTIVE = 'ACTIVE', 'Active'
+        INACTIVE = 'INACTIVE', 'Inactive'
+        ON_LEAVE = 'ON LEAVE', 'On Leave'
+
     
     full_name = models.CharField(max_length=100)
     title = models.CharField(max_length=50, blank=True)
     role = models.CharField(max_length=50, choices=Roles.choices)
     contact = models.CharField(max_length=15, blank=True)
-    picture = models.ImageField(upload_to='user_pictures/', null=True, blank=True)
+    picture = models.ImageField(upload_to='user_pictures/', null=True, blank=True) 
 
 
     def __str__(self):

@@ -12,4 +12,5 @@ urlpatterns = [
     path('user/delete/<str:username>/', views.delete_user, name='delete_user' ),
     path('logout/', views.logout_view, name='logout'),
     path('edit/profile/', views.edit_my_profile, name='edit_my_profile'),
+    path('toggle/active/<int:user_id>/', views.toggle_active_state, name='toggle_active_state')
 ]

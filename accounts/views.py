@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.views.generic import ListView
+from django.views.decorators.http import require_POST
 from django.utils.decorators import method_decorator
 from .decorators import role_required
 from .models import Invitation
@@ -51,8 +51,17 @@ def login_view(request):
         password = data.get('password', '')
         role = data.get('role', '')
 
-        user = authenticate(request, username=username, password=password)
+        try:
+            user_obj = User.objects.get(username=username)
+            if not user_obj.is_active:
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Account Deactivated. Please contacct admin'
+                })
+        except User.DoesNotExist:
+            pass
 
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             if user.role == role:
                 if not user.is_active:
@@ -213,3 +222,18 @@ def edit_my_profile(request):
         'form': form
     }
     return render(request, 'accounts/edit_my_profile.html', context)
+
+
+@require_POST
+@role_required('ADMIN')
+def toggle_active_state(request, user_id):
+    print('View Hit')
+    user = get_object_or_404(User, id=user_id)
+
+    user.is_active = not user.is_active
+    user.save()
+
+    message = f'User has been toggled {'active' if user.is_active else 'inactive'}'
+    status = 'Active' if user.is_active else 'Inactive'
+
+    return JsonResponse({'is_active': user.is_active, 'message': message, 'status': status})
