@@ -139,18 +139,18 @@ class Student(models.Model):
         return self.student_name
     
     def save(self, *args, **kwargs):
-    # 1. Handle new instance PK generation first so we have an ID
+
         is_new = self.pk is None
         if is_new:
             # Save initially to populate self.pk
             super().save(*args, **kwargs)
             
-            # Now we safely have self.pk to generate the unique student_id
+
             self.student_id = f'STU-{str(self.pk).zfill(5)}'
             # Save the student_id back to the instance
             super().save(update_fields=['student_id'])
 
-        # 2. Track if a new image was actually uploaded to avoid re-compressing
+        # Track if a new image was actually uploaded to avoid re-compressing
         if self.image:
             if not is_new:
                 # Grab the original image from the database to compare
@@ -180,7 +180,7 @@ class Student(models.Model):
                 if not is_new:
                     super().save(*args, **kwargs)
 
-        # 3. Final fallback save for standard updates (if not already handled)
+        # Fallback save for standard updates (if not already handled)
         if not is_new and not 'image_changed' in locals():
             super().save(*args, **kwargs)
 

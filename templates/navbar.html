@@ -61,7 +61,7 @@
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter mt-1">{{ request.user.get_role_display }}</p>
                 </div>
                 
-                <div class="relative">
+                <a href="{% url 'accounts:my_profile' %}" class="relative">
                     {% if request.user.picture %}
                         <img src="{{ request.user.picture.url }}" class="w-10 h-10 rounded-xl border-2 border-gray-50 shadow-sm object-cover ring-2 ring-transparent hover:ring-blue-100 transition-all cursor-pointer" alt="{{ request.user.full_name }}">
                     {% else %}
@@ -71,7 +71,7 @@
                     {% endif %}
                     <!-- Online Status Indicator -->
                     <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></span>
-                </div>
+                </a>
             </div>
         </div>
     </div>

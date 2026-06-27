@@ -55,7 +55,8 @@ async function submitLogin() {
             loginBtn.innerHTML = `Login`
         }
     }catch(err) {
-        toast.show(err, 'error')
+        toast.show('Something went wrong. Please try again', 'error')
+        window.location.reload()
     }
 }
 

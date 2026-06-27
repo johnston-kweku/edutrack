@@ -38,32 +38,53 @@
             </div>
 
             <!-- Full Name -->
-            <div class="space-y-1.5">
-                <label for="{{ form.full_name.id_for_label }}" class="text-xs font-bold text-gray-400 uppercase tracking-widest">Full Name</label>
-                <input type="text" name="{{ form.full_name.name }}" id="{{ form.full_name.id_for_label }}" value="{{ form.full_name.value|default:'' }}" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium transition-all outline-none">
-                {% if form.full_name.errors %}
+            <div class="space-y-1.5 grid grid-cols-2 gap-4">
+                <div>
+                    <label for="{{ form.full_name.id_for_label }}" class="text-xs font-bold text-gray-400 uppercase tracking-widest">Full Name</label>
+                    <input type="text" name="{{ form.full_name.name }}" id="{{ form.full_name.id_for_label }}" value="{{ form.full_name.value|default:'' }}" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium transition-all outline-none">
+                    {% if form.full_name.errors %}
                     <p class="text-xs text-red-500 font-bold">{{ form.full_name.errors.0 }}</p>
-                {% endif %}
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="{{ form.title.id_for_label }}" class="text-xs font-bold text-gray-400 uppercase tracking-widest">Title</label>
+                    <input type="text" name="{{ form.title.name }}" id="{{ form.title.id_for_label }}" value="{{ form.title.value|default:'' }}" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium transition-all outline-none">
+                    {% if form.title.errors %}
+                    <p class="text-xs text-red-500 font-bold">{{ form.title.errors.0 }}</p>
+                    {% endif %}
+                </div>
             </div>
 
-            <!-- Contact -->
-            <div class="space-y-1.5">
-                <label for="{{ form.contact.id_for_label }}" class="text-xs font-bold text-gray-400 uppercase tracking-widest">Contact Number</label>
-                <input type="text" name="{{ form.contact.name }}" id="{{ form.contact.id_for_label }}" value="{{ form.contact.value|default:'' }}" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium transition-all outline-none">
-                {% if form.contact.errors %}
+            <!-- Contact/Email -->
+            <div class="space-y-1.5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="{{ form.contact.id_for_label }}" class="text-xs font-bold text-gray-400 uppercase tracking-widest">Contact Number</label>
+                    <input type="text" name="{{ form.contact.name }}" id="{{ form.contact.id_for_label }}" value="{{ form.contact.value|default:'' }}" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium transition-all outline-none">
+                    {% if form.contact.errors %}
                     <p class="text-xs text-red-500 font-bold">{{ form.contact.errors.0 }}</p>
-                {% endif %}
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="{{ form.email.id_for_label }}" class="text-xs font-bold text-gray-400 uppercase tracking-widest">Email</label>
+                    <input type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}" value="{{ form.email.value|default:'' }}" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium transition-all outline-none">
+                    {% if form.email.errors %}
+                    <p class="text-xs text-red-500 font-bold">{{ form.email.errors.0 }}</p>
+                    {% endif %}
+                </div>
             </div>
 
             <!-- Read-only info -->
             <div class="pt-4 border-t border-gray-100 grid grid-cols-2 gap-4">
                 <div>
-                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Role</p>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Role(Read Only)</p>
                     <p class="text-sm font-medium text-gray-700 mt-1">{{ request.user.get_role_display }}</p>
                 </div>
                 <div>
-                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Username</p>
-                    <p class="text-sm font-medium text-gray-700 mt-1">{{ request.user.username }}</p>
+                    <label for="{{ form.username.id_for_label }}" class="text-xs font-bold text-gray-400 uppercase tracking-widest">Username</label>
+                    <input type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label}}" value="{{form.username.value|default:'' }}" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium transition-all outline-none">
+                    {% if form.username.errors %}
+                        <p class="text-xs text-red-500 font-bold">{{ form.username.errors.0 }}</p>
+                    {% endif %}
                 </div>
             </div>
 

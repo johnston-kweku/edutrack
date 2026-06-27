@@ -68,8 +68,12 @@ def class_view(request, class_id):
 @login_required
 @role_required('ADMIN')
 def teachers_view(request):
+    query = request.GET.get('query', '')
     teachers = User.objects.filter(role='TEACHING_STAFF').select_related('class_assigned')
     teachers_count = teachers.count()
+
+    if query:
+        teachers = teachers.filter(full_name__icontains=query)
 
     paginator = Paginator(teachers, 10)
     page_number = request.GET.get('page')

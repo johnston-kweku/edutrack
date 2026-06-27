@@ -4,7 +4,6 @@ from django.contrib.auth import authenticate, login as auth_login, logout, get_u
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from django.utils.decorators import method_decorator
 from .decorators import role_required
 from .models import Invitation
 from .forms import UserCreationForm, ProfileEditForm
@@ -56,7 +55,7 @@ def login_view(request):
             if not user_obj.is_active:
                 return JsonResponse({
                     'success': False,
-                    'message': 'Account Deactivated. Please contacct admin'
+                    'message': 'Account Deactivated. Please contact admin'
                 })
         except User.DoesNotExist:
             pass
@@ -227,7 +226,7 @@ def edit_my_profile(request):
 @require_POST
 @role_required('ADMIN')
 def toggle_active_state(request, user_id):
-    print('View Hit')
+
     user = get_object_or_404(User, id=user_id)
 
     user.is_active = not user.is_active
@@ -237,3 +236,8 @@ def toggle_active_state(request, user_id):
     status = 'Active' if user.is_active else 'Inactive'
 
     return JsonResponse({'is_active': user.is_active, 'message': message, 'status': status})
+
+
+@login_required
+def my_profile(request):
+    return render(request, 'accounts/my_profile.html')
