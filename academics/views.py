@@ -4,6 +4,10 @@ from django.db.models import Count
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.paginator import Paginator
+from django.utils import timezone
+from django.http import HttpResponse
+from datetime import timedelta
+import csv
 from accounts.decorators import role_required
 from .forms import ClassCreationForm
 from .models import Class
@@ -65,26 +69,122 @@ def class_view(request, class_id):
 
 
 
-@login_required
+
+
+
 @role_required('ADMIN')
+@login_required
 def teachers_view(request):
     query = request.GET.get('query', '')
-    teachers = User.objects.filter(role='TEACHING_STAFF').select_related('class_assigned')
-    teachers_count = teachers.count()
-
+    status_filter = request.GET.get('status', '')
+    class_filter = request.GET.get('class_assigned', '')
+    
+    teachers = User.objects.filter(role='TEACHING_STAFF')
+    
+    # Search
     if query:
         teachers = teachers.filter(full_name__icontains=query)
-
+    
+    # Filters
+    if status_filter in ['true', 'false']:
+        teachers = teachers.filter(is_active=(status_filter == 'true'))
+    if class_filter:
+        teachers = teachers.filter(class_assigned__icontains=class_filter)
+    
+    # Stats
+    active_count = teachers.filter(is_active=True).count()
+    classes_count = teachers.values('class_assigned').distinct().count()
+    
+    # Export
+    if request.GET.get('export') == 'csv':
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="teachers.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['Name', 'Title', 'Class', 'Contact', 'Email', 'Status'])
+        for t in teachers:
+            writer.writerow([
+                t.full_name, t.title, t.class_assigned or '',
+                t.contact or '', t.email,
+                'Active' if t.is_active else 'Inactive'
+            ])
+        return response
+    
     paginator = Paginator(teachers, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    
     context = {
         'page_obj': page_obj,
-        'teachers_count': teachers_count
+        'query': query,
+        'active_count': active_count,
+        'classes_count': classes_count,
+        'status_filter': status_filter,
+        'class_filter': class_filter,
     }
     return render(request, 'academics/teachers.html', context)
 
 
+@role_required('ADMIN')
+@login_required
+def parents_view(request):
+    query = request.GET.get('query', '')
+    has_student = request.GET.get('has_student', '')
+    date_from = request.GET.get('date_from', '')
+    date_to = request.GET.get('date_to', '')
+    
+    parents = User.objects.filter(role='PARENT').prefetch_related('student')
+    
+    # Search
+    if query:
+        parents = parents.filter(full_name__icontains=query)
+    
+    # Filters
+    if has_student == 'yes':
+        parents = parents.filter(student__isnull=False).distinct()
+    elif has_student == 'no':
+        parents = parents.filter(student__isnull=True)
+    if date_from:
+        parents = parents.filter(date_joined__date__gte=date_from)
+    if date_to:
+        parents = parents.filter(date_joined__date__lte=date_to)
+    
+    # Stats
+    parents_count = parents.count()
+    students_linked = parents.filter(student__isnull=False).count()
+    new_parents_count = parents.filter(
+        date_joined__gte=timezone.now() - timedelta(days=30)
+    ).count()
+    
+    # Export
+    if request.GET.get('export') == 'csv':
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="parents.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['Name', 'Email', 'Contact', 'Student', 'Registered'])
+        for p in parents:
+            student = p.student.first()
+            writer.writerow([
+                p.full_name, p.email, p.contact or '',
+                student.student_name if student else '—',
+                p.date_joined.strftime('%Y-%m-%d') if p.date_joined else ''
+            ])
+        return response
+    
+    paginator = Paginator(parents, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'page_obj': page_obj,
+        'query': query,
+        'parents_count': parents_count,
+        'students_linked': students_linked,
+        'new_parents_count': new_parents_count,
+        'has_student': has_student,
+        'date_from': date_from,
+        'date_to': date_to,
+    }
+    return render(request, 'academics/parents_list.html', context)
 
 
 

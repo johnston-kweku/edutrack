@@ -131,7 +131,7 @@ class Student(models.Model):
     date_of_birth = models.DateField()
     enrollment_date = models.DateField(auto_now_add=True)
     gender = models.CharField(max_length=20, choices=Gender.choices)
-    parent = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role': 'PARENT'}, blank=True, null=True)
+    parent = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role': 'PARENT'}, blank=True, null=True, related_name='student')
     image = models.ImageField(upload_to='student_images/', blank=True, null=True, validators=[FileExtensionValidator(allowed_extensions=['png', 'jpeg', 'jpg'])])
 
 

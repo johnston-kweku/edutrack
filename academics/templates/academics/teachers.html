@@ -1,132 +1,332 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="p-6 max-w-full mx-auto space-y-6">
+<div class="min-h-screen bg-gray-50/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-            <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Faculty Directory</h1>
-            <p class="text-sm text-gray-500 mt-1">Manage and organize your school's teaching staff.</p>
-        </div>
-        <div>
-            <button class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm px-4 py-2.5 rounded-xl transition shadow-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-                Add Teacher
-            </button>
-        </div>
-    </div>
+        <!-- Header Section -->
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
+            <div class="space-y-1">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-linear-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-600/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Faculty Directory</h1>
+                        <p class="text-sm text-gray-500">Manage and organize your school's teaching staff</p>
+                    </div>
+                </div>
+            </div>
 
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
-        <div class="relative py-3 px-3 ">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-            </span>
-            <form method="get" class="w-full sm:w-7/12">
-                <input type="text" name="query" placeholder="Search teachers..." class="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-all" value="{{ query }}">
-            </form>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead class="bg-gray-50 border-b border-gray-200">
-                    <tr>
-                        <th class="p-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Teacher Name</th>
-                        <th class="p-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Title</th>
-                        <th class="p-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Assigned Class</th>
-                        <th class="p-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Contact</th>
-                        <th class="p-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Status</th>
-                        <th class="p-4 text-xs font-semibold uppercase tracking-wider text-gray-500 text-right">Actions</th>
-                    </tr>
-                </thead>
-                
-                <tbody class="divide-y divide-gray-100">
-                    {% for teacher in page_obj %}
-                    <tr class="hover:bg-gray-50/70 transition-colors">
-                        <td class="p-4 whitespace-nowrap">
-                            <div class="flex items-center gap-3">
-                                {% if teacher.picture %}
-                                    <img src="{{ teacher.picture.url }}" alt="{{ teacher.full_name }}" class="w-10 h-10 rounded-full object-cover">
-                                {% else %}
-                                    <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold text-sm">
-                                        {{ teacher.full_name|slice:":1" }}
-                                    </div>
-                                {% endif %}
-                                <div>
-                                    <div class="font-semibold text-gray-900 text-sm">{{ teacher.full_name }}</div>
-                                    <div class="text-xs text-gray-500">{{ teacher.email }}</div>
-                                </div>
-                            </div>
-                        </td>
-                        
-                        <td class="p-4 text-sm text-gray-600 whitespace-nowrap">
-                            {{ teacher.title }}
-                        </td>
-                        
-                        <td class="p-4 text-sm text-gray-600 whitespace-nowrap">
-                            {{ teacher.class_assigned }}
-                        </td>
-                        
-                        <td class="p-4 text-sm text-gray-600 whitespace-nowrap">
-                            {{ teacher.contact }}
-                        </td>
-                        
-                        <td class="p-4 whitespace-nowrap status-{{teacher.id}}">
-                            {% if teacher.is_active %}
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">Active</span>
-                            {% else %}
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700 border border-red-200">Inactive</span>
-                            {% endif %}
-                        </td>
-                        
-                        <td class="p-4 whitespace-nowrap text-right">
-                            <div class="inline-flex items-center gap-3 justify-end w-full">
-                                <button class="text-gray-400 hover:text-blue-600 transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                    </svg>
-                                </button>
-                                
-                                <label class="relative inline-flex items-center cursor-pointer active-toggle" data-teacher-id="{{teacher.id}}">
-                                    <input data-teacher-id="{{teacher.id}}" type="checkbox" class="sr-only peer check-box" {% if teacher.is_active %}checked{% endif %}>
-                                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:inset-s-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-            <span class="text-xs font-medium text-gray-500">Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-            <div class="flex items-center gap-2">
-                {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}&query={{ query }}" class="p-2 bg-white rounded-lg border border-gray-500 text-gray-300 cursor-pointer active:scale-95 transition-all">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                    </a>
-                {% else %}
-                    <button disabled class="p-2 cursor-not-allowed bg-white rounded-lg border border-gray-200 text-gray-300">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                    </button>
-                {% endif %}
-                {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}&query={{ query }}" class="p-2 bg-white rounded-lg border border-gray-500 text-gray-300 cursor-pointer active:scale-95 transition-all">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </a>
-                {% else %}
-                <button disabled class="p-2 cursor-not-allowed bg-white rounded-lg border border-gray-200 text-gray-300">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <div class="flex items-center gap-3">
+                <div class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-gray-200 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <span class="text-sm font-medium text-gray-600">{{ page_obj.paginator.count }} Teachers</span>
+                </div>
+                <button class="group inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-200 shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform group-hover:rotate-90">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    Add Teacher
                 </button>
-                {% endif %}
             </div>
         </div>
-    </div>
 
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Faculty</p>
+                        <p class="text-2xl font-bold text-gray-900 mt-1">{{ page_obj.paginator.count }}</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Active</p>
+                        <p class="text-2xl font-bold text-green-600 mt-1">{{ active_count|default:page_obj.paginator.count }}</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Classes Covered</p>
+                        <p class="text-2xl font-bold text-indigo-600 mt-1">{{ classes_count|default:"12" }}</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Card -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <!-- Toolbar -->
+            <!-- Toolbar -->
+            <div class="p-4 border-b border-gray-100 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                
+                <!-- Search -->
+                <div class="relative max-w-md w-full">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </span>
+                    <form method="get" class="w-full" id="search-form">
+                        <input type="hidden" name="status" value="{{ status_filter }}">
+                        <input type="hidden" name="class_assigned" value="{{ class_filter }}">
+                        <input 
+                            type="text" 
+                            name="query" 
+                            placeholder="Search teachers by name..." 
+                            class="block w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-gray-50/50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition-all sm:text-sm"
+                            value="{{ query }}"
+                        >
+                    </form>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <!-- Filter Dropdown -->
+                    <div class="relative group">
+                        <button type="button" class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                            </svg>
+                            Filter
+                            {% if status_filter or class_filter %}
+                            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                            {% endif %}
+                        </button>
+                        <div class="absolute right-0 mt-2 w-72 bg-white rounded-xl border border-gray-200 shadow-lg p-4 hidden group-hover:block z-50">
+                            <form method="get" class="space-y-3">
+                                <input type="hidden" name="query" value="{{ query }}">
+                                
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Status</label>
+                                    <select name="status" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                                        <option value="">All</option>
+                                        <option value="true" {% if status_filter == 'true' %}selected{% endif %}>Active</option>
+                                        <option value="false" {% if status_filter == 'false' %}selected{% endif %}>Inactive</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Class</label>
+                                    <input type="text" name="class_assigned" value="{{ class_filter }}" placeholder="e.g. Grade 5A" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                                </div>
+                                
+                                <div class="flex gap-2 pt-1">
+                                    <button type="submit" class="flex-1 bg-blue-600 text-white text-sm font-medium py-2 rounded-lg hover:bg-blue-700 transition">Apply</button>
+                                    <a href="?" class="flex-1 text-center bg-gray-100 text-gray-600 text-sm font-medium py-2 rounded-lg hover:bg-gray-200 transition">Clear</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Export -->
+                    <a href="?{% if query %}query={{ query }}&{% endif %}{% if status_filter %}status={{ status_filter }}&{% endif %}{% if class_filter %}class_assigned={{ class_filter }}&{% endif %}export=csv" class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all">
+                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        Export CSV
+                    </a>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-50/80 border-b border-gray-200">
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Teacher</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Title & Class</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Contact</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        {% for teacher in page_obj %}
+                        <tr class="group hover:bg-blue-50/30 transition-colors duration-200">
+                            <!-- Teacher Column -->
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-4">
+                                    {% if teacher.picture %}
+                                        <img src="{{ teacher.picture.url }}" alt="{{ teacher.full_name }}" class="w-11 h-11 rounded-full object-cover ring-2 ring-gray-100 group-hover:ring-blue-200 transition-all">
+                                    {% else %}
+                                        <div class="w-11 h-11 rounded-full bg-linear-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+                                            {{ teacher.full_name|slice:":1" }}
+                                        </div>
+                                    {% endif %}
+                                    <div>
+                                        <div class="font-semibold text-gray-900 text-sm group-hover:text-blue-700 transition-colors">{{ teacher.full_name }}</div>
+                                        <div class="text-xs text-gray-400 mt-0.5">{{ teacher.email }}</div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Title & Class Column -->
+                            <td class="px-6 py-4">
+                                <div class="space-y-1">
+                                    <div class="text-sm font-medium text-gray-700">{{ teacher.title }}</div>
+                                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gray-100 text-gray-600 text-xs font-medium">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                        </svg>
+                                        {{ teacher.class_assigned }}
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Contact Column -->
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                    </svg>
+                                    <span class="font-mono text-xs">{{ teacher.contact }}</span>
+                                </div>
+                            </td>
+
+                            <!-- Status Column -->
+                            <td class="px-6 py-4 status-{{teacher.id}}">
+                                {% if teacher.is_active %}
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-200/60">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                        Active
+                                    </span>
+                                {% else %}
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-red-50 text-red-700 border border-red-200/60">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                        Inactive
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <!-- Actions Column -->
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <button class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200" title="View Profile">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                        </svg>
+                                    </button>
+
+                                    <button class="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all duration-200" title="Edit">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                        </svg>
+                                    </button>
+
+                                    <label class="relative inline-flex items-center cursor-pointer active-toggle ml-1" data-teacher-id="{{teacher.id}}">
+                                        <input data-teacher-id="{{teacher.id}}" type="checkbox" class="sr-only peer check-box" {% if teacher.is_active %}checked{% endif %}>
+                                        <div class="w-10 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-500/20 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="px-6 py-16 text-center">
+                                <div class="flex flex-col items-center justify-center">
+                                    <div class="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mb-4">
+                                        <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-1">No teachers found</h3>
+                                    <p class="text-sm text-gray-500 max-w-xs mx-auto">Get started by adding your first teacher to the directory.</p>
+                                    <button class="mt-4 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm px-4 py-2 rounded-xl transition">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                        </svg>
+                                        Add Teacher
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {% if page_obj.has_other_pages %}
+            <div class="px-6 py-4 bg-gray-50/80 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2 text-sm text-gray-500">
+                    <span>Showing</span>
+                    <span class="font-semibold text-gray-900">{{ page_obj.start_index }}-{{ page_obj.end_index }}</span>
+                    <span>of</span>
+                    <span class="font-semibold text-gray-900">{{ page_obj.paginator.count }}</span>
+                    <span>teachers</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1&query={{ query }}" class="p-2 bg-white rounded-lg border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-300 hover:bg-gray-50 transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
+                        </a>
+                        <a href="?page={{ page_obj.previous_page_number }}&query={{ query }}" class="p-2 bg-white rounded-lg border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-300 hover:bg-gray-50 transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                        </a>
+                    {% else %}
+                        <button disabled class="p-2 cursor-not-allowed bg-gray-100 rounded-lg border border-gray-200 text-gray-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
+                        </button>
+                        <button disabled class="p-2 cursor-not-allowed bg-gray-100 rounded-lg border border-gray-200 text-gray-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                    {% endif %}
+
+                    <div class="flex items-center gap-1">
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <span class="w-9 h-9 flex items-center justify-center rounded-lg bg-blue-600 text-white text-sm font-semibold shadow-sm shadow-blue-600/20">{{ num }}</span>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <a href="?page={{ num }}&query={{ query }}" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-300 hover:bg-gray-50 text-sm font-medium transition-all">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}&query={{ query }}" class="p-2 bg-white rounded-lg border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-300 hover:bg-gray-50 transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}&query={{ query }}" class="p-2 bg-white rounded-lg border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-300 hover:bg-gray-50 transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
+                        </a>
+                    {% else %}
+                        <button disabled class="p-2 cursor-not-allowed bg-gray-100 rounded-lg border border-gray-200 text-gray-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                        <button disabled class="p-2 cursor-not-allowed bg-gray-100 rounded-lg border border-gray-200 text-gray-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
+
 <script src="{% static 'js/academics/teachers.js' %}"></script>
 {% endblock %}
