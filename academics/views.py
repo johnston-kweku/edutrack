@@ -53,7 +53,7 @@ def class_view(request, class_id):
     students = class_requested.student.all().select_related('parent')
 
     if query:
-        students = students.filter(name__icontains=query)
+        students = students.filter(student_name__icontains=query)
 
     paginator = Paginator(students, 10)
     page_number = request.GET.get('page')
@@ -88,8 +88,6 @@ def teachers_view(request):
     # Filters
     if status_filter in ['true', 'false']:
         teachers = teachers.filter(is_active=(status_filter == 'true'))
-    if class_filter:
-        teachers = teachers.filter(class_assigned__icontains=class_filter)
     
     # Stats
     active_count = teachers.filter(is_active=True).count()
@@ -102,8 +100,9 @@ def teachers_view(request):
         writer = csv.writer(response)
         writer.writerow(['Name', 'Title', 'Class', 'Contact', 'Email', 'Status'])
         for t in teachers:
+            class_assigned = t.class_assigned if hasattr(t, 'class_assigned') else 'Not Assigned'
             writer.writerow([
-                t.full_name, t.title, t.class_assigned or '',
+                t.full_name, t.title, class_assigned,
                 t.contact or '', t.email,
                 'Active' if t.is_active else 'Inactive'
             ])

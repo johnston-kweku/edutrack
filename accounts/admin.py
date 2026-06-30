@@ -5,14 +5,14 @@ from .models import User, Invitation
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['thumbnail', 'full_name', 'username', 'role', 'contact', 'is_active', 'date_joined']
+    list_display = ['thumbnail', 'full_name', 'username', 'role', 'contact', 'is_active', 'email', 'date_joined']
     list_filter = ['role', 'is_active', 'date_joined']
     search_fields = ['full_name', 'username', 'email', 'contact']
     ordering = ['-date_joined']
     
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Personal Info', {'fields': ('full_name', 'email', 'title', 'contact', 'picture')}),
+        ('Personal Info', {'fields': ('full_name', 'email', 'title', 'contact', 'picture',)}),
         ('Role & Permissions', {'fields': ('role', 'is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important Dates', {'fields': ('last_login', 'date_joined')}),
     )

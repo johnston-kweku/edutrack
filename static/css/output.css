@@ -2009,6 +2009,11 @@
       }
     }
   }
+  .group-focus\:block {
+    &:is(:where(.group):focus *) {
+      display: block;
+    }
+  }
   .peer-checked\:bg-blue-600 {
     &:is(:where(.peer):checked ~ *) {
       background-color: var(--color-blue-600);

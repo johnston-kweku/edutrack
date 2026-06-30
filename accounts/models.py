@@ -1,9 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.utils import timezone
+from django.core.files.base import ContentFile
+import os
+from PIL import Image
+from io import BytesIO
 import uuid
 from datetime import timedelta, time
-from django.utils import timezone
 
 
 # Create your models here.
@@ -18,7 +22,6 @@ class User(AbstractUser):
         INACTIVE = 'INACTIVE', 'Inactive'
         ON_LEAVE = 'ON LEAVE', 'On Leave'
 
-    
     full_name = models.CharField(max_length=100)
     title = models.CharField(max_length=50, blank=True)
     role = models.CharField(max_length=50, choices=Roles.choices)
@@ -37,6 +40,8 @@ class User(AbstractUser):
     
     def is_parent(self):
         return self.role == self.Roles.PARENT
+    
+
     
 
 
