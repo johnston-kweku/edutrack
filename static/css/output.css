@@ -2133,6 +2133,12 @@
       top: 2px;
     }
   }
+  .after\:left-0\.5 {
+    &::after {
+      content: var(--tw-content);
+      left: calc(var(--spacing) * 0.5);
+    }
+  }
   .after\:left-1 {
     &::after {
       content: var(--tw-content);
