@@ -77,7 +77,7 @@ def class_view(request, class_id):
 def teachers_view(request):
     query = request.GET.get('query', '')
     status_filter = request.GET.get('status', '')
-    class_filter = request.GET.get('class_assigned', '')
+
     
     teachers = User.objects.filter(role='TEACHING_STAFF')
     
@@ -118,7 +118,6 @@ def teachers_view(request):
         'active_count': active_count,
         'classes_count': classes_count,
         'status_filter': status_filter,
-        'class_filter': class_filter,
     }
     return render(request, 'academics/teachers.html', context)
 
