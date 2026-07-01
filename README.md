@@ -41,69 +41,63 @@ EduTrack is a robust, enterprise-grade School Management System built with a **"
 - **Monitoring**: Sentry SDK
 - **Styling**: Modern CSS with Tailwind CLI
 
-## ⚙️ Setup & Installation
+## ⚙️ App Documentation
 
-### Prerequisites
-- Python 3.10+
-- Node.js & npm (for Tailwind CSS)
+This section provides a detailed overview of each Django app within the EduTrack project.
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/johnston-kweku/edutrack.git
-cd edutrack
-```
+### 1. `accounts` App
+   - **Purpose**: Manages user authentication, authorization, roles, and the invitation system.
+   - **Key Models**:
+     - `User`: Extends Django's built-in User model to include `full_name`, `title`, `role` (Admin, Teaching Staff, Parent), `contact`, and `picture`.
+     - `Invitation`: Handles secure, token-based invitations for new user registrations, specifying role and expiry.
+   - **Key Features**:
+     - Role-Based Access Control (RBAC) via `role_required` decorator.
+     - Secure user registration through invitations.
+     - User profile management.
 
-### 2. Python Environment Setup
-```bash
-# Create a virtual environment
-python -m venv venv
+### 2. `academics` App
+   - **Purpose**: Core application for managing academic structures, students, subjects, terms, and attendance.
+   - **Key Models**:
+     - `Class`: Represents academic classes with stages and levels (KG, Primary, JHS), and an optional `class_teacher`. Includes validation for valid stage/level combinations.
+     - `Subject`: Defines academic subjects.
+     - `ClassSubject`: Maps subjects to specific classes and assigns a `teacher`.
+     - `AcademicYear`: Manages academic years, including tracking the current year.
+     - `Term`: Manages academic terms within an academic year, including tracking the current term.
+     - `Student`: Stores student information, including ID generation, personal details, parent linkage, and an optional profile image (with image compression).
+     - `Assessment`: Defines different types of assessments (Quiz, Class Test, Exam, Exercise) with associated scores, subjects, terms, and classes.
+     - `AssessmentRecord`: Records individual student scores for specific assessments, with validation against `max_score`.
+     - `Attendance`: Tracks daily attendance for a class, marked by a staff member.
+     - `AttendanceRecord`: Records the presence or absence of individual students for a given attendance entry.
+   - **Key Features**:
+     - Hierarchical class structure.
+     - Automated student ID generation.
+     - Comprehensive academic year and term management.
+     - Robust assessment and grading system.
+     - Daily attendance tracking.
+     - Image handling for student profiles with compression.
 
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
+### 3. `finances` App
+   - **Purpose**: Handles financial aspects of the school, specifically fee management and payments.
+   - **Key Models**:
+     - `Fee`: Defines fees for specific classes and terms, including amount and description. Ensures unique fee configurations per class/term.
+     - `FeePayment`: Records student payments towards fees, calculating `amount_tendered`, `balance`, and tracking who received the payment. Automatically calculates balance based on previous payments.
+   - **Key Features**:
+     - Class and term-specific fee configuration.
+     - Automated calculation of outstanding balances.
+     - Payment history tracking.
 
-# Install dependencies
-pip install -r requirements.txt
-```
+### 4. `dashboards` App
+   - **Purpose**: Provides role-specific dashboards for different user types (Admin, Teacher, Parent).
+   - **Key Models**: (Likely minimal models, primarily focused on views/templates)
+   - **Key Features**:
+     - Centralized overview for administrators.
+     - Workspace for teachers to manage classes and students.
+     - Parent portal for tracking student progress and finances.
 
-### 3. Environment Variables
-Create a `.env` file in the root directory and add the following:
-```env
-SECRET_KEY=your-secret-key
-DEBUG=True
-ALLOWED_HOSTS=*
-SENTRY_DSN=your-sentry-dsn
-```
-
-### 4. Database Migrations
-```bash
-python manage.py migrate
-```
-
-### 5. Tailwind CSS Setup
-```bash
-# Install Node dependencies
-npm install
-
-# Build styles
-npm run build
-
-# For development (watch mode)
-npm run dev
-```
-
-### 6. Seed Data (Optional)
-Populate the database with realistic Ghanaian sample data:
-```bash
-python manage.py populate_db
-```
-
-### 7. Run the Development Server
-```bash
-python manage.py runserver
-```
+### 5. `students` App
+   - **Purpose**: Contains student-specific utilities, views, or additional models not covered by `academics`.
+   - **Key Models**: (Based on provided `students/models.py`, it's currently empty, suggesting its purpose might evolve or be integrated elsewhere.)
+   - **Key Features**: (To be defined as the app grows)
 
 ## 📁 Project Structure
 
