@@ -9,3 +9,4 @@ plan.drawio
 .DS_Store
 
 venv/
+.aider*
