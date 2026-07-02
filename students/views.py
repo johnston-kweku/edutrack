@@ -6,7 +6,6 @@ from django.utils import timezone
 from django.utils.dateparse import parse_date
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
-from django.db.models import Q
 from academics.models import Student, Class, Attendance, AttendanceRecord
 from accounts.decorators import role_required
 from .forms import StudentCreationForm
