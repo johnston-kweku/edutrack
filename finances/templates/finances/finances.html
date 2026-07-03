@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'finances:add_fee' %}" class="text-blue-600 cursor-pointer">Add Fee</a>
+    <a href="{% url 'finances:fee_payment' %}" class="text-blue-600 cursor-pointer">Record Fee Payment</a>
+{% endblock content %}

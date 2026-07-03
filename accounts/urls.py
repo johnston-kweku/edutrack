@@ -14,4 +14,5 @@ urlpatterns = [
     path('edit/profile/', views.edit_my_profile, name='edit_my_profile'),
     path('toggle/active/<int:user_id>/', views.toggle_active_state, name='toggle_active_state'),
     path('profile/', views.my_profile, name='my_profile'),
+    path('user/profile/<int:user_id>/',  views.user_profile, name='user_profile')
 ]

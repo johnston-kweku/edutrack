@@ -146,7 +146,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 LOGIN_URL = 'accounts:login'
-LOGOUT_URL = 'accounts:login'
+LOGOUT_URL = 'accounts:landing'
 
 
 

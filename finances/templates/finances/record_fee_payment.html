@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="bg-blue-600 text-white font-bold px-3 py-2 rounded-xl">Record Fee Payment</button>
+    </form>
+{% endblock content %}

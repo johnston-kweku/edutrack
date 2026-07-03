@@ -201,11 +201,10 @@ def invalid_invite(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('accounts:login')
+    return redirect('accounts:landing')
 
 
 
-# accounts/views.py
 
 @login_required
 def edit_my_profile(request):
@@ -241,3 +240,19 @@ def toggle_active_state(request, user_id):
 @login_required
 def my_profile(request):
     return render(request, 'accounts/my_profile.html')
+
+
+
+@role_required('ADMIN')
+@login_required
+def user_profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        user.is_active = not user.is_active
+        user.save()
+    
+    context = {
+        'profile_user': user,
+    }
+    
+    return render(request, 'accounts/user_profile.html', context)

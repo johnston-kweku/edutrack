@@ -1,9 +1,11 @@
-from decimal import Decimal
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Count
 from django.core.cache import cache
+from django.shortcuts import render, redirect, get_object_or_404
+from decimal import Decimal
 from academics.models import Student, Term, Class
+from .forms import FeeCreationForm, FeeRecordForm
 from finances.models import Fee, FeePayment
 from accounts.models import User
 from accounts.decorators import role_required
@@ -94,7 +96,7 @@ def dashboard_summary(request):
         total_paid = totals_map.get(payment.student_id, Decimal('0.00'))
         status = 'Paid' if total_paid >= payment.fee.amount else 'Partial'
         transactions.append({
-            'student_name': payment.student.name,
+            'student_name': payment.student.student_name,
             'student_class': str(payment.student.student_class),
             'amount': str(payment.amount_tendered),
             'status': status,
@@ -126,3 +128,49 @@ def dashboard_summary(request):
     cache.set(key='dashboard_summary', value=dashboard_data, timeout=300)
 
     return JsonResponse(dashboard_data)
+
+
+
+
+
+
+@role_required('ADMIN')
+def add_fee(request):
+    if request.method == 'POST':
+        form = FeeCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'finances/add_fee.html')
+    
+    else:
+        form = FeeCreationForm()
+    
+    context = {
+        'form': form
+    }
+
+    return render(request, 'finances/add_fee.html', context)
+
+
+
+@role_required('ADMIN')
+def finances_view(request):
+    return render(request, 'finances/finances.html')
+
+
+@role_required('ADMIN')
+def record_fee_payment(request):
+    if request.method == 'POST':
+        form = FeeRecordForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'finances/record_fee_payment.html', { 'form': form})
+        
+    else:
+        form = FeeRecordForm()
+    
+    context = {
+        'form': form
+    }
+
+    return render(request, 'finances/record_fee_payment.html', context)
