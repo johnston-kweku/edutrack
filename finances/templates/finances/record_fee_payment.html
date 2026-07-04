@@ -1,10 +1,254 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+<div class="min-h-screen bg-gray-50/50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="bg-blue-600 text-white font-bold px-3 py-2 rounded-xl">Record Fee Payment</button>
-    </form>
-{% endblock content %}
+        <!-- Header -->
+        <div class="mb-8">
+            <div class="flex items-center gap-3 mb-2">
+                <a href="#" onclick="history.back()" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                </a>
+                <div class="w-10 h-10 rounded-xl bg-linear-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-white">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.242 1.453-1.099V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v.375c0 .621.504 1.125 1.125 1.125H18.75a1.125 1.125 0 001.125-1.125V6a1.125 1.125 0 00-1.125-1.125H3.75zM3.75 12v.75a.75.75 0 01-.75.75H2.25m0 0v.375c0 .621.504 1.125 1.125 1.125H18.75a1.125 1.125 0 001.125-1.125V12a1.125 1.125 0 00-1.125-1.125H3.75zM3.75 18.75v.75a.75.75 0 01-.75.75H2.25m0 0v.375c0 .621.504 1.125 1.125 1.125H18.75a1.125 1.125 0 001.125-1.125V18.75a1.125 1.125 0 00-1.125-1.125H3.75z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Record Fee Payment</h1>
+                    <p class="text-sm text-gray-500">Log a new student fee payment into the system</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="p-6 sm:p-8">
+                <form method="post" class="space-y-6" novalidate>
+                    {% csrf_token %}
+
+                    <!-- Non-field errors -->
+                    {% if form.non_field_errors %}
+                    <div class="p-4 rounded-xl bg-red-50 border border-red-200">
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-red-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <div class="text-sm text-red-700">
+                                {% for error in form.non_field_errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Fee Field -->
+                        <div class="space-y-2">
+                            <label for="{{ form.fee.id_for_label }}" class="block text-sm font-semibold text-gray-700">
+                                Fee <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <select 
+                                    name="{{ form.fee.name }}" 
+                                    id="{{ form.fee.id_for_label }}"
+                                    hx-get="{% url 'finances:get_students_by_fee' %}"
+                                    hx-target="#student-select-container"
+                                    hx-trigger="change"
+                                    hx-indicator="#student-loading"
+                                    class="block w-full pl-4 pr-10 py-2.5 border {% if form.fee.errors %}border-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-200 focus:ring-amber-500/20 focus:border-amber-500{% endif %} rounded-xl bg-gray-50/50 text-gray-900 focus:outline-none focus:ring-2 focus:bg-white transition-all sm:text-sm appearance-none cursor-pointer"
+                                >
+                                    <option value="" disabled {% if not form.fee.value %}selected{% endif %}>Select fee</option>
+                                    {% for choice in form.fee.field.choices %}
+                                        {% if choice.0 %}
+                                        <option value="{{ choice.0 }}" {% if form.fee.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            {% if form.fee.errors %}
+                                <p class="text-xs text-red-600 mt-1">{{ form.fee.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Student Field -->
+                        <div class="space-y-2">
+                            <label for="{{ form.student.id_for_label }}" class="block text-sm font-semibold text-gray-700">
+                                Student <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <!-- Loading spinner -->
+                                <div id="student-loading" class="htmx-indicator absolute inset-y-0 right-10 flex items-center z-10">
+                                    <svg class="animate-spin h-4 w-4 text-amber-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </div>
+
+                                <div id="student-select-container" class="relative">
+                                    <select 
+                                        name="{{ form.student.name }}" 
+                                        id="{{ form.student.id_for_label }}"
+                                        {% if not form.fee.value %}disabled{% endif %}
+                                        class="block w-full pl-4 pr-10 py-2.5 border {% if form.student.errors %}border-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-200 focus:ring-amber-500/20 focus:border-amber-500{% endif %} rounded-xl bg-gray-50/50 text-gray-900 focus:outline-none focus:ring-2 focus:bg-white transition-all sm:text-sm appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {% if form.fee.value and form.student.value %}
+                                            {% for choice in form.student.field.choices %}
+                                                {% if choice.0 %}
+                                                <option value="{{ choice.0 }}" {% if form.student.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            <option value="" disabled selected>Select a fee first</option>
+                                        {% endif %}
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400">Only students in the selected fee's class will appear here.</p>
+                            {% if form.student.errors %}
+                                <p class="text-xs text-red-600 mt-1">{{ form.student.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Amount Tendered Field -->
+                        <div class="space-y-2">
+                            <label for="{{ form.amount_tendered.id_for_label }}" class="block text-sm font-semibold text-gray-700">
+                                Amount Tendered <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="text-gray-400 text-sm font-medium">$</span>
+                                </div>
+                                <input 
+                                    type="number" 
+                                    name="{{ form.amount_tendered.name }}" 
+                                    id="{{ form.amount_tendered.id_for_label }}"
+                                    value="{{ form.amount_tendered.value|default:'' }}"
+                                    step="0.01"
+                                    min="0"
+                                    placeholder="0.00"
+                                    class="block w-full pl-8 pr-4 py-2.5 border {% if form.amount_tendered.errors %}border-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-200 focus:ring-amber-500/20 focus:border-amber-500{% endif %} rounded-xl bg-gray-50/50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:bg-white transition-all sm:text-sm"
+                                >
+                            </div>
+                            {% if form.amount_tendered.errors %}
+                                <p class="text-xs text-red-600 mt-1">{{ form.amount_tendered.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Paid At Field -->
+                        <div class="space-y-2">
+                            <label for="{{ form.paid_at.id_for_label }}" class="block text-sm font-semibold text-gray-700">
+                                Payment Date & Time <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="datetime-local" 
+                                    name="{{ form.paid_at.name }}" 
+                                    id="{{ form.paid_at.id_for_label }}"
+                                    value="{{ form.paid_at.value|default:''|date:'Y-m-d\TH:i' }}"
+                                    class="block w-full pl-10 pr-4 py-2.5 border {% if form.paid_at.errors %}border-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-200 focus:ring-amber-500/20 focus:border-amber-500{% endif %} rounded-xl bg-gray-50/50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:bg-white transition-all sm:text-sm"
+                                >
+                            </div>
+                            {% if form.paid_at.errors %}
+                                <p class="text-xs text-red-600 mt-1">{{ form.paid_at.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Received By Field -->
+                        <div class="space-y-2 sm:col-span-2">
+                            <label for="{{ form.received_by.id_for_label }}" class="block text-sm font-semibold text-gray-700">
+                                Received By <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                                    </svg>
+                                </div>
+                                <select 
+                                    name="{{ form.received_by.name }}" 
+                                    id="{{ form.received_by.id_for_label }}"
+                                    class="block w-full pl-10 pr-10 py-2.5 border {% if form.received_by.errors %}border-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-200 focus:ring-amber-500/20 focus:border-amber-500{% endif %} rounded-xl bg-gray-50/50 text-gray-900 focus:outline-none focus:ring-2 focus:bg-white transition-all sm:text-sm appearance-none cursor-pointer"
+                                >
+                                    <option value="" disabled {% if not form.received_by.value %}selected{% endif %}>Select staff member</option>
+                                    {% for choice in form.received_by.field.choices %}
+                                        {% if choice.0 %}
+                                        <option value="{{ choice.0 }}" {% if form.received_by.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            {% if form.received_by.errors %}
+                                <p class="text-xs text-red-600 mt-1">{{ form.received_by.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-gray-100"></div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <a href="#" onclick="history.back()" class="w-full sm:w-auto text-center text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
+                            Cancel and go back
+                        </a>
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <button type="reset" class="flex-1 sm:flex-none px-5 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">
+                                Reset
+                            </button>
+                            <button type="submit" class="group flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all duration-200 shadow-lg shadow-amber-600/25 hover:shadow-amber-600/40 hover:-translate-y-0.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Record Payment
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Info Card -->
+        <div class="mt-6 bg-amber-50/50 rounded-2xl border border-amber-100 p-5">
+            <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-amber-800">Recording a Payment</h3>
+                    <p class="text-sm text-amber-600 mt-1 leading-relaxed">
+                        Select the applicable fee and student, then enter the amount tendered. The payment date defaults to now but can be adjusted for back-dated entries. Once recorded, the payment will be reflected in the student's fee balance immediately.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

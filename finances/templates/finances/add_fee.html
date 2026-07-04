@@ -1,11 +1,195 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+<div class="min-h-screen bg-gray-50/50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="text-white font-bold bg-blue-600 px-3 py-2 rounded-xl cursor-pointer">Add Fee</button>
-    </form>
+        <!-- Header -->
+        <div class="mb-8">
+            <div class="flex items-center gap-3 mb-2">
+                <a href="#" onclick="history.back()" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                </a>
+                <div class="w-10 h-10 rounded-xl bg-linear-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-white">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Add New Fee</h1>
+                    <p class="text-sm text-gray-500">Create a new fee structure for a term and class</p>
+                </div>
+            </div>
+        </div>
 
-{% endblock content %}
+        <!-- Form Card -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="p-6 sm:p-8">
+                <form method="post" class="space-y-6" novalidate>
+                    {% csrf_token %}
+
+                    <!-- Non-field errors -->
+                    {% if form.non_field_errors %}
+                    <div class="p-4 rounded-xl bg-red-50 border border-red-200">
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-red-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <div class="text-sm text-red-700">
+                                {% for error in form.non_field_errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Term Field -->
+                        <div class="space-y-2">
+                            <label for="{{ form.term.id_for_label }}" class="block text-sm font-semibold text-gray-700">
+                                Term <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <select 
+                                    name="{{ form.term.name }}" 
+                                    id="{{ form.term.id_for_label }}"
+                                    class="block w-full pl-4 pr-10 py-2.5 border {% if form.term.errors %}border-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500{% endif %} rounded-xl bg-gray-50/50 text-gray-900 focus:outline-none focus:ring-2 focus:bg-white transition-all sm:text-sm appearance-none cursor-pointer"
+                                >
+                                    <option value="" disabled {% if not form.term.value %}selected{% endif %}>Select a term</option>
+                                    {% for choice in form.term.field.choices %}
+                                        {% if choice.0 %}
+                                        <option value="{{ choice.0 }}" {% if form.term.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            {% if form.term.errors %}
+                                <p class="text-xs text-red-600 mt-1">{{ form.term.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Amount Field -->
+                        <div class="space-y-2">
+                            <label for="{{ form.amount.id_for_label }}" class="block text-sm font-semibold text-gray-700">
+                                Amount <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="text-gray-400 text-sm font-medium">$</span>
+                                </div>
+                                <input 
+                                    type="number" 
+                                    name="{{ form.amount.name }}" 
+                                    id="{{ form.amount.id_for_label }}"
+                                    value="{{ form.amount.value|default:'' }}"
+                                    step="0.01"
+                                    min="0"
+                                    placeholder="0.00"
+                                    class="block w-full pl-8 pr-4 py-2.5 border {% if form.amount.errors %}border-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500{% endif %} rounded-xl bg-gray-50/50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:bg-white transition-all sm:text-sm"
+                                >
+                            </div>
+                            {% if form.amount.errors %}
+                                <p class="text-xs text-red-600 mt-1">{{ form.amount.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Student Class Field -->
+                        <div class="space-y-2 sm:col-span-2">
+                            <label for="{{ form.student_class.id_for_label }}" class="block text-sm font-semibold text-gray-700">
+                                Class <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <select 
+                                    name="{{ form.student_class.name }}" 
+                                    id="{{ form.student_class.id_for_label }}"
+                                    class="block w-full pl-4 pr-10 py-2.5 border {% if form.student_class.errors %}border-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500{% endif %} rounded-xl bg-gray-50/50 text-gray-900 focus:outline-none focus:ring-2 focus:bg-white transition-all sm:text-sm appearance-none cursor-pointer"
+                                >
+                                    <option value="" disabled {% if not form.student_class.value %}selected{% endif %}>Select a class</option>
+                                    {% for choice in form.student_class.field.choices %}
+                                        {% if choice.0 %}
+                                        <option value="{{ choice.0 }}" {% if form.student_class.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            {% if form.student_class.errors %}
+                                <p class="text-xs text-red-600 mt-1">{{ form.student_class.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Description Field -->
+                        <div class="space-y-2 sm:col-span-2">
+                            <label for="{{ form.description.id_for_label }}" class="block text-sm font-semibold text-gray-700">
+                                Description
+                            </label>
+                            <textarea 
+                                name="{{ form.description.name }}" 
+                                id="{{ form.description.id_for_label }}"
+                                rows="4"
+                                placeholder="Enter fee description..."
+                                class="block w-full px-4 py-2.5 border {% if form.description.errors %}border-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-200 focus:ring-emerald-500/20 focus:border-emerald-500{% endif %} rounded-xl bg-gray-50/50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:bg-white transition-all sm:text-sm resize-y"
+                            >{{ form.description.value|default:'' }}</textarea>
+                            {% if form.description.errors %}
+                                <p class="text-xs text-red-600 mt-1">{{ form.description.errors.0 }}</p>
+                            {% endif %}
+                            <p class="text-xs text-gray-400">Optional. Provide any additional details about this fee.</p>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-gray-100"></div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <a href="#" class="w-full sm:w-auto text-center text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
+                            Cancel and go back
+                        </a>
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <button type="reset" class="flex-1 sm:flex-none px-5 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">
+                                Reset
+                            </button>
+                            <button type="submit" class="group flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all duration-200 shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/40 hover:-translate-y-0.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform group-hover:rotate-90">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                                Add Fee
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Info Card -->
+        <div class="mt-6 bg-emerald-50/50 rounded-2xl border border-emerald-100 p-5">
+            <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-emerald-800">About Fee Creation</h3>
+                    <p class="text-sm text-emerald-600 mt-1 leading-relaxed">
+                        Fees are assigned per term and class. Once created, students in the selected class will owe this fee. Make sure the amount and term are correct before saving.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

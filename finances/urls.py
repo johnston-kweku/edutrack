@@ -10,7 +10,8 @@ urlpatterns = [
     path('dashboard/summary/', views.dashboard_summary, name='dashboard_summary'),
     path('add/fee/', views.add_fee, name='add_fee'),
     path('finances/', views.finances_view, name='finances'),
-    path('fee/payment/', views.record_fee_payment, name='fee_payment')
+    path('fee/payment/', views.record_fee_payment, name='fee_payment'),
+    path('api/students-by-fee/', views.get_students_by_fee, name='get_students_by_fee')
 ]
 
 if settings.DEBUG:

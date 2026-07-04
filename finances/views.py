@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Count
+from django.http import HttpResponse
 from django.core.cache import cache
 from django.shortcuts import render, redirect, get_object_or_404
 from decimal import Decimal
@@ -140,7 +141,7 @@ def add_fee(request):
         form = FeeCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'finances/add_fee.html')
+            return redirect('finances:add_fee')
     
     else:
         form = FeeCreationForm()
@@ -164,7 +165,7 @@ def record_fee_payment(request):
         form = FeeRecordForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'finances/record_fee_payment.html', { 'form': form})
+            return redirect('finances:fee_payment')
         
     else:
         form = FeeRecordForm()
@@ -174,3 +175,115 @@ def record_fee_payment(request):
     }
 
     return render(request, 'finances/record_fee_payment.html', context)
+
+
+
+
+def get_students_by_fee(request):
+    fee_id = request.GET.get('fee')
+    options = '<option value="" disabled selected>Select student</option>'
+    
+    if fee_id:
+        fee = get_object_or_404(Fee, pk=fee_id)
+        students = Student.objects.filter(student_class=fee.student_class).order_by('student_name')
+        for student in students:
+            options += f'<option value="{student.pk}">{student.student_name} ({student.student_id})</option>'
+    
+    html = f'''
+    <select name="student" id="id_student"
+        class="block w-full pl-4 pr-10 py-2.5 border border-gray-200 rounded-xl bg-gray-50/50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 sm:text-sm appearance-none cursor-pointer">
+        {options}
+    </select>
+    <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+    </div>
+    '''
+    return HttpResponse(html)
+
+
+
+
+
+
+
+
+from django.db.models import Sum, Count
+from django.utils import timezone
+from datetime import timedelta
+
+
+
+@role_required('ADMIN')
+def finances_view(request):
+    # ===== Core Metrics =====
+    total_fees = Fee.objects.count()
+
+    # Total collected across all payments
+    total_collected = FeePayment.objects.aggregate(
+        total=Sum('amount_tendered')
+    )['total'] or 0
+
+    # Expected revenue = fee.amount × number of students in each class
+    fees_with_student_counts = Fee.objects.annotate(
+        student_count=Count('student_class__student', distinct=True)
+    )
+    total_expected = sum(
+        f.amount * f.student_count for f in fees_with_student_counts
+    )
+    total_outstanding = total_expected - total_collected
+    collection_rate = round((total_collected / total_expected * 100), 1) if total_expected > 0 else 0
+
+    # Recent activity (last 7 days)
+    week_ago = timezone.now() - timedelta(days=7)
+    recent_payments_count = FeePayment.objects.filter(paid_at__gte=week_ago).count()
+    recent_collected = FeePayment.objects.filter(paid_at__gte=week_ago).aggregate(
+        total=Sum('amount_tendered')
+    )['total'] or 0
+
+    # ===== Recent Payments Table =====
+    recent_payments = FeePayment.objects.select_related(
+        'student', 'fee', 'fee__student_class', 'fee__term', 'received_by'
+    ).order_by('-paid_at')[:10]
+
+    # ===== Fees Overview Table =====
+    fees = Fee.objects.select_related('term', 'student_class').annotate(
+        total_paid=Sum('feepayment__amount_tendered'),
+        payment_count=Count('feepayment'),
+        student_count=Count('student_class__student', distinct=True)
+    ).order_by('-term')[:10]
+
+    # Calculate expected and completion % for each fee
+    for fee in fees:
+        fee.expected_amount = fee.amount * fee.student_count
+        fee.collected_amount = fee.total_paid or 0
+        fee.completion_rate = round(
+            (fee.collected_amount / fee.expected_amount * 100), 1
+        ) if fee.expected_amount > 0 else 0
+
+    # ===== Outstanding Balances Table =====
+    # Get latest payment per student-fee combo where balance > 0
+    outstanding = FeePayment.objects.filter(
+        balance__gt=0
+    ).select_related(
+        'student', 'fee', 'fee__student_class', 'fee__term'
+    ).order_by('-balance')[:10]
+
+    context = {
+        # Stats
+        'total_fees': total_fees,
+        'total_expected': total_expected,
+        'total_collected': total_collected,
+        'total_outstanding': total_outstanding,
+        'collection_rate': collection_rate,
+        'recent_payments_count': recent_payments_count,
+        'recent_collected': recent_collected,
+
+        # Tables
+        'recent_payments': recent_payments,
+        'fees': fees,
+        'outstanding': outstanding,
+    }
+
+    return render(request, 'finances/finances.html', context)
