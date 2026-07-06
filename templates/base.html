@@ -17,7 +17,7 @@
     <script src="{% static 'js/base.js' %}"></script>
     <script src="{% static 'js/utils/toastManager.js' %}"></script>
     <script src="{% static 'js/sidebar.js'%}"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-..." crossorigin="anonymous"></script>
+    <script src="{% static 'js/htmx.min.js' %}" integrity="sha384-..." crossorigin="anonymous"></script>
     
     <main class="{% if request.user.is_authenticated %}md:ml-[16.666667%] pt-20 px-4 md:px-8 pb-8 min-h-screen{% endif %}">
         {% block content %}{% endblock content %}

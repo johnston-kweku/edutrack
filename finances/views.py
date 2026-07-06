@@ -4,6 +4,8 @@ from django.db.models import Sum, Count
 from django.http import HttpResponse
 from django.core.cache import cache
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import timezone
+from datetime import timedelta
 from decimal import Decimal
 from academics.models import Student, Term, Class
 from .forms import FeeCreationForm, FeeRecordForm
@@ -141,6 +143,7 @@ def add_fee(request):
         form = FeeCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            cache.delete('dashboard_summary')
             return redirect('finances:add_fee')
     
     else:
@@ -153,10 +156,6 @@ def add_fee(request):
     return render(request, 'finances/add_fee.html', context)
 
 
-
-@role_required('ADMIN')
-def finances_view(request):
-    return render(request, 'finances/finances.html')
 
 
 @role_required('ADMIN')
@@ -206,84 +205,33 @@ def get_students_by_fee(request):
 
 
 
-
-
-
-from django.db.models import Sum, Count
-from django.utils import timezone
-from datetime import timedelta
-
-
-
 @role_required('ADMIN')
 def finances_view(request):
-    # ===== Core Metrics =====
-    total_fees = Fee.objects.count()
+    fees = Fee.objects.filter(term__is_current=True).select_related('student_class', 'term')
 
-    # Total collected across all payments
-    total_collected = FeePayment.objects.aggregate(
-        total=Sum('amount_tendered')
-    )['total'] or 0
+    students_with_partial_payments = FeePayment.objects.filter(
+        fee__in=fees
+    ).distinct('student', 'fee').order_by('student', 'fee', '-paid_at').filter(balance__gte=0)
 
-    # Expected revenue = fee.amount × number of students in each class
-    fees_with_student_counts = Fee.objects.annotate(
-        student_count=Count('student_class__student', distinct=True)
+    print(students_with_partial_payments)
+
+    # Stat cards data
+    total_fees = fees.count()
+
+    total_funds_expected = sum(
+        f.amount * f.student_count for f in Fee.objects.annotate(student_count=Count('student_class__student'))
     )
-    total_expected = sum(
-        f.amount * f.student_count for f in fees_with_student_counts
-    )
-    total_outstanding = total_expected - total_collected
-    collection_rate = round((total_collected / total_expected * 100), 1) if total_expected > 0 else 0
-
-    # Recent activity (last 7 days)
-    week_ago = timezone.now() - timedelta(days=7)
-    recent_payments_count = FeePayment.objects.filter(paid_at__gte=week_ago).count()
-    recent_collected = FeePayment.objects.filter(paid_at__gte=week_ago).aggregate(
+    total_fees_collected = FeePayment.objects.filter(fee__term__is_current=True).aggregate(
         total=Sum('amount_tendered')
-    )['total'] or 0
+    )['total'] or Decimal('0.00')
 
-    # ===== Recent Payments Table =====
-    recent_payments = FeePayment.objects.select_related(
-        'student', 'fee', 'fee__student_class', 'fee__term', 'received_by'
-    ).order_by('-paid_at')[:10]
+    outstanding = total_funds_expected - total_fees_collected
 
-    # ===== Fees Overview Table =====
-    fees = Fee.objects.select_related('term', 'student_class').annotate(
-        total_paid=Sum('feepayment__amount_tendered'),
-        payment_count=Count('feepayment'),
-        student_count=Count('student_class__student', distinct=True)
-    ).order_by('-term')[:10]
 
-    # Calculate expected and completion % for each fee
-    for fee in fees:
-        fee.expected_amount = fee.amount * fee.student_count
-        fee.collected_amount = fee.total_paid or 0
-        fee.completion_rate = round(
-            (fee.collected_amount / fee.expected_amount * 100), 1
-        ) if fee.expected_amount > 0 else 0
-
-    # ===== Outstanding Balances Table =====
-    # Get latest payment per student-fee combo where balance > 0
-    outstanding = FeePayment.objects.filter(
-        balance__gt=0
-    ).select_related(
-        'student', 'fee', 'fee__student_class', 'fee__term'
-    ).order_by('-balance')[:10]
 
     context = {
-        # Stats
-        'total_fees': total_fees,
-        'total_expected': total_expected,
-        'total_collected': total_collected,
-        'total_outstanding': total_outstanding,
-        'collection_rate': collection_rate,
-        'recent_payments_count': recent_payments_count,
-        'recent_collected': recent_collected,
 
-        # Tables
-        'recent_payments': recent_payments,
-        'fees': fees,
-        'outstanding': outstanding,
     }
 
     return render(request, 'finances/finances.html', context)
+

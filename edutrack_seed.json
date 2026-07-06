@@ -1,0 +1,4297 @@
+[
+{
+  "model": "accounts.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$CrQo6k6gITelq1BiBETitO$yr2FYJRHWgeQwe0Jz94AOOuor+CLfrFC/crN7xIuB5U=",
+    "last_login": "2026-07-03T21:12:41.906Z",
+    "is_superuser": true,
+    "username": "jr",
+    "first_name": "",
+    "last_name": "",
+    "email": "johnstonkweku@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-06-12T18:16:39.347Z",
+    "full_name": "Johnston Kweku Abubakar",
+    "title": "Mr.",
+    "role": "ADMIN",
+    "contact": "0595471021",
+    "picture": "user_pictures/ChatGPT_Image_Jun_24_2026_03_35_22_PM.png",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$iRrwxeEeHX1szms89cJOV9$vq2KScbqci4fZLYqhsmgRY6VSkGR5itQ9kPiUO7iJws=",
+    "last_login": "2026-07-03T06:33:03.726Z",
+    "is_superuser": false,
+    "username": "kmensah",
+    "first_name": "",
+    "last_name": "",
+    "email": "kmensah@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-13T07:39:03.535Z",
+    "full_name": "Kweku Mensah Alex",
+    "title": "Mr.",
+    "role": "TEACHING_STAFF",
+    "contact": "0595471021",
+    "picture": "user_pictures/CODE-CAPITAL1_m80vfzq.png",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$25MRIovWibVPWv1RCr1Ocw$cHqplQxZUq+cwXRozUTwVMlHFLCB8v0K0U7gnw34Akg=",
+    "last_login": "2026-06-27T07:22:21.631Z",
+    "is_superuser": false,
+    "username": "teacher_1",
+    "first_name": "",
+    "last_name": "",
+    "email": "teacher_1@edutrack.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:41:54.203Z",
+    "full_name": "Kwaku Addo",
+    "title": "",
+    "role": "TEACHING_STAFF",
+    "contact": "0542781228",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$U1dt2URSFqLDerqHchnFis$9SU+miG5d0dTEDmlojGaUt7ywPDewJwtH29OMnKlYXw=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher_2",
+    "first_name": "",
+    "last_name": "",
+    "email": "teacher_2@edutrack.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:41:56.660Z",
+    "full_name": "Adjoa Appiah",
+    "title": "",
+    "role": "TEACHING_STAFF",
+    "contact": "",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$H4yhO4c6ooVNopp1dgMKX0$1X4r3NNScippfrMAENodznxBLMd6PIwLC37IBu36iyQ=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher_3",
+    "first_name": "",
+    "last_name": "",
+    "email": "teacher_3@edutrack.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:41:57.576Z",
+    "full_name": "Akosua Agyemang",
+    "title": "",
+    "role": "TEACHING_STAFF",
+    "contact": "",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$f4PsZJAlQGbGrOcB3yau4V$NAvupP3HzIA3fs6gNTnBHZyq6jk9TDnbqtwXP4+guzg=",
+    "last_login": "2026-06-20T16:24:05.463Z",
+    "is_superuser": false,
+    "username": "teacher_4",
+    "first_name": "",
+    "last_name": "",
+    "email": "teacher_4@edutrack.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:41:58.352Z",
+    "full_name": "Akosua Darko",
+    "title": "",
+    "role": "TEACHING_STAFF",
+    "contact": "",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$KfxghVgw9RFRuNofXwBqYG$ifiVjIyXUuJ4z07Up7VETe3VFBQuVw89gGHAhWlFo8I=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher_5",
+    "first_name": "",
+    "last_name": "",
+    "email": "teacher_5@edutrack.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:41:59.135Z",
+    "full_name": "Adjoa Baah",
+    "title": "",
+    "role": "TEACHING_STAFF",
+    "contact": "",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$0dWjsg3wRieC3sLEiosLqe$wgEMCGOcyIMvxQ4+6Ijb/64XGLhwcZ6U2hRR2TPsv9Y=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher_6",
+    "first_name": "",
+    "last_name": "",
+    "email": "teacher_6@edutrack.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:41:59.898Z",
+    "full_name": "Kwaku Tetteh",
+    "title": "",
+    "role": "TEACHING_STAFF",
+    "contact": "",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$dgUKMNzuqG7pif5AKTspZo$3l4SYVgNZ6j0p4nl4olnnUDPd0gs7Al/C6OiCbJoyaQ=",
+    "last_login": "2026-06-22T13:58:58.105Z",
+    "is_superuser": false,
+    "username": "teacher_7",
+    "first_name": "",
+    "last_name": "",
+    "email": "teacher_7@edutrack.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:00.594Z",
+    "full_name": "Yaw Osei",
+    "title": "",
+    "role": "TEACHING_STAFF",
+    "contact": "",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$n0CRJWHUuLbPrAbL8sy4PB$v9Njoc0M1LDM8lC/dIKPPfT+GUiOlm7sRVsWMVOXKh0=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher_8",
+    "first_name": "",
+    "last_name": "",
+    "email": "teacher_8@edutrack.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:01.270Z",
+    "full_name": "Kofi Osei",
+    "title": "",
+    "role": "TEACHING_STAFF",
+    "contact": "",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$Qi7W3EouxgFwXqnhwORuCn$E2VTN2z6l/lkUKRFa0pEZW29rBX2wIuWckwRWLfMgO0=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "teacher_9",
+    "first_name": "",
+    "last_name": "",
+    "email": "teacher_9@edutrack.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:02.099Z",
+    "full_name": "Adjoa Appiah",
+    "title": "",
+    "role": "TEACHING_STAFF",
+    "contact": "",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 12,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$s8v2j7fq8o1aENXmc8krbz$7AV4y/0tr03GVGbY/XP2d0hebrAhpTNBwk6jqeOvroM=",
+    "last_login": "2026-06-21T11:49:59.709Z",
+    "is_superuser": false,
+    "username": "teacher_10",
+    "first_name": "",
+    "last_name": "",
+    "email": "teacher_10@edutrack.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:02.799Z",
+    "full_name": "Efua Gyamfi",
+    "title": "",
+    "role": "TEACHING_STAFF",
+    "contact": "",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 13,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$uA0aEsaPwu5aOrBPoRomDe$mssH6+/MuOAmkI89DRGdi0dTjxJwqJ105rVXRqxhfVc=",
+    "last_login": "2026-06-21T11:49:17.296Z",
+    "is_superuser": false,
+    "username": "parent_1",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_1@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:03.478Z",
+    "full_name": "Panyin Owusu",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0541829543",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 14,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$aFwB5myj6T7F8MOJVTT3y0$SzSf+S1RAxOs1f4m0v1hCOHa0GjP18U9vZSfKCpAMEk=",
+    "last_login": "2026-06-28T13:39:23.344Z",
+    "is_superuser": false,
+    "username": "parent_2",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_2@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:04.152Z",
+    "full_name": "Araba Asante",
+    "title": "Mrs.",
+    "role": "PARENT",
+    "contact": "0545937999",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 15,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$Z6fEI4ZSKr5GP68ufbE2uj$yYStuoBfu9PG5dEJlfmhmZhZRKrWBe2J/49KrB2q5G0=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_3",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_3@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:04.813Z",
+    "full_name": "Kwesi Tetteh",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0546178062",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 16,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$g9wjVfmwgdypu3Y4ZAOlvx$8C45JnuRyLB+CuQY0fyxfhESx7BMdhf5ObKRAmObN6k=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_4",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_4@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:05.482Z",
+    "full_name": "Kakra Owusu",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0545436468",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 17,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$04vmiMhN8bnvy1l3WTwwoZ$J1K1UKCoexOqmfArqo64glLxqp6LcMuTdrObb+qhSuM=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_5",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_5@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:06.152Z",
+    "full_name": "Efua Kyei",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0542518965",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 18,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$bYOHECe4j9iVQI88NjFvXy$L2mvJdETmhqFAU4jHtYGTgNlgsaYXBrW2tRi4aNIlNo=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_6",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_6@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:06.814Z",
+    "full_name": "Yaw Baah",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0548681601",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 19,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$cLeeAV6uEwSYxmgb9kIyRF$Ri7D4/5dFPk6Xg6caOTkHHiDmwZSFBEywlTJ7z80KIM=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_7",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_7@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:07.487Z",
+    "full_name": "Akua Owusu",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0544337598",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 20,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$69ELT0ljaBdECrmv4rlsrk$tMn1DDiaIEUmXzYRr5KEQGbhowMmC+4UwCfndTGXMEA=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_8",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_8@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:08.157Z",
+    "full_name": "Yaw Darko",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0549414258",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 21,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$g6nPH1fW0LLGaEONMl38JN$zFNOJYTdTv57/LgPTzPNqulfCjT0CNAZuN+dMnbz6CU=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_9",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_9@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:08.825Z",
+    "full_name": "Akua Owusu",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0544990082",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 22,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$tmB7LlktGkSMRNhXedYNW6$z0JjfFBmWtmxzwH1HJDSJ1am0+zIcvt217EOg4ZXQdo=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_10",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_10@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:09.514Z",
+    "full_name": "Efua Appiah",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0544509711",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 23,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$iSKYvwBNkMIidAp2Sx1b5P$P919zCwonOLIAwJD64sXAmDhS+msCudtS1gxISq5qHs=",
+    "last_login": "2026-06-24T15:20:40.462Z",
+    "is_superuser": false,
+    "username": "parent_11",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_11@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:10.433Z",
+    "full_name": "Araba Adu",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0545256156",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 24,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$yonZmnAFuNjnYvKPOGbbXR$0ivuoARq+gwUwjCE8s1U6pK3rGcx0pvdv2xGpI6uKeg=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_12",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_12@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:11.094Z",
+    "full_name": "Akua Appiah",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0542094346",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 25,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$COgj6huziItdoMWpeLQPHR$Yr8EyIf7W5V/XHiV2y2N3wAC0//8XBJZ+m/669a1gT0=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_13",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_13@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:12.518Z",
+    "full_name": "Adjoa Owusu",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0548756435",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 26,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$e6kxLNQeTpeou0wsQvkgFf$pRhdTCwdU5X/dD9Hv1Ro32NVKLqyw7ro0xU7xn7s/jk=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_14",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_14@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:15.726Z",
+    "full_name": "Abena Gyamfi",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0549243435",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 27,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$lArmNaxBRuJqFGTiB4O0mP$4iSVt1a3JNjy0pD0PiaO15tYOiKBfnkHYhJOVgJXm7s=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_15",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_15@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:17.125Z",
+    "full_name": "Adjoa Boateng",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0546351145",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 28,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$XjN5D86bZzZhpTd8ARLNRN$k0D/77RbzUTHT0vGRY7r2FVurc/s6FwQfAZOx7AjFsY=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_16",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_16@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:19.281Z",
+    "full_name": "Araba Owusu",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0544546707",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 29,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$B5kPjP4zld7mXcoibcNBtC$4aYXA7zh/TkREqLrzAuT2g4bY0+1uLlI2zuHr2Y/yhA=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_17",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_17@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:21.110Z",
+    "full_name": "Kakra Osei",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0546787397",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 30,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$s0Y7GBE8cBZW6ZA2DE3kaV$hY837pyV+JMymUIwMfFpWH2w8YiUoqgN+GUtxzORfcE=",
+    "last_login": "2026-06-18T15:29:52.321Z",
+    "is_superuser": false,
+    "username": "parent_18",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_18@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:21.952Z",
+    "full_name": "Adjoa Addo",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0544847176",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 31,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$90NbIw22eoU2ErAPlWR84t$D09xKcNIoJKEwD+pbI6SIzG1SjwPLpQMt1WG5utS9oA=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_19",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_19@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:22.688Z",
+    "full_name": "Efua Darko",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0542265676",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 32,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$RBjU2pr7nHiR82kY91aMYr$lI7OmyCCRjt2/vGUL50tjQ8bM1o3gQA1SQCKSlc/rmo=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "parent_20",
+    "first_name": "",
+    "last_name": "",
+    "email": "parent_20@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-15T20:42:23.386Z",
+    "full_name": "Efua Kyei",
+    "title": "",
+    "role": "PARENT",
+    "contact": "0542781228",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 33,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$3IkQRFYb12R9i8c7FDGdcE$mnJczwo2EOcLn5CWZfXgR17C3L/vZ0QWcfDms1+iY9c=",
+    "last_login": "2026-07-01T10:52:56.647Z",
+    "is_superuser": false,
+    "username": "kudus",
+    "first_name": "",
+    "last_name": "",
+    "email": "kudus@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-16T14:10:20.181Z",
+    "full_name": "Kudus Mohammed",
+    "title": "",
+    "role": "ADMIN",
+    "contact": "0505504257",
+    "picture": "user_pictures/alex_johnson.jpeg",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 34,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$FWGPADoBMTjSQ6Jsq0BvVW$cFbVmBj7Df51htiWWl2abXqOspGbt8pI6EKZ1kIm/DU=",
+    "last_login": "2026-06-26T12:04:26.613Z",
+    "is_superuser": false,
+    "username": "kmanuadu",
+    "first_name": "",
+    "last_name": "",
+    "email": "kmanu@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-26T12:04:13.985Z",
+    "full_name": "Kwaku Manu Adu Armah",
+    "title": "",
+    "role": "TEACHING_STAFF",
+    "contact": "0505504257",
+    "picture": "user_pictures/44c41f1567290c720d6cff7fe3cf587a.jpg",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 35,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$xQTPN4T3pS9C1bHKFBPwTl$T2jmpZPAx7KdWzduJFOjmnkIUTqn6hA+RjJ2NczNNpw=",
+    "last_login": "2026-06-30T19:11:56.391Z",
+    "is_superuser": false,
+    "username": "mankwa",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-30T19:11:41.940Z",
+    "full_name": "Mansah Akwanin",
+    "title": "",
+    "role": "PARENT",
+    "contact": "",
+    "picture": "user_pictures/CODE_CAPITAL_v2.jpg",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 36,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$KB8SydFUqBakMOADa5UZuk$dktH8pq82zEiSVQa/2P4AZsjBXkC5EZXKaKlTQMYL0A=",
+    "last_login": "2026-06-30T20:38:53.209Z",
+    "is_superuser": false,
+    "username": "amanda",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-30T20:37:09.080Z",
+    "full_name": "Amanda Holden",
+    "title": "",
+    "role": "PARENT",
+    "contact": "",
+    "picture": "user_pictures/ChatGPT_Image_Jun_21__2026__08_10_38_AM-removebg-preview.png",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 37,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$1OlNDErpTbnJ4mqV3oljOp$TlhbKsDwLCe5uQnHYGWbb/f9snTptfPz5c9mZBMrTaU=",
+    "last_login": "2026-07-01T14:19:09.066Z",
+    "is_superuser": false,
+    "username": "messi",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-06-30T20:40:59.335Z",
+    "full_name": "Lionel Messi",
+    "title": "",
+    "role": "PARENT",
+    "contact": "",
+    "picture": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 1,
+  "fields": {
+    "token": "df21b59e-f65b-4c61-8944-e5c9181e137e",
+    "created_by": 1,
+    "created_at": "2026-06-12T21:24:40.507Z",
+    "is_used": false,
+    "role": "PARENT",
+    "expires_at": "2026-06-14T21:24:40.505Z"
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 2,
+  "fields": {
+    "token": "5e77c65b-ba0c-40be-8e72-5dba39f1ac7e",
+    "created_by": 1,
+    "created_at": "2026-06-13T07:34:40.627Z",
+    "is_used": true,
+    "role": "TEACHING_STAFF",
+    "expires_at": "2026-06-15T07:34:40.625Z"
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 3,
+  "fields": {
+    "token": "118921bf-a539-43e4-ab91-5eec07dbd26d",
+    "created_by": 1,
+    "created_at": "2026-06-15T16:33:59.952Z",
+    "is_used": false,
+    "role": "ADMIN",
+    "expires_at": "2026-06-17T16:33:59.945Z"
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 4,
+  "fields": {
+    "token": "0b09d1fc-f080-441c-aac7-10e51134d8b1",
+    "created_by": 1,
+    "created_at": "2026-06-15T16:34:26.471Z",
+    "is_used": false,
+    "role": "PARENT",
+    "expires_at": "2026-06-17T16:34:26.471Z"
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 5,
+  "fields": {
+    "token": "83303668-5292-44d5-ac8c-7fc29e02c200",
+    "created_by": 1,
+    "created_at": "2026-06-16T14:08:29.095Z",
+    "is_used": true,
+    "role": "ADMIN",
+    "expires_at": "2026-06-18T14:08:29.088Z"
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 6,
+  "fields": {
+    "token": "eb4b2787-4c70-4f24-9d1c-5af27bd2e4a7",
+    "created_by": 1,
+    "created_at": "2026-06-16T15:22:59.407Z",
+    "is_used": false,
+    "role": "ADMIN",
+    "expires_at": "2026-06-18T15:22:59.407Z"
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 7,
+  "fields": {
+    "token": "7bbd03f4-74b2-4650-82e4-3de6c06031f6",
+    "created_by": 1,
+    "created_at": "2026-06-22T19:59:48.327Z",
+    "is_used": false,
+    "role": "ADMIN",
+    "expires_at": "2026-06-24T19:59:48.326Z"
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 8,
+  "fields": {
+    "token": "7b2a878a-575c-40fd-9d93-efd693bc4a13",
+    "created_by": 1,
+    "created_at": "2026-06-23T15:55:59.650Z",
+    "is_used": false,
+    "role": "TEACHING_STAFF",
+    "expires_at": "2026-06-25T15:55:59.649Z"
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 9,
+  "fields": {
+    "token": "8c01f854-2002-4758-99b9-fde0d8c3a3e9",
+    "created_by": 1,
+    "created_at": "2026-06-26T12:03:13.039Z",
+    "is_used": true,
+    "role": "TEACHING_STAFF",
+    "expires_at": "2026-06-28T12:03:13.039Z"
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 10,
+  "fields": {
+    "token": "601c6344-c4f6-47a2-8237-b97ff1a12b5b",
+    "created_by": 1,
+    "created_at": "2026-06-30T19:09:01.350Z",
+    "is_used": true,
+    "role": "PARENT",
+    "expires_at": "2026-07-02T19:09:01.349Z"
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 11,
+  "fields": {
+    "token": "c3a8dc2d-9fff-46c1-8ded-bf280fbf377c",
+    "created_by": 1,
+    "created_at": "2026-06-30T20:35:00.839Z",
+    "is_used": true,
+    "role": "PARENT",
+    "expires_at": "2026-07-02T20:35:00.838Z"
+  }
+},
+{
+  "model": "accounts.invitation",
+  "pk": 12,
+  "fields": {
+    "token": "e9e9d011-78da-4dfa-9850-d53bf295ea7e",
+    "created_by": 1,
+    "created_at": "2026-06-30T20:40:20.084Z",
+    "is_used": true,
+    "role": "PARENT",
+    "expires_at": "2026-07-02T20:40:20.084Z"
+  }
+},
+{
+  "model": "academics.class",
+  "pk": 1,
+  "fields": {
+    "stage": "3",
+    "level": "JHS",
+    "class_teacher": 1,
+    "is_active": true
+  }
+},
+{
+  "model": "academics.class",
+  "pk": 3,
+  "fields": {
+    "stage": "2",
+    "level": "JHS",
+    "class_teacher": 9,
+    "is_active": true
+  }
+},
+{
+  "model": "academics.class",
+  "pk": 4,
+  "fields": {
+    "stage": "1",
+    "level": "LOWER_PRIMARY",
+    "class_teacher": 3,
+    "is_active": true
+  }
+},
+{
+  "model": "academics.class",
+  "pk": 5,
+  "fields": {
+    "stage": "2",
+    "level": "LOWER_PRIMARY",
+    "class_teacher": null,
+    "is_active": true
+  }
+},
+{
+  "model": "academics.class",
+  "pk": 6,
+  "fields": {
+    "stage": "3",
+    "level": "LOWER_PRIMARY",
+    "class_teacher": null,
+    "is_active": true
+  }
+},
+{
+  "model": "academics.class",
+  "pk": 7,
+  "fields": {
+    "stage": "4",
+    "level": "UPPER_PRIMARY",
+    "class_teacher": null,
+    "is_active": true
+  }
+},
+{
+  "model": "academics.class",
+  "pk": 8,
+  "fields": {
+    "stage": "5",
+    "level": "UPPER_PRIMARY",
+    "class_teacher": null,
+    "is_active": true
+  }
+},
+{
+  "model": "academics.class",
+  "pk": 9,
+  "fields": {
+    "stage": "6",
+    "level": "UPPER_PRIMARY",
+    "class_teacher": null,
+    "is_active": true
+  }
+},
+{
+  "model": "academics.class",
+  "pk": 10,
+  "fields": {
+    "stage": "1",
+    "level": "KINDERGARTEN",
+    "class_teacher": 12,
+    "is_active": true
+  }
+},
+{
+  "model": "academics.class",
+  "pk": 11,
+  "fields": {
+    "stage": "2",
+    "level": "KINDERGARTEN",
+    "class_teacher": 6,
+    "is_active": false
+  }
+},
+{
+  "model": "academics.class",
+  "pk": 12,
+  "fields": {
+    "stage": "1",
+    "level": "JHS",
+    "class_teacher": null,
+    "is_active": false
+  }
+},
+{
+  "model": "academics.subject",
+  "pk": 1,
+  "fields": {
+    "name": "Mathematics"
+  }
+},
+{
+  "model": "academics.subject",
+  "pk": 2,
+  "fields": {
+    "name": "English Language"
+  }
+},
+{
+  "model": "academics.subject",
+  "pk": 3,
+  "fields": {
+    "name": "Science"
+  }
+},
+{
+  "model": "academics.subject",
+  "pk": 4,
+  "fields": {
+    "name": "Social Studies"
+  }
+},
+{
+  "model": "academics.subject",
+  "pk": 5,
+  "fields": {
+    "name": "ICT"
+  }
+},
+{
+  "model": "academics.subject",
+  "pk": 6,
+  "fields": {
+    "name": "RME"
+  }
+},
+{
+  "model": "academics.subject",
+  "pk": 7,
+  "fields": {
+    "name": "Creative Arts"
+  }
+},
+{
+  "model": "academics.classsubject",
+  "pk": 1,
+  "fields": {
+    "subject": 1,
+    "subject_class": 4,
+    "teacher": 12
+  }
+},
+{
+  "model": "academics.classsubject",
+  "pk": 2,
+  "fields": {
+    "subject": 5,
+    "subject_class": 1,
+    "teacher": 1
+  }
+},
+{
+  "model": "academics.classsubject",
+  "pk": 3,
+  "fields": {
+    "subject": 5,
+    "subject_class": 3,
+    "teacher": 1
+  }
+},
+{
+  "model": "academics.classsubject",
+  "pk": 4,
+  "fields": {
+    "subject": 5,
+    "subject_class": 12,
+    "teacher": 1
+  }
+},
+{
+  "model": "academics.academicyear",
+  "pk": 1,
+  "fields": {
+    "start_year": 2026,
+    "end_year": 2027,
+    "is_current": true
+  }
+},
+{
+  "model": "academics.term",
+  "pk": 1,
+  "fields": {
+    "term": "1",
+    "academic_year": 1,
+    "is_current": true
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 1,
+  "fields": {
+    "student_id": "STU-00001",
+    "student_name": "Adwoa Manu",
+    "student_class": 12,
+    "date_of_birth": "2022-12-07",
+    "enrollment_date": "2026-06-14",
+    "gender": "FEMALE",
+    "parent": null,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 2,
+  "fields": {
+    "student_id": "STU-00002",
+    "student_name": "Kofi Addo",
+    "student_class": 11,
+    "date_of_birth": "2026-06-14",
+    "enrollment_date": "2026-06-14",
+    "gender": "MALE",
+    "parent": null,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 3,
+  "fields": {
+    "student_id": "STU-00003",
+    "student_name": "Kakra Tetteh",
+    "student_class": 10,
+    "date_of_birth": "2026-06-21",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 27,
+    "image": "student_images/ChatGPT_Image_Jun_24_2026_03_35_22_PM.jpg"
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 4,
+  "fields": {
+    "student_id": "STU-00004",
+    "student_name": "Akua Appiah",
+    "student_class": 10,
+    "date_of_birth": "2016-11-20",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 28,
+    "image": "student_images/crying_face.jpg"
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 5,
+  "fields": {
+    "student_id": "STU-00005",
+    "student_name": "Efua Asante",
+    "student_class": 10,
+    "date_of_birth": "2016-08-12",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 24,
+    "image": "student_images/aleksey-kashmar-DJyyREYI9vw-unsplash.jpg"
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 6,
+  "fields": {
+    "student_id": "STU-00006",
+    "student_name": "Akosua Boateng",
+    "student_class": 10,
+    "date_of_birth": "2014-03-15",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 18,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 7,
+  "fields": {
+    "student_id": "STU-00007",
+    "student_name": "Kwesi Tetteh",
+    "student_class": 10,
+    "date_of_birth": "2016-02-16",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 30,
+    "image": "student_images/albert-stoynov-PlnSc3b3dVI-unsplash.jpg"
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 8,
+  "fields": {
+    "student_id": "STU-00008",
+    "student_name": "Yaa Quansah",
+    "student_class": 10,
+    "date_of_birth": "2016-03-23",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 29,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 9,
+  "fields": {
+    "student_id": "STU-00009",
+    "student_name": "Kwaku Gyamfi",
+    "student_class": 10,
+    "date_of_birth": "2018-05-16",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 20,
+    "image": "student_images/chip-vincent-hVNQHEpoPpQ-unsplash.jpg"
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 10,
+  "fields": {
+    "student_id": "STU-00010",
+    "student_name": "Kofi Mensah",
+    "student_class": 10,
+    "date_of_birth": "2014-01-03",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 24,
+    "image": "student_images/anders-jilden-cYrMQA7a3Wc-unsplash.jpg"
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 11,
+  "fields": {
+    "student_id": "STU-00011",
+    "student_name": "Abena Owusu",
+    "student_class": 10,
+    "date_of_birth": "2020-03-12",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 29,
+    "image": "student_images/cook-aynne-rSHK8P8M-40-unsplash.jpg"
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 12,
+  "fields": {
+    "student_id": "STU-00012",
+    "student_name": "Yaw Agyemang",
+    "student_class": 10,
+    "date_of_birth": "2021-02-13",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 25,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 13,
+  "fields": {
+    "student_id": "STU-00013",
+    "student_name": "Ama Owusu",
+    "student_class": 11,
+    "date_of_birth": "2017-08-24",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 20,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 14,
+  "fields": {
+    "student_id": "STU-00014",
+    "student_name": "Yaa Appiah",
+    "student_class": 11,
+    "date_of_birth": "2013-01-17",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 15,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 15,
+  "fields": {
+    "student_id": "STU-00015",
+    "student_name": "Kakra Appiah",
+    "student_class": 11,
+    "date_of_birth": "2012-05-27",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 30,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 16,
+  "fields": {
+    "student_id": "STU-00016",
+    "student_name": "Yaa Appiah",
+    "student_class": 11,
+    "date_of_birth": "2018-08-13",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 14,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 17,
+  "fields": {
+    "student_id": "STU-00017",
+    "student_name": "Ama Quansah",
+    "student_class": 11,
+    "date_of_birth": "2013-09-11",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 22,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 18,
+  "fields": {
+    "student_id": "STU-00018",
+    "student_name": "Abena Darko",
+    "student_class": 11,
+    "date_of_birth": "2017-08-03",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 31,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 19,
+  "fields": {
+    "student_id": "STU-00019",
+    "student_name": "Adjoa Mensah",
+    "student_class": 11,
+    "date_of_birth": "2012-02-09",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 17,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 20,
+  "fields": {
+    "student_id": "STU-00020",
+    "student_name": "Araba Appiah",
+    "student_class": 11,
+    "date_of_birth": "2014-10-05",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 32,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 21,
+  "fields": {
+    "student_id": "STU-00021",
+    "student_name": "Kakra Boateng",
+    "student_class": 11,
+    "date_of_birth": "2015-11-29",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 22,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 22,
+  "fields": {
+    "student_id": "STU-00022",
+    "student_name": "Kwaku Addo",
+    "student_class": 11,
+    "date_of_birth": "2011-09-26",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 32,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 23,
+  "fields": {
+    "student_id": "STU-00023",
+    "student_name": "Kwesi Quansah",
+    "student_class": 11,
+    "date_of_birth": "2014-02-08",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 22,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 24,
+  "fields": {
+    "student_id": "STU-00024",
+    "student_name": "Efua Addo",
+    "student_class": 11,
+    "date_of_birth": "2019-02-24",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 23,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 25,
+  "fields": {
+    "student_id": "STU-00025",
+    "student_name": "Kwesi Quansah",
+    "student_class": 11,
+    "date_of_birth": "2013-12-31",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 23,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 26,
+  "fields": {
+    "student_id": "STU-00026",
+    "student_name": "Yaw Tetteh",
+    "student_class": 11,
+    "date_of_birth": "2017-08-10",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 19,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 27,
+  "fields": {
+    "student_id": "STU-00027",
+    "student_name": "Ama Kyei",
+    "student_class": 4,
+    "date_of_birth": "2014-06-25",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 14,
+    "image": "student_images/fake_user_behavious.jpg"
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 28,
+  "fields": {
+    "student_id": "STU-00028",
+    "student_name": "Efua Gyamfi",
+    "student_class": 4,
+    "date_of_birth": "2012-11-07",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 24,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 29,
+  "fields": {
+    "student_id": "STU-00029",
+    "student_name": "Akosua Annan",
+    "student_class": 4,
+    "date_of_birth": "2013-04-30",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 15,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 30,
+  "fields": {
+    "student_id": "STU-00030",
+    "student_name": "Ama Adu",
+    "student_class": 4,
+    "date_of_birth": "2018-08-12",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 24,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 31,
+  "fields": {
+    "student_id": "STU-00031",
+    "student_name": "Kakra Addo",
+    "student_class": 4,
+    "date_of_birth": "2013-01-22",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 25,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 32,
+  "fields": {
+    "student_id": "STU-00032",
+    "student_name": "Kakra Annan",
+    "student_class": 4,
+    "date_of_birth": "2020-10-22",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 30,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 33,
+  "fields": {
+    "student_id": "STU-00033",
+    "student_name": "Akosua Boateng",
+    "student_class": 4,
+    "date_of_birth": "2013-03-01",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 25,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 34,
+  "fields": {
+    "student_id": "STU-00034",
+    "student_name": "Kwesi Osei",
+    "student_class": 4,
+    "date_of_birth": "2015-01-11",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 23,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 35,
+  "fields": {
+    "student_id": "STU-00035",
+    "student_name": "Adjoa Kyei",
+    "student_class": 4,
+    "date_of_birth": "2014-02-22",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 17,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 36,
+  "fields": {
+    "student_id": "STU-00036",
+    "student_name": "Adjoa Baah",
+    "student_class": 4,
+    "date_of_birth": "2012-11-26",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 27,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 37,
+  "fields": {
+    "student_id": "STU-00037",
+    "student_name": "Akua Osei",
+    "student_class": 4,
+    "date_of_birth": "2012-06-05",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 30,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 38,
+  "fields": {
+    "student_id": "STU-00038",
+    "student_name": "Kojo Adu",
+    "student_class": 4,
+    "date_of_birth": "2016-10-07",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 26,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 39,
+  "fields": {
+    "student_id": "STU-00039",
+    "student_name": "Kwame Darko",
+    "student_class": 5,
+    "date_of_birth": "2015-02-20",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 18,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 40,
+  "fields": {
+    "student_id": "STU-00040",
+    "student_name": "Araba Boateng",
+    "student_class": 5,
+    "date_of_birth": "2016-03-13",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 21,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 41,
+  "fields": {
+    "student_id": "STU-00041",
+    "student_name": "Panyin Baah",
+    "student_class": 5,
+    "date_of_birth": "2016-05-27",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 14,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 42,
+  "fields": {
+    "student_id": "STU-00042",
+    "student_name": "Akosua Annan",
+    "student_class": 5,
+    "date_of_birth": "2017-10-14",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 28,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 43,
+  "fields": {
+    "student_id": "STU-00043",
+    "student_name": "Kojo Addo",
+    "student_class": 5,
+    "date_of_birth": "2016-06-28",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 24,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 44,
+  "fields": {
+    "student_id": "STU-00044",
+    "student_name": "Ama Darko",
+    "student_class": 5,
+    "date_of_birth": "2012-03-21",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 20,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 45,
+  "fields": {
+    "student_id": "STU-00045",
+    "student_name": "Kwame Darko",
+    "student_class": 5,
+    "date_of_birth": "2017-07-30",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": null,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 46,
+  "fields": {
+    "student_id": "STU-00046",
+    "student_name": "Kofi Agyemang",
+    "student_class": 5,
+    "date_of_birth": "2015-05-06",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 30,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 47,
+  "fields": {
+    "student_id": "STU-00047",
+    "student_name": "Kakra Quansah",
+    "student_class": 5,
+    "date_of_birth": "2020-07-22",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 28,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 48,
+  "fields": {
+    "student_id": "STU-00048",
+    "student_name": "Kofi Mensah",
+    "student_class": 5,
+    "date_of_birth": "2017-02-12",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 31,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 49,
+  "fields": {
+    "student_id": "STU-00049",
+    "student_name": "Ekow Appiah",
+    "student_class": 5,
+    "date_of_birth": "2016-02-24",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 19,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 50,
+  "fields": {
+    "student_id": "STU-00050",
+    "student_name": "Kakra Appiah",
+    "student_class": 6,
+    "date_of_birth": "2013-09-08",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 30,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 51,
+  "fields": {
+    "student_id": "STU-00051",
+    "student_name": "Akosua Mensah",
+    "student_class": 6,
+    "date_of_birth": "2020-03-26",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 22,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 52,
+  "fields": {
+    "student_id": "STU-00052",
+    "student_name": "Yaw Osei",
+    "student_class": 6,
+    "date_of_birth": "2018-09-11",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 16,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 53,
+  "fields": {
+    "student_id": "STU-00053",
+    "student_name": "Yaw Darko",
+    "student_class": 6,
+    "date_of_birth": "2012-09-01",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 29,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 54,
+  "fields": {
+    "student_id": "STU-00054",
+    "student_name": "Efua Agyemang",
+    "student_class": 6,
+    "date_of_birth": "2019-08-05",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 32,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 55,
+  "fields": {
+    "student_id": "STU-00055",
+    "student_name": "Ama Gyamfi",
+    "student_class": 6,
+    "date_of_birth": "2014-11-04",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 31,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 56,
+  "fields": {
+    "student_id": "STU-00056",
+    "student_name": "Ekow Owusu",
+    "student_class": 6,
+    "date_of_birth": "2017-02-05",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 22,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 57,
+  "fields": {
+    "student_id": "STU-00057",
+    "student_name": "Kwaku Baah",
+    "student_class": 6,
+    "date_of_birth": "2019-07-20",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 19,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 58,
+  "fields": {
+    "student_id": "STU-00058",
+    "student_name": "Araba Osei",
+    "student_class": 6,
+    "date_of_birth": "2018-03-15",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 32,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 59,
+  "fields": {
+    "student_id": "STU-00059",
+    "student_name": "Yaa Owusu",
+    "student_class": 6,
+    "date_of_birth": "2016-02-16",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 31,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 60,
+  "fields": {
+    "student_id": "STU-00060",
+    "student_name": "Yaa Boateng",
+    "student_class": 6,
+    "date_of_birth": "2020-11-19",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 25,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 61,
+  "fields": {
+    "student_id": "STU-00061",
+    "student_name": "Akosua Appiah",
+    "student_class": 6,
+    "date_of_birth": "2020-11-06",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 14,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 62,
+  "fields": {
+    "student_id": "STU-00062",
+    "student_name": "Efua Tetteh",
+    "student_class": 7,
+    "date_of_birth": "2012-10-05",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 14,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 63,
+  "fields": {
+    "student_id": "STU-00063",
+    "student_name": "Akua Quansah",
+    "student_class": 7,
+    "date_of_birth": "2014-05-31",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 13,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 64,
+  "fields": {
+    "student_id": "STU-00064",
+    "student_name": "Yaw Baah",
+    "student_class": 7,
+    "date_of_birth": "2014-06-25",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 25,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 65,
+  "fields": {
+    "student_id": "STU-00065",
+    "student_name": "Akua Kyei",
+    "student_class": 7,
+    "date_of_birth": "2012-07-15",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 13,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 66,
+  "fields": {
+    "student_id": "STU-00066",
+    "student_name": "Yaa Mensah",
+    "student_class": 7,
+    "date_of_birth": "2019-01-23",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 13,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 67,
+  "fields": {
+    "student_id": "STU-00067",
+    "student_name": "Adjoa Baah",
+    "student_class": 7,
+    "date_of_birth": "2013-01-29",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 32,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 68,
+  "fields": {
+    "student_id": "STU-00068",
+    "student_name": "Kakra Asante",
+    "student_class": 7,
+    "date_of_birth": "2016-05-12",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 14,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 69,
+  "fields": {
+    "student_id": "STU-00069",
+    "student_name": "Kwesi Osei",
+    "student_class": 7,
+    "date_of_birth": "2012-07-22",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 19,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 70,
+  "fields": {
+    "student_id": "STU-00070",
+    "student_name": "Kakra Addo",
+    "student_class": 7,
+    "date_of_birth": "2013-09-18",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 21,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 71,
+  "fields": {
+    "student_id": "STU-00071",
+    "student_name": "Kofi Darko",
+    "student_class": 7,
+    "date_of_birth": "2019-07-21",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 15,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 72,
+  "fields": {
+    "student_id": "STU-00072",
+    "student_name": "Abena Appiah",
+    "student_class": 7,
+    "date_of_birth": "2015-09-14",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 17,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 73,
+  "fields": {
+    "student_id": "STU-00073",
+    "student_name": "Adjoa Quansah",
+    "student_class": 7,
+    "date_of_birth": "2015-01-03",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 18,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 74,
+  "fields": {
+    "student_id": "STU-00074",
+    "student_name": "Kofi Osei",
+    "student_class": 7,
+    "date_of_birth": "2012-06-21",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 19,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 75,
+  "fields": {
+    "student_id": "STU-00075",
+    "student_name": "Adjoa Annan",
+    "student_class": 8,
+    "date_of_birth": "2014-06-16",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 18,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 76,
+  "fields": {
+    "student_id": "STU-00076",
+    "student_name": "Akua Kyei",
+    "student_class": 8,
+    "date_of_birth": "2020-11-12",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 13,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 77,
+  "fields": {
+    "student_id": "STU-00077",
+    "student_name": "Ama Osei",
+    "student_class": 8,
+    "date_of_birth": "2020-08-29",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 19,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 78,
+  "fields": {
+    "student_id": "STU-00078",
+    "student_name": "Ama Baah",
+    "student_class": 8,
+    "date_of_birth": "2015-10-14",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 17,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 79,
+  "fields": {
+    "student_id": "STU-00079",
+    "student_name": "Adjoa Asante",
+    "student_class": 8,
+    "date_of_birth": "2016-04-12",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 18,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 80,
+  "fields": {
+    "student_id": "STU-00080",
+    "student_name": "Panyin Owusu",
+    "student_class": 8,
+    "date_of_birth": "2017-02-10",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 18,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 81,
+  "fields": {
+    "student_id": "STU-00081",
+    "student_name": "Panyin Baah",
+    "student_class": 8,
+    "date_of_birth": "2014-01-09",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 13,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 82,
+  "fields": {
+    "student_id": "STU-00082",
+    "student_name": "Kojo Adu",
+    "student_class": 8,
+    "date_of_birth": "2017-05-29",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 15,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 83,
+  "fields": {
+    "student_id": "STU-00083",
+    "student_name": "Kwame Quansah",
+    "student_class": 8,
+    "date_of_birth": "2020-03-10",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 17,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 84,
+  "fields": {
+    "student_id": "STU-00084",
+    "student_name": "Yaw Appiah",
+    "student_class": 9,
+    "date_of_birth": "2018-12-30",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 16,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 85,
+  "fields": {
+    "student_id": "STU-00085",
+    "student_name": "Ama Annan",
+    "student_class": 9,
+    "date_of_birth": "2020-12-26",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 14,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 86,
+  "fields": {
+    "student_id": "STU-00086",
+    "student_name": "Kwaku Owusu",
+    "student_class": 9,
+    "date_of_birth": "2017-01-21",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 30,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 87,
+  "fields": {
+    "student_id": "STU-00087",
+    "student_name": "Kakra Asante",
+    "student_class": 9,
+    "date_of_birth": "2013-07-31",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 31,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 88,
+  "fields": {
+    "student_id": "STU-00088",
+    "student_name": "Kofi Darko",
+    "student_class": 9,
+    "date_of_birth": "2018-01-02",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 18,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 89,
+  "fields": {
+    "student_id": "STU-00089",
+    "student_name": "Kojo Boateng",
+    "student_class": 9,
+    "date_of_birth": "2011-12-22",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 20,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 90,
+  "fields": {
+    "student_id": "STU-00090",
+    "student_name": "Ekow Tetteh",
+    "student_class": 9,
+    "date_of_birth": "2019-07-20",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 17,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 91,
+  "fields": {
+    "student_id": "STU-00091",
+    "student_name": "Ama Adu",
+    "student_class": 9,
+    "date_of_birth": "2013-04-17",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 24,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 92,
+  "fields": {
+    "student_id": "STU-00092",
+    "student_name": "Akosua Asante",
+    "student_class": 9,
+    "date_of_birth": "2016-11-02",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 17,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 93,
+  "fields": {
+    "student_id": "STU-00093",
+    "student_name": "Kwaku Addo",
+    "student_class": 9,
+    "date_of_birth": "2016-09-10",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 25,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 94,
+  "fields": {
+    "student_id": "STU-00094",
+    "student_name": "Yaa Osei",
+    "student_class": 9,
+    "date_of_birth": "2011-12-10",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 20,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 95,
+  "fields": {
+    "student_id": "STU-00095",
+    "student_name": "Akua Kyei",
+    "student_class": 9,
+    "date_of_birth": "2015-10-07",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 20,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 96,
+  "fields": {
+    "student_id": "STU-00096",
+    "student_name": "Akosua Asante",
+    "student_class": 9,
+    "date_of_birth": "2013-11-17",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 23,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 97,
+  "fields": {
+    "student_id": "STU-00097",
+    "student_name": "Akosua Osei",
+    "student_class": 9,
+    "date_of_birth": "2016-04-06",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 23,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 98,
+  "fields": {
+    "student_id": "STU-00098",
+    "student_name": "Ama Agyemang",
+    "student_class": 12,
+    "date_of_birth": "2018-08-08",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 32,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 99,
+  "fields": {
+    "student_id": "STU-00099",
+    "student_name": "Kojo Owusu",
+    "student_class": 12,
+    "date_of_birth": "2015-12-31",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 28,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 100,
+  "fields": {
+    "student_id": "STU-00100",
+    "student_name": "Ekow Agyemang",
+    "student_class": 12,
+    "date_of_birth": "2013-07-24",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 20,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 101,
+  "fields": {
+    "student_id": "STU-00101",
+    "student_name": "Yaw Quansah",
+    "student_class": 12,
+    "date_of_birth": "2011-10-02",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 24,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 102,
+  "fields": {
+    "student_id": "STU-00102",
+    "student_name": "Kwesi Tetteh",
+    "student_class": 12,
+    "date_of_birth": "2016-05-05",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 22,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 103,
+  "fields": {
+    "student_id": "STU-00103",
+    "student_name": "Kwame Darko",
+    "student_class": 12,
+    "date_of_birth": "2020-10-25",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 15,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 104,
+  "fields": {
+    "student_id": "STU-00104",
+    "student_name": "Akua Owusu",
+    "student_class": 12,
+    "date_of_birth": "2017-12-24",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 16,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 105,
+  "fields": {
+    "student_id": "STU-00105",
+    "student_name": "Kakra Owusu",
+    "student_class": 12,
+    "date_of_birth": "2020-09-20",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 20,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 106,
+  "fields": {
+    "student_id": "STU-00106",
+    "student_name": "Kojo Addo",
+    "student_class": 12,
+    "date_of_birth": "2020-02-28",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 32,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 107,
+  "fields": {
+    "student_id": "STU-00107",
+    "student_name": "Akosua Mensah",
+    "student_class": 12,
+    "date_of_birth": "2016-01-14",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 19,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 108,
+  "fields": {
+    "student_id": "STU-00108",
+    "student_name": "Kwaku Addo",
+    "student_class": 12,
+    "date_of_birth": "2015-06-28",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 19,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 109,
+  "fields": {
+    "student_id": "STU-00109",
+    "student_name": "Akua Adu",
+    "student_class": 12,
+    "date_of_birth": "2017-08-07",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 28,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 110,
+  "fields": {
+    "student_id": "STU-00110",
+    "student_name": "Abena Addo",
+    "student_class": 12,
+    "date_of_birth": "2017-02-09",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 22,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 111,
+  "fields": {
+    "student_id": "STU-00111",
+    "student_name": "Yaw Baah",
+    "student_class": 12,
+    "date_of_birth": "2016-08-05",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 19,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 112,
+  "fields": {
+    "student_id": "STU-00112",
+    "student_name": "Yaw Asante",
+    "student_class": 12,
+    "date_of_birth": "2017-12-22",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 20,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 113,
+  "fields": {
+    "student_id": "STU-00113",
+    "student_name": "Kwaku Baah",
+    "student_class": 3,
+    "date_of_birth": "2021-06-10",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 26,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 114,
+  "fields": {
+    "student_id": "STU-00114",
+    "student_name": "Ama Tetteh",
+    "student_class": 3,
+    "date_of_birth": "2019-06-18",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 29,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 115,
+  "fields": {
+    "student_id": "STU-00115",
+    "student_name": "Araba Mensah",
+    "student_class": 3,
+    "date_of_birth": "2013-11-09",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 24,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 116,
+  "fields": {
+    "student_id": "STU-00116",
+    "student_name": "Yaa Gyamfi",
+    "student_class": 3,
+    "date_of_birth": "2020-02-18",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 21,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 117,
+  "fields": {
+    "student_id": "STU-00117",
+    "student_name": "Kakra Boateng",
+    "student_class": 3,
+    "date_of_birth": "2014-08-27",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 28,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 118,
+  "fields": {
+    "student_id": "STU-00118",
+    "student_name": "Kofi Gyamfi",
+    "student_class": 3,
+    "date_of_birth": "2015-03-07",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 15,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 119,
+  "fields": {
+    "student_id": "STU-00119",
+    "student_name": "Kofi Appiah",
+    "student_class": 3,
+    "date_of_birth": "2012-06-21",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 25,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 120,
+  "fields": {
+    "student_id": "STU-00120",
+    "student_name": "Efua Baah",
+    "student_class": 3,
+    "date_of_birth": "2018-12-20",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 30,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 121,
+  "fields": {
+    "student_id": "STU-00121",
+    "student_name": "Kwaku Mensah",
+    "student_class": 3,
+    "date_of_birth": "2020-03-06",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 17,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 122,
+  "fields": {
+    "student_id": "STU-00122",
+    "student_name": "Kwesi Gyamfi",
+    "student_class": 3,
+    "date_of_birth": "2014-02-17",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 15,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 123,
+  "fields": {
+    "student_id": "STU-00123",
+    "student_name": "Kojo Boateng",
+    "student_class": 3,
+    "date_of_birth": "2015-04-22",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 25,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 124,
+  "fields": {
+    "student_id": "STU-00124",
+    "student_name": "Araba Boateng",
+    "student_class": 1,
+    "date_of_birth": "2015-03-29",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 31,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 125,
+  "fields": {
+    "student_id": "STU-00125",
+    "student_name": "Yaa Gyamfi",
+    "student_class": 1,
+    "date_of_birth": "2017-12-02",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 20,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 126,
+  "fields": {
+    "student_id": "STU-00126",
+    "student_name": "Kojo Tetteh",
+    "student_class": 1,
+    "date_of_birth": "2019-03-14",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 32,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 127,
+  "fields": {
+    "student_id": "STU-00127",
+    "student_name": "Akosua Gyamfi",
+    "student_class": 1,
+    "date_of_birth": "2012-02-03",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 24,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 128,
+  "fields": {
+    "student_id": "STU-00128",
+    "student_name": "Akosua Owusu",
+    "student_class": 1,
+    "date_of_birth": "2012-07-08",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 26,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 129,
+  "fields": {
+    "student_id": "STU-00129",
+    "student_name": "Yaa Baah",
+    "student_class": 1,
+    "date_of_birth": "2015-01-12",
+    "enrollment_date": "2026-06-15",
+    "gender": "FEMALE",
+    "parent": 31,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 130,
+  "fields": {
+    "student_id": "STU-00130",
+    "student_name": "Abena Tetteh",
+    "student_class": 1,
+    "date_of_birth": "2016-09-30",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 28,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 131,
+  "fields": {
+    "student_id": "STU-00131",
+    "student_name": "Abena Boateng",
+    "student_class": 1,
+    "date_of_birth": "2016-08-05",
+    "enrollment_date": "2026-06-15",
+    "gender": "MALE",
+    "parent": 31,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 132,
+  "fields": {
+    "student_id": "STU-00132",
+    "student_name": "Edward Manu",
+    "student_class": 1,
+    "date_of_birth": "2006-02-11",
+    "enrollment_date": "2026-06-17",
+    "gender": "MALE",
+    "parent": 13,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 133,
+  "fields": {
+    "student_id": "STU-00133",
+    "student_name": "Adu Gyamfi Auxwell",
+    "student_class": 3,
+    "date_of_birth": "2026-06-17",
+    "enrollment_date": "2026-06-17",
+    "gender": "MALE",
+    "parent": 13,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 134,
+  "fields": {
+    "student_id": "STU-00134",
+    "student_name": "Mandem Adu Banaman",
+    "student_class": 3,
+    "date_of_birth": "2026-06-17",
+    "enrollment_date": "2026-06-17",
+    "gender": "MALE",
+    "parent": 13,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 135,
+  "fields": {
+    "student_id": "STU-00135",
+    "student_name": "Samuel Adjetey",
+    "student_class": 10,
+    "date_of_birth": "2007-10-24",
+    "enrollment_date": "2026-06-17",
+    "gender": "MALE",
+    "parent": 30,
+    "image": "student_images/Screenshot_2026-06-20_at_2.41.29_PM.png"
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 136,
+  "fields": {
+    "student_id": "STU-00136",
+    "student_name": "crying face.png",
+    "student_class": 3,
+    "date_of_birth": "2012-02-24",
+    "enrollment_date": "2026-06-24",
+    "gender": "MALE",
+    "parent": 28,
+    "image": ""
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 137,
+  "fields": {
+    "student_id": "STU-00137",
+    "student_name": "Kwamina Antwi Osei Manu",
+    "student_class": 1,
+    "date_of_birth": "2010-06-24",
+    "enrollment_date": "2026-06-24",
+    "gender": "MALE",
+    "parent": 14,
+    "image": "student_images/crying_dacce.jpg"
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 138,
+  "fields": {
+    "student_id": "STU-00138",
+    "student_name": "Bismark Sarckey",
+    "student_class": 3,
+    "date_of_birth": "2026-06-24",
+    "enrollment_date": "2026-06-24",
+    "gender": "MALE",
+    "parent": 19,
+    "image": "student_images/ChatGPT_Image_Jun_21_2026_08_01_42_PM.jpg"
+  }
+},
+{
+  "model": "academics.student",
+  "pk": 141,
+  "fields": {
+    "student_id": "STU-00141",
+    "student_name": "Adoba Manu",
+    "student_class": 4,
+    "date_of_birth": "2026-06-24",
+    "enrollment_date": "2026-06-24",
+    "gender": "FEMALE",
+    "parent": 13,
+    "image": "student_images/dataformat.jpeg"
+  }
+},
+{
+  "model": "academics.assessment",
+  "pk": 1,
+  "fields": {
+    "date": "2026-06-22T11:16:57Z",
+    "assessment_type": "CLASS TEST",
+    "recorded_by": 1,
+    "subject": 5,
+    "term": 1,
+    "academic_year": 1,
+    "student_class": 1,
+    "max_score": "25.00"
+  }
+},
+{
+  "model": "academics.attendance",
+  "pk": 1,
+  "fields": {
+    "date": null,
+    "class_marked": 10,
+    "marked_by": 1
+  }
+},
+{
+  "model": "academics.attendance",
+  "pk": 2,
+  "fields": {
+    "date": "2026-06-18",
+    "class_marked": 10,
+    "marked_by": 1
+  }
+},
+{
+  "model": "academics.attendance",
+  "pk": 3,
+  "fields": {
+    "date": "2026-06-19",
+    "class_marked": 10,
+    "marked_by": 12
+  }
+},
+{
+  "model": "academics.attendance",
+  "pk": 4,
+  "fields": {
+    "date": "2026-06-19",
+    "class_marked": 1,
+    "marked_by": 1
+  }
+},
+{
+  "model": "academics.attendance",
+  "pk": 5,
+  "fields": {
+    "date": "2026-06-20",
+    "class_marked": 10,
+    "marked_by": 12
+  }
+},
+{
+  "model": "academics.attendance",
+  "pk": 6,
+  "fields": {
+    "date": "2026-06-20",
+    "class_marked": 1,
+    "marked_by": 1
+  }
+},
+{
+  "model": "academics.attendance",
+  "pk": 7,
+  "fields": {
+    "date": "2026-06-21",
+    "class_marked": 1,
+    "marked_by": 1
+  }
+},
+{
+  "model": "academics.attendance",
+  "pk": 8,
+  "fields": {
+    "date": "2026-06-21",
+    "class_marked": 10,
+    "marked_by": 12
+  }
+},
+{
+  "model": "academics.attendance",
+  "pk": 9,
+  "fields": {
+    "date": "2026-06-23",
+    "class_marked": 1,
+    "marked_by": 1
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 1,
+  "fields": {
+    "attendance": 1,
+    "student": 1,
+    "is_present": true,
+    "updated_at": "2026-06-18T18:59:29.871Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 2,
+  "fields": {
+    "attendance": 1,
+    "student": 3,
+    "is_present": true,
+    "updated_at": "2026-06-18T18:59:29.871Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 3,
+  "fields": {
+    "attendance": 2,
+    "student": 1,
+    "is_present": true,
+    "updated_at": "2026-06-18T20:27:14.382Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 4,
+  "fields": {
+    "attendance": 2,
+    "student": 2,
+    "is_present": false,
+    "updated_at": "2026-06-18T20:30:03.762Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 5,
+  "fields": {
+    "attendance": 2,
+    "student": 3,
+    "is_present": true,
+    "updated_at": "2026-06-18T20:30:03.766Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 6,
+  "fields": {
+    "attendance": 2,
+    "student": 4,
+    "is_present": true,
+    "updated_at": "2026-06-18T20:30:03.800Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 7,
+  "fields": {
+    "attendance": 2,
+    "student": 5,
+    "is_present": true,
+    "updated_at": "2026-06-18T20:30:03.816Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 8,
+  "fields": {
+    "attendance": 2,
+    "student": 6,
+    "is_present": true,
+    "updated_at": "2026-06-18T20:30:03.817Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 9,
+  "fields": {
+    "attendance": 2,
+    "student": 7,
+    "is_present": true,
+    "updated_at": "2026-06-18T20:30:03.817Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 10,
+  "fields": {
+    "attendance": 2,
+    "student": 9,
+    "is_present": false,
+    "updated_at": "2026-06-18T20:30:03.823Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 11,
+  "fields": {
+    "attendance": 2,
+    "student": 8,
+    "is_present": true,
+    "updated_at": "2026-06-18T20:30:03.825Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 12,
+  "fields": {
+    "attendance": 2,
+    "student": 10,
+    "is_present": false,
+    "updated_at": "2026-06-18T20:30:03.825Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 13,
+  "fields": {
+    "attendance": 2,
+    "student": 11,
+    "is_present": true,
+    "updated_at": "2026-06-18T20:30:03.826Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 14,
+  "fields": {
+    "attendance": 2,
+    "student": 12,
+    "is_present": true,
+    "updated_at": "2026-06-18T20:30:03.826Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 15,
+  "fields": {
+    "attendance": 2,
+    "student": 135,
+    "is_present": true,
+    "updated_at": "2026-06-18T20:30:03.827Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 16,
+  "fields": {
+    "attendance": 3,
+    "student": 3,
+    "is_present": true,
+    "updated_at": "2026-06-19T18:28:02.006Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 17,
+  "fields": {
+    "attendance": 3,
+    "student": 4,
+    "is_present": true,
+    "updated_at": "2026-06-19T18:28:02.009Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 18,
+  "fields": {
+    "attendance": 3,
+    "student": 5,
+    "is_present": true,
+    "updated_at": "2026-06-19T18:28:02.012Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 19,
+  "fields": {
+    "attendance": 3,
+    "student": 6,
+    "is_present": true,
+    "updated_at": "2026-06-19T18:28:02.018Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 20,
+  "fields": {
+    "attendance": 3,
+    "student": 7,
+    "is_present": true,
+    "updated_at": "2026-06-19T18:28:02.023Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 21,
+  "fields": {
+    "attendance": 3,
+    "student": 8,
+    "is_present": true,
+    "updated_at": "2026-06-19T18:28:02.026Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 22,
+  "fields": {
+    "attendance": 3,
+    "student": 9,
+    "is_present": true,
+    "updated_at": "2026-06-19T18:28:02.032Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 23,
+  "fields": {
+    "attendance": 3,
+    "student": 10,
+    "is_present": true,
+    "updated_at": "2026-06-19T18:28:02.034Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 24,
+  "fields": {
+    "attendance": 3,
+    "student": 11,
+    "is_present": true,
+    "updated_at": "2026-06-19T18:28:02.038Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 25,
+  "fields": {
+    "attendance": 3,
+    "student": 12,
+    "is_present": true,
+    "updated_at": "2026-06-19T18:28:02.040Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 26,
+  "fields": {
+    "attendance": 3,
+    "student": 135,
+    "is_present": false,
+    "updated_at": "2026-06-19T18:28:02.042Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 27,
+  "fields": {
+    "attendance": 4,
+    "student": 124,
+    "is_present": true,
+    "updated_at": "2026-06-19T17:42:35.741Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 28,
+  "fields": {
+    "attendance": 4,
+    "student": 125,
+    "is_present": true,
+    "updated_at": "2026-06-19T17:42:35.745Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 29,
+  "fields": {
+    "attendance": 4,
+    "student": 126,
+    "is_present": true,
+    "updated_at": "2026-06-19T17:42:35.749Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 30,
+  "fields": {
+    "attendance": 4,
+    "student": 127,
+    "is_present": true,
+    "updated_at": "2026-06-19T17:42:35.754Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 31,
+  "fields": {
+    "attendance": 4,
+    "student": 128,
+    "is_present": true,
+    "updated_at": "2026-06-19T17:42:35.763Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 32,
+  "fields": {
+    "attendance": 4,
+    "student": 129,
+    "is_present": true,
+    "updated_at": "2026-06-19T17:42:35.775Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 33,
+  "fields": {
+    "attendance": 4,
+    "student": 130,
+    "is_present": true,
+    "updated_at": "2026-06-19T17:42:35.783Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 34,
+  "fields": {
+    "attendance": 4,
+    "student": 131,
+    "is_present": true,
+    "updated_at": "2026-06-19T17:42:35.793Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 35,
+  "fields": {
+    "attendance": 4,
+    "student": 132,
+    "is_present": true,
+    "updated_at": "2026-06-19T17:42:35.800Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 36,
+  "fields": {
+    "attendance": 5,
+    "student": 3,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:46:44.021Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 37,
+  "fields": {
+    "attendance": 5,
+    "student": 4,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:46:44.026Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 38,
+  "fields": {
+    "attendance": 5,
+    "student": 5,
+    "is_present": true,
+    "updated_at": "2026-06-20T15:46:44.033Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 39,
+  "fields": {
+    "attendance": 5,
+    "student": 6,
+    "is_present": true,
+    "updated_at": "2026-06-20T15:46:44.037Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 40,
+  "fields": {
+    "attendance": 5,
+    "student": 7,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:46:44.042Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 41,
+  "fields": {
+    "attendance": 5,
+    "student": 8,
+    "is_present": true,
+    "updated_at": "2026-06-20T15:46:44.051Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 42,
+  "fields": {
+    "attendance": 5,
+    "student": 9,
+    "is_present": true,
+    "updated_at": "2026-06-20T15:46:44.054Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 43,
+  "fields": {
+    "attendance": 5,
+    "student": 10,
+    "is_present": true,
+    "updated_at": "2026-06-20T15:46:44.068Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 44,
+  "fields": {
+    "attendance": 5,
+    "student": 11,
+    "is_present": true,
+    "updated_at": "2026-06-20T15:46:44.073Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 45,
+  "fields": {
+    "attendance": 5,
+    "student": 12,
+    "is_present": true,
+    "updated_at": "2026-06-20T15:46:44.083Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 46,
+  "fields": {
+    "attendance": 5,
+    "student": 135,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:46:44.085Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 47,
+  "fields": {
+    "attendance": 6,
+    "student": 124,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:21:45.125Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 48,
+  "fields": {
+    "attendance": 6,
+    "student": 125,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:21:45.136Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 49,
+  "fields": {
+    "attendance": 6,
+    "student": 126,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:21:45.141Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 50,
+  "fields": {
+    "attendance": 6,
+    "student": 127,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:21:45.153Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 51,
+  "fields": {
+    "attendance": 6,
+    "student": 128,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:21:45.164Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 52,
+  "fields": {
+    "attendance": 6,
+    "student": 129,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:21:45.170Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 53,
+  "fields": {
+    "attendance": 6,
+    "student": 130,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:21:45.174Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 54,
+  "fields": {
+    "attendance": 6,
+    "student": 131,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:21:45.183Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 55,
+  "fields": {
+    "attendance": 6,
+    "student": 132,
+    "is_present": false,
+    "updated_at": "2026-06-20T15:21:45.187Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 56,
+  "fields": {
+    "attendance": 7,
+    "student": 124,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:00:25.004Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 57,
+  "fields": {
+    "attendance": 7,
+    "student": 125,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:00:25.008Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 58,
+  "fields": {
+    "attendance": 7,
+    "student": 126,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:00:25.020Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 59,
+  "fields": {
+    "attendance": 7,
+    "student": 127,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:00:25.025Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 60,
+  "fields": {
+    "attendance": 7,
+    "student": 128,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:00:25.037Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 61,
+  "fields": {
+    "attendance": 7,
+    "student": 129,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:00:25.042Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 62,
+  "fields": {
+    "attendance": 7,
+    "student": 130,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:00:25.052Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 63,
+  "fields": {
+    "attendance": 7,
+    "student": 131,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:00:25.056Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 64,
+  "fields": {
+    "attendance": 7,
+    "student": 132,
+    "is_present": false,
+    "updated_at": "2026-06-21T15:00:25.058Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 65,
+  "fields": {
+    "attendance": 8,
+    "student": 3,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:59:57.958Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 66,
+  "fields": {
+    "attendance": 8,
+    "student": 4,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:59:57.962Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 67,
+  "fields": {
+    "attendance": 8,
+    "student": 5,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:59:57.968Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 68,
+  "fields": {
+    "attendance": 8,
+    "student": 6,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:59:57.978Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 69,
+  "fields": {
+    "attendance": 8,
+    "student": 7,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:59:57.981Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 70,
+  "fields": {
+    "attendance": 8,
+    "student": 8,
+    "is_present": false,
+    "updated_at": "2026-06-21T15:59:57.993Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 71,
+  "fields": {
+    "attendance": 8,
+    "student": 9,
+    "is_present": false,
+    "updated_at": "2026-06-21T15:59:57.996Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 72,
+  "fields": {
+    "attendance": 8,
+    "student": 10,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:59:58.004Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 73,
+  "fields": {
+    "attendance": 8,
+    "student": 11,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:59:58.011Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 74,
+  "fields": {
+    "attendance": 8,
+    "student": 12,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:59:58.015Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 75,
+  "fields": {
+    "attendance": 8,
+    "student": 135,
+    "is_present": true,
+    "updated_at": "2026-06-21T15:59:58.023Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 76,
+  "fields": {
+    "attendance": 9,
+    "student": 124,
+    "is_present": true,
+    "updated_at": "2026-06-23T08:44:49.775Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 77,
+  "fields": {
+    "attendance": 9,
+    "student": 125,
+    "is_present": true,
+    "updated_at": "2026-06-23T08:44:49.779Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 78,
+  "fields": {
+    "attendance": 9,
+    "student": 126,
+    "is_present": true,
+    "updated_at": "2026-06-23T08:44:49.790Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 79,
+  "fields": {
+    "attendance": 9,
+    "student": 127,
+    "is_present": true,
+    "updated_at": "2026-06-23T08:44:49.795Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 80,
+  "fields": {
+    "attendance": 9,
+    "student": 128,
+    "is_present": true,
+    "updated_at": "2026-06-23T08:44:49.799Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 81,
+  "fields": {
+    "attendance": 9,
+    "student": 129,
+    "is_present": true,
+    "updated_at": "2026-06-23T08:44:49.809Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 82,
+  "fields": {
+    "attendance": 9,
+    "student": 130,
+    "is_present": true,
+    "updated_at": "2026-06-23T08:44:49.813Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 83,
+  "fields": {
+    "attendance": 9,
+    "student": 131,
+    "is_present": true,
+    "updated_at": "2026-06-23T08:44:49.825Z"
+  }
+},
+{
+  "model": "academics.attendancerecord",
+  "pk": 84,
+  "fields": {
+    "attendance": 9,
+    "student": 132,
+    "is_present": true,
+    "updated_at": "2026-06-23T08:44:49.845Z"
+  }
+},
+{
+  "model": "finances.fee",
+  "pk": 1,
+  "fields": {
+    "term": 1,
+    "amount": "350.00",
+    "student_class": 10,
+    "description": ""
+  }
+},
+{
+  "model": "finances.fee",
+  "pk": 2,
+  "fields": {
+    "term": 1,
+    "amount": "350.00",
+    "student_class": 11,
+    "description": ""
+  }
+},
+{
+  "model": "finances.fee",
+  "pk": 3,
+  "fields": {
+    "term": 1,
+    "amount": "400.00",
+    "student_class": 4,
+    "description": ""
+  }
+},
+{
+  "model": "finances.fee",
+  "pk": 4,
+  "fields": {
+    "term": 1,
+    "amount": "400.00",
+    "student_class": 5,
+    "description": ""
+  }
+},
+{
+  "model": "finances.fee",
+  "pk": 5,
+  "fields": {
+    "term": 1,
+    "amount": "400.00",
+    "student_class": 6,
+    "description": ""
+  }
+},
+{
+  "model": "finances.fee",
+  "pk": 6,
+  "fields": {
+    "term": 1,
+    "amount": "450.00",
+    "student_class": 7,
+    "description": ""
+  }
+},
+{
+  "model": "finances.fee",
+  "pk": 7,
+  "fields": {
+    "term": 1,
+    "amount": "450.00",
+    "student_class": 8,
+    "description": ""
+  }
+},
+{
+  "model": "finances.fee",
+  "pk": 8,
+  "fields": {
+    "term": 1,
+    "amount": "450.00",
+    "student_class": 9,
+    "description": ""
+  }
+},
+{
+  "model": "finances.fee",
+  "pk": 9,
+  "fields": {
+    "term": 1,
+    "amount": "500.00",
+    "student_class": 12,
+    "description": ""
+  }
+},
+{
+  "model": "finances.fee",
+  "pk": 10,
+  "fields": {
+    "term": 1,
+    "amount": "500.00",
+    "student_class": 3,
+    "description": ""
+  }
+},
+{
+  "model": "finances.fee",
+  "pk": 11,
+  "fields": {
+    "term": 1,
+    "amount": "500.00",
+    "student_class": 1,
+    "description": ""
+  }
+},
+{
+  "model": "finances.feepayment",
+  "pk": 1,
+  "fields": {
+    "fee": 1,
+    "student": 3,
+    "amount_tendered": "200.00",
+    "paid_at": "2026-07-03T11:11:35Z",
+    "received_by": 1,
+    "balance": "150.00"
+  }
+},
+{
+  "model": "finances.feepayment",
+  "pk": 2,
+  "fields": {
+    "fee": 1,
+    "student": 3,
+    "amount_tendered": "150.00",
+    "paid_at": "2026-07-03T11:43:46Z",
+    "received_by": 1,
+    "balance": "0.00"
+  }
+},
+{
+  "model": "finances.feepayment",
+  "pk": 3,
+  "fields": {
+    "fee": 1,
+    "student": 4,
+    "amount_tendered": "300.00",
+    "paid_at": "2026-07-03T21:13:18Z",
+    "received_by": 1,
+    "balance": "50.00"
+  }
+},
+{
+  "model": "finances.feepayment",
+  "pk": 5,
+  "fields": {
+    "fee": 1,
+    "student": 4,
+    "amount_tendered": "49.00",
+    "paid_at": "2026-07-03T21:16:58Z",
+    "received_by": 1,
+    "balance": "1.00"
+  }
+},
+{
+  "model": "finances.feepayment",
+  "pk": 6,
+  "fields": {
+    "fee": 1,
+    "student": 4,
+    "amount_tendered": "1.00",
+    "paid_at": "2026-07-03T21:19:33Z",
+    "received_by": 1,
+    "balance": "0.00"
+  }
+},
+{
+  "model": "finances.feepayment",
+  "pk": 7,
+  "fields": {
+    "fee": 1,
+    "student": 6,
+    "amount_tendered": "340.00",
+    "paid_at": "2026-07-04T01:02:00Z",
+    "received_by": 1,
+    "balance": "10.00"
+  }
+},
+{
+  "model": "finances.feepayment",
+  "pk": 9,
+  "fields": {
+    "fee": 1,
+    "student": 135,
+    "amount_tendered": "350.00",
+    "paid_at": "2026-07-04T15:01:00Z",
+    "received_by": 1,
+    "balance": "0.00"
+  }
+},
+{
+  "model": "finances.feepayment",
+  "pk": 10,
+  "fields": {
+    "fee": 2,
+    "student": 13,
+    "amount_tendered": "350.00",
+    "paid_at": "2026-07-04T15:02:00Z",
+    "received_by": 1,
+    "balance": "0.00"
+  }
+}
+]
