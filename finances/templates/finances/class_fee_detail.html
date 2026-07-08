@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="min-h-screen bg-gray-50/50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Back link -->
+        <a href="{% url 'finances:finances' %}" class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-6 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            Back to Finance Dashboard
+        </a>
+
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 tracking-tight">{{ fee.student_class }}</h1>
+                <p class="text-sm text-gray-500">{{ fee.term }} · ${{ fee.amount|floatformat:2 }} per student{% if fee.description %} · {{ fee.description }}{% endif %}</p>
+            </div>
+            <a href="{% url 'finances:fee_payment' %}" class="inline-flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-200 shadow-lg shadow-amber-600/25 hover:shadow-amber-600/40">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Record Payment
+            </a>
+        </div>
+
+        <!-- Students table -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="p-5 border-b border-gray-100 flex items-center justify-between">
+                <h2 class="text-lg font-bold text-gray-900">Students</h2>
+                <span class="text-sm text-gray-500">{{ students|length }} students</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-50/80 border-b border-gray-200">
+                            <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Student</th>
+                            <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Parent Contact</th>
+                            <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount Owed</th>
+                            <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        {% for student in students %}
+                        <tr class="hover:bg-gray-50/50 transition-colors">
+                            <td class="px-5 py-3">
+                                <div class="flex items-center gap-3">
+                                    {% if student.image %}
+                                        <img src="{{ student.image.url }}" alt="{{ student.student_name }}" class="w-9 h-9 rounded-full object-cover">
+                                    {% else %}
+                                        <div class="w-9 h-9 rounded-full bg-linear-to-br from-amber-400 to-orange-500 text-white flex items-center justify-center font-bold text-xs">
+                                            {{ student.student_name|slice:":1" }}
+                                        </div>
+                                    {% endif %}
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">{{ student.student_name }}</div>
+                                        <div class="text-xs text-gray-400">{{ student.student_id }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3">
+                                {% if student.parent %}
+                                    <div class="text-sm text-gray-700">{{ student.parent.full_name }}</div>
+                                    <a href="tel:{{ student.parent.contact }}" class="text-xs text-amber-600 hover:underline">{{ student.parent.contact }}</a>
+                                {% else %}
+                                    <span class="text-xs text-gray-400">No parent on file</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-5 py-3">
+                                {% if student.amount_owed > 0 %}
+                                    <span class="text-sm font-semibold text-red-600">${{ student.amount_owed|floatformat:2 }}</span>
+                                {% else %}
+                                    <span class="text-sm text-gray-400">$0.00</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-5 py-3 text-right">
+                                {% if student.amount_owed <= 0 %}
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">Paid</span>
+                                {% elif student.amount_owed >= fee.amount %}
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200/60">Unpaid</span>
+                                {% else %}
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200/60">Partial</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="px-5 py-8 text-center text-sm text-gray-400">No students in this class yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

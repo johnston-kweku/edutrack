@@ -1,10 +1,11 @@
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Value, Subquery, OuterRef
 from django.http import HttpResponse
 from django.core.cache import cache
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
+from django.db.models.functions import Coalesce
 from datetime import timedelta
 from decimal import Decimal
 from academics.models import Student, Term, Class
@@ -258,3 +259,14 @@ def finances_view(request):
     }
 
     return render(request, 'finances/finances.html', context)
+
+
+@role_required('ADMIN')
+def class_fee_detail(request, fee_id):
+    fee = get_object_or_404(Fee, id=fee_id)
+    payments = FeePayment.objects.filter(student=OuterRef('pk'), fee=fee).order_by('-paid_at').values('balance')[:1]
+    students = Student.objects.filter(student_class=fee.student_class).annotate(
+        amount_owed=Coalesce(Subquery(payments), Value(fee.amount))
+    ).select_related('parent').order_by('student_name')
+
+    return render(request, 'finances/class_fee_detail.html', {'fee': fee, 'students': students})
