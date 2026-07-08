@@ -250,7 +250,7 @@ class AttendanceRecord(models.Model):
 
 
     def __str__(self):
-        student_name = self.student.name.split(' ')[0]
+        student_name = self.student.student_name.split(' ')[0]
         status = 'Present' if self.is_present else 'Absent'
         return f'{student_name} – {status}'
     

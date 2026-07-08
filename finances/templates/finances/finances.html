@@ -14,7 +14,7 @@
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Finance Dashboard</h1>
-                    <p class="text-sm text-gray-500">Overview of fees, payments, and collections</p>
+                    <p class="text-sm text-gray-500">Fee collection overview for the current term</p>
                 </div>
             </div>
 
@@ -37,10 +37,10 @@
         <!-- Stats Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <!-- Total Fees -->
-            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Fees</p>
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Classes with Fees</p>
                         <p class="text-2xl font-bold text-gray-900 mt-1">{{ total_fees }}</p>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center">
@@ -51,12 +51,12 @@
                 </div>
             </div>
 
-            <!-- Total Expected -->
-            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <!-- Expected -->
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Expected</p>
-                        <p class="text-2xl font-bold text-gray-900 mt-1">${{ total_expected|floatformat:2 }}</p>
+                        <p class="text-2xl font-bold text-gray-900 mt-1">${{ total_funds_expected|floatformat:2 }}</p>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
                         <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,12 +66,12 @@
                 </div>
             </div>
 
-            <!-- Total Collected -->
-            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <!-- Collected -->
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Collected</p>
-                        <p class="text-2xl font-bold text-emerald-600 mt-1">${{ total_collected|floatformat:2 }}</p>
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Collected</p>
+                        <p class="text-2xl font-bold text-emerald-600 mt-1">${{ total_fees_collected|floatformat:2 }}</p>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center">
                         <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,21 +81,21 @@
                 </div>
                 <div class="mt-3">
                     <div class="flex items-center justify-between text-xs mb-1">
-                        <span class="text-gray-500">Collection rate</span>
-                        <span class="font-semibold text-emerald-600">{{ collection_rate }}%</span>
+                        <span class="text-gray-500">of target</span>
+                        <span class="font-semibold text-emerald-600">{{ percent_of_target }}%</span>
                     </div>
                     <div class="w-full bg-gray-100 rounded-full h-2">
-                        <div class="bg-emerald-500 h-2 rounded-full transition-all" style="width: {{ collection_rate }}%"></div>
+                        <div class="bg-emerald-500 h-2 rounded-full" style="width: {{ percent_of_target }}%"></div>
                     </div>
                 </div>
             </div>
 
             <!-- Outstanding -->
-            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Outstanding</p>
-                        <p class="text-2xl font-bold text-red-600 mt-1">${{ total_outstanding|floatformat:2 }}</p>
+                        <p class="text-2xl font-bold text-red-600 mt-1">${{ outstanding|floatformat:2 }}</p>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
                         <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,7 +108,7 @@
 
         <!-- Recent Activity Banner -->
         <div class="bg-linear-to-r from-amber-500 to-orange-500 rounded-2xl p-5 mb-8 shadow-lg shadow-amber-500/20">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center justify-between">
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,217 +117,103 @@
                     </div>
                     <div>
                         <p class="text-white/80 text-sm font-medium">This Week</p>
-                        <p class="text-white text-lg font-bold">{{ recent_payments_count }} payments recorded</p>
+                        <p class="text-white text-lg font-bold">{{ payments_this_week }} payments recorded</p>
                     </div>
-                </div>
-                <div class="text-right">
-                    <p class="text-white/80 text-sm font-medium">Amount collected</p>
-                    <p class="text-white text-2xl font-bold">${{ recent_collected|floatformat:2 }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 xl:grid-cols-5 gap-6">
 
-            <!-- Recent Payments -->
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                <div class="p-5 border-b border-gray-100 flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <h2 class="text-lg font-bold text-gray-900">Recent Payments</h2>
-                    </div>
-                    <a href="{% url 'finances:fee_payment' %}" class="text-sm font-medium text-amber-600 hover:text-amber-700 transition">Record New</a>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-gray-50/80 border-b border-gray-200">
-                                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Student</th>
-                                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount</th>
-                                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Balance</th>
-                                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            {% for payment in recent_payments %}
-                            <tr class="hover:bg-gray-50/50 transition-colors">
-                                <td class="px-5 py-3">
-                                    <div class="flex items-center gap-3">
-                                        {% if payment.student.image %}
-                                            <img src="{{ payment.student.image.url }}" alt="{{ payment.student.student_name }}" class="w-8 h-8 rounded-full object-cover">
-                                        {% else %}
-                                            <div class="w-8 h-8 rounded-full bg-linear-to-br from-emerald-400 to-teal-500 text-white flex items-center justify-center font-bold text-xs">
-                                                {{ payment.student.student_name|slice:":1" }}
-                                            </div>
-                                        {% endif %}
-                                        <div>
-                                            <div class="text-sm font-medium text-gray-900">{{ payment.student.student_name }}</div>
-                                            <div class="text-xs text-gray-400">{{ payment.fee.student_class }}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-5 py-3">
-                                    <span class="text-sm font-semibold text-emerald-600">${{ payment.amount_tendered|floatformat:2 }}</span>
-                                </td>
-                                <td class="px-5 py-3">
-                                    {% if payment.balance > 0 %}
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700 border border-red-200/60">${{ payment.balance|floatformat:2 }}</span>
-                                    {% else %}
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">Paid</span>
-                                    {% endif %}
-                                </td>
-                                <td class="px-5 py-3 text-sm text-gray-500">
-                                    {{ payment.paid_at|date:"M d, Y" }}<br>
-                                    <span class="text-xs text-gray-400">by {{ payment.received_by.full_name }}</span>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="4" class="px-5 py-8 text-center text-sm text-gray-400">No payments recorded yet.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Fees Overview -->
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                <div class="p-5 border-b border-gray-100 flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                            </svg>
-                        </div>
-                        <h2 class="text-lg font-bold text-gray-900">Fees Overview</h2>
-                    </div>
-                    <a href="{% url 'finances:add_fee' %}" class="text-sm font-medium text-amber-600 hover:text-amber-700 transition">Add Fee</a>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-gray-50/80 border-b border-gray-200">
-                                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Fee</th>
-                                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount</th>
-                                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Progress</th>
-                                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            {% for fee in fees %}
-                            <tr class="hover:bg-gray-50/50 transition-colors">
-                                <td class="px-5 py-3">
-                                    <div class="text-sm font-medium text-gray-900">{{ fee.student_class }}</div>
-                                    <div class="text-xs text-gray-400">{{ fee.term }}</div>
-                                </td>
-                                <td class="px-5 py-3">
-                                    <div class="text-sm font-semibold text-gray-700">${{ fee.amount|floatformat:2 }}</div>
-                                    <div class="text-xs text-gray-400">{{ fee.student_count }} students</div>
-                                </td>
-                                <td class="px-5 py-3">
-                                    <div class="flex items-center gap-2">
-                                        <div class="flex-1 bg-gray-100 rounded-full h-2 w-24">
-                                            <div class="bg-amber-500 h-2 rounded-full transition-all" style="width: {{ fee.completion_rate }}%"></div>
-                                        </div>
-                                        <span class="text-xs font-medium text-gray-600 w-10 text-right">{{ fee.completion_rate }}%</span>
-                                    </div>
-                                    <div class="text-xs text-gray-400 mt-1">${{ fee.collected_amount|floatformat:2 }} / ${{ fee.expected_amount|floatformat:2 }}</div>
-                                </td>
-                                <td class="px-5 py-3 text-right">
-                                    {% if fee.completion_rate >= 100 %}
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">Complete</span>
-                                    {% elif fee.completion_rate > 0 %}
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200/60">Partial</span>
-                                    {% else %}
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200/60">Pending</span>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="4" class="px-5 py-8 text-center text-sm text-gray-400">No fees created yet.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Outstanding Balances -->
-        <div class="mt-6 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-            <div class="p-5 border-b border-gray-100 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
-                        <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            <!-- Classes with completion rate -->
+            <div class="xl:col-span-3 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                <div class="p-5 border-b border-gray-100 flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
                     </div>
-                    <h2 class="text-lg font-bold text-gray-900">Outstanding Balances</h2>
+                    <h2 class="text-lg font-bold text-gray-900">Classes</h2>
                 </div>
-                <span class="text-sm text-gray-500">{{ outstanding|length }} records</span>
+                <div class="divide-y divide-gray-100">
+                    {% for fee in fees_with_stats %}
+                    <a href="{% url 'finances:class_detail' fee.id %}" class="block px-5 py-4 hover:bg-gray-50/50 transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <div class="text-sm font-semibold text-gray-900">{{ fee.student_class }}</div>
+                                <div class="text-xs text-gray-400">{{ fee.student_count }} students · ${{ fee.amount|floatformat:2 }} each</div>
+                            </div>
+                            <div class="text-right">
+                                {% if fee.completion_rate >= 100 %}
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">Complete</span>
+                                {% elif fee.completion_rate > 0 %}
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200/60">Partial</span>
+                                {% else %}
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200/60">Pending</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="flex-1 bg-gray-100 rounded-full h-2">
+                                <div class="bg-amber-500 h-2 rounded-full" style="width: {{ fee.completion_rate }}%"></div>
+                            </div>
+                            <span class="text-xs font-medium text-gray-600 w-12 text-right">{{ fee.completion_rate }}%</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mt-1">${{ fee.total_paid|floatformat:2 }} / ${{ fee.expected_amount|floatformat:2 }}</div>
+                    </a>
+                    {% empty %}
+                    <div class="px-5 py-8 text-center text-sm text-gray-400">No fees created for the current term yet.</div>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-gray-50/80 border-b border-gray-200">
-                            <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Student</th>
-                            <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Fee</th>
-                            <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount Due</th>
-                            <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Last Paid</th>
-                            <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        {% for item in outstanding %}
-                        <tr class="hover:bg-gray-50/50 transition-colors">
-                            <td class="px-5 py-3">
-                                <div class="flex items-center gap-3">
-                                    {% if item.student.image %}
-                                        <img src="{{ item.student.image.url }}" alt="{{ item.student.student_name }}" class="w-8 h-8 rounded-full object-cover">
-                                    {% else %}
-                                        <div class="w-8 h-8 rounded-full bg-linear-to-br from-red-400 to-pink-500 text-white flex items-center justify-center font-bold text-xs">
-                                            {{ item.student.student_name|slice:":1" }}
-                                        </div>
-                                    {% endif %}
-                                    <div class="text-sm font-medium text-gray-900">{{ item.student.student_name }}</div>
-                                </div>
-                            </td>
-                            <td class="px-5 py-3">
-                                <div class="text-sm text-gray-700">{{ item.fee.student_class }}</div>
-                                <div class="text-xs text-gray-400">{{ item.fee.term }}</div>
-                            </td>
-                            <td class="px-5 py-3">
-                                <span class="text-sm font-bold text-red-600">${{ item.balance|floatformat:2 }}</span>
-                            </td>
-                            <td class="px-5 py-3 text-sm text-gray-500">
-                                {{ item.paid_at|date:"M d, Y" }}
-                            </td>
-                            <td class="px-5 py-3 text-right">
-                                <a href="{% url 'finances:fee_payment' %}" class="inline-flex items-center gap-1.5 text-sm font-medium text-amber-600 hover:text-amber-700 transition">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                                    </svg>
-                                    Pay
-                                </a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5" class="px-5 py-8 text-center text-sm text-gray-400">No outstanding balances. All caught up!</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
+            <!-- Recent Payments -->
+            <div class="xl:col-span-2 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                <div class="p-5 border-b border-gray-100 flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-lg font-bold text-gray-900">Recent Payments</h2>
+                </div>
+                <div class="divide-y divide-gray-100">
+                    {% for payment in recent_fee_payments %}
+                    <div class="px-5 py-4">
+                        <div class="flex items-center gap-3">
+                            {% if payment.student.image %}
+                                <img src="{{ payment.student.image.url }}" alt="{{ payment.student.student_name }}" class="w-9 h-9 rounded-full object-cover">
+                            {% else %}
+                                <div class="w-9 h-9 rounded-full bg-linear-to-br from-emerald-400 to-teal-500 text-white flex items-center justify-center font-bold text-xs">
+                                    {{ payment.student.student_name|slice:":1" }}
+                                </div>
+                            {% endif %}
+                            <div class="flex-1 min-w-0">
+                                <div class="text-sm font-medium text-gray-900 truncate">{{ payment.student.student_name }}</div>
+                                <div class="text-xs text-gray-400">
+                                    {{ payment.paid_at|date:"M d" }} · by {{ payment.received_by.full_name }}
+                                    {% if payment.student.parent %}
+                                        · <a href="tel:{{ payment.student.parent.contact }}" class="text-amber-600 hover:underline">{{ payment.student.parent.contact }}</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <div class="text-sm font-semibold text-emerald-600">${{ payment.amount_tendered|floatformat:2 }}</div>
+                                {% if payment.balance > 0 %}
+                                    <div class="text-xs text-red-500">${{ payment.balance|floatformat:2 }} left</div>
+                                {% else %}
+                                    <div class="text-xs text-emerald-500">Paid</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="px-5 py-8 text-center text-sm text-gray-400">No payments recorded yet.</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 {% endblock %}

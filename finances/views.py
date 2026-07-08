@@ -205,33 +205,56 @@ def get_students_by_fee(request):
 
 
 
+
 @role_required('ADMIN')
 def finances_view(request):
     fees = Fee.objects.filter(term__is_current=True).select_related('student_class', 'term')
 
-    students_with_partial_payments = FeePayment.objects.filter(
-        fee__in=fees
-    ).distinct('student', 'fee').order_by('student', 'fee', '-paid_at').filter(balance__gte=0)
-
-    print(students_with_partial_payments)
-
     # Stat cards data
     total_fees = fees.count()
+    fees_with_counts = fees.annotate(student_count=Count('student_class__student', distinct=True))
+    total_funds_expected = sum(f.amount * f.student_count for f in fees_with_counts)
 
-    total_funds_expected = sum(
-        f.amount * f.student_count for f in Fee.objects.annotate(student_count=Count('student_class__student'))
-    )
     total_fees_collected = FeePayment.objects.filter(fee__term__is_current=True).aggregate(
         total=Sum('amount_tendered')
     )['total'] or Decimal('0.00')
-
     outstanding = total_funds_expected - total_fees_collected
 
+    week_ago = timezone.now() - timedelta(days=7)
+    payments_this_week = FeePayment.objects.filter(paid_at__gt=week_ago).count()
 
+    try:
+        percent_of_target = round((total_fees_collected / total_funds_expected) * 100, 1)
+    except ZeroDivisionError:
+        percent_of_target = 0.0
+
+    # Classes with completion rate (Option B: two decoupled queries)
+    total_paid_per_fee = FeePayment.objects.filter(fee__in=fees).values('fee').annotate(total_paid=Sum('amount_tendered'))
+    total_paid_map = {entry['fee']: entry['total_paid'] for entry in total_paid_per_fee}
+
+    fees_with_stats = []
+    for fee in fees_with_counts:
+        total_paid = total_paid_map.get(fee.id, 0)
+        expected_amount = fee.amount * fee.student_count
+        fee.total_paid = total_paid
+        fee.expected_amount = expected_amount
+        fee.completion_rate = round((total_paid / expected_amount * 100), 1) if expected_amount > 0 else 0
+        fees_with_stats.append(fee)
+
+    # Recent payments
+    recent_fee_payments = FeePayment.objects.filter(fee__in=fees).select_related(
+        'student', 'student__parent', 'received_by'
+    ).order_by('-paid_at')[:5]
 
     context = {
-
+        'total_fees': total_fees,
+        'total_funds_expected': total_funds_expected,
+        'total_fees_collected': total_fees_collected,
+        'outstanding': outstanding,
+        'percent_of_target': percent_of_target,
+        'payments_this_week': payments_this_week,
+        'fees_with_stats': fees_with_stats,
+        'recent_fee_payments': recent_fee_payments,
     }
 
     return render(request, 'finances/finances.html', context)
-

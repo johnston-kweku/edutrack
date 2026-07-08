@@ -3169,15 +3169,6 @@
 },
 {
   "model": "academics.attendance",
-  "pk": 1,
-  "fields": {
-    "date": null,
-    "class_marked": 10,
-    "marked_by": 1
-  }
-},
-{
-  "model": "academics.attendance",
   "pk": 2,
   "fields": {
     "date": "2026-06-18",
@@ -3246,26 +3237,6 @@
     "date": "2026-06-23",
     "class_marked": 1,
     "marked_by": 1
-  }
-},
-{
-  "model": "academics.attendancerecord",
-  "pk": 1,
-  "fields": {
-    "attendance": 1,
-    "student": 1,
-    "is_present": true,
-    "updated_at": "2026-06-18T18:59:29.871Z"
-  }
-},
-{
-  "model": "academics.attendancerecord",
-  "pk": 2,
-  "fields": {
-    "attendance": 1,
-    "student": 3,
-    "is_present": true,
-    "updated_at": "2026-06-18T18:59:29.871Z"
   }
 },
 {
