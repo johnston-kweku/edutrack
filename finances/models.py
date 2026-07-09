@@ -39,10 +39,7 @@ class FeePayment(models.Model):
             fee=self.fee
         ).exclude(pk=self.pk).aggregate(total=Sum('amount_tendered'))['total'] or 0
         self.balance = self.fee.amount - previous_payments - self.amount_tendered
-        
 
-        if previous_payments + self.amount_tendered > self.fee.amount:
-            raise ValidationError(f'Cannot pay more than fee amount – {self.fee.amount}')
 
         super().save(*args, **kwargs)
 
