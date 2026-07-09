@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.db.models import Sum
+from django.core.exceptions import ValidationError
 from academics.models import Student, Class, Term
 User = get_user_model()
 # Create your models here.
@@ -38,5 +39,10 @@ class FeePayment(models.Model):
             fee=self.fee
         ).exclude(pk=self.pk).aggregate(total=Sum('amount_tendered'))['total'] or 0
         self.balance = self.fee.amount - previous_payments - self.amount_tendered
+        
+
+        if previous_payments + self.amount_tendered > self.fee.amount:
+            raise ValidationError(f'Cannot pay more than fee amount – {self.fee.amount}')
+
         super().save(*args, **kwargs)
 
