@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Results{% endblock %}
+{% block title %}Academics{% endblock %}
 
 {% block content %}
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
     <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-blue-600">Academic Records</p>
-            <h1 class="text-3xl font-black text-gray-900">Results</h1>
-            <p class="mt-2 max-w-2xl text-sm text-gray-600">Manage the building blocks for academic reporting, from subjects to class-level subject assignments.</p>
+            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-blue-600">Academics</p>
+            <h1 class="text-3xl font-black text-gray-900">Academic Dashboard</h1>
+            <p class="mt-2 max-w-2xl text-sm text-gray-600">Manage the curriculum setup and class subject assignments that support your academic operations.</p>
         </div>
         <div class="flex flex-wrap gap-3">
             <a href="{% url 'academics:add_subject' %}" class="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition-all hover:bg-gray-50">

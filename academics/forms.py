@@ -41,3 +41,4 @@ class ClassSubjectCreationForm(forms.ModelForm):
                 'class': 'block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium appearance-none transition-all outline-none cursor-pointer'
             })
         }
+
