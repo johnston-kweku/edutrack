@@ -9,8 +9,8 @@ from django.http import HttpResponse
 from datetime import timedelta
 import csv
 from accounts.decorators import role_required
-from .forms import ClassCreationForm
-from .models import Class
+from .forms import ClassCreationForm, SubjectCreationForm, ClassSubjectCreationForm
+from .models import Class, Subject, ClassSubject
 User = get_user_model()
 # Create your views here.
 
@@ -228,3 +228,81 @@ def edit_class(request, class_id):
     }
 
     return render(request, 'academics/edit_class.html', context)
+
+
+
+
+
+
+def academics_landing(request):
+    subjects = Subject.objects.all().order_by('name')
+    class_subjects = (
+        ClassSubject.objects.select_related('subject', 'subject_class', 'teacher')
+        .all()
+        .order_by('subject_class__level', 'subject_class__stage', 'subject__name')
+    )
+
+    context = {
+        'subjects': subjects,
+        'class_subjects': class_subjects,
+    }
+    return render(request, 'academics/academics_landing.html', context)
+
+
+@role_required('ADMIN')
+def add_subject(request):
+    if request.method == 'POST':
+        form = SubjectCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('academics:add_subject')
+        
+    else:
+        form = SubjectCreationForm()
+    
+    return render(request, 'academics/add_subject.html', {'form': form})
+
+
+@role_required('ADMIN')
+def add_class_subject(request):
+    if request.method == 'POST':
+        form = ClassSubjectCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('academics:add_class_subject')
+        
+    else:
+        form = ClassSubjectCreationForm()
+    
+    return render(request, 'academics/add_class_subject.html', {'form': form})
+
+
+@role_required('ADMIN')
+def edit_subject(request, subject_id):
+    subject = get_object_or_404(Subject, pk=subject_id)
+
+    if request.method == 'POST':
+        form = SubjectCreationForm(request.POST, instance=subject)
+        if form.is_valid():
+            form.save()
+            return redirect('academics:academics_landing')
+    else:
+        form = SubjectCreationForm(instance=subject)
+
+    return render(request, 'academics/edit_subject.html', {'form': form, 'subject': subject})
+
+
+@role_required('ADMIN')
+def edit_class_subject(request, class_subject_id):
+    class_subject = get_object_or_404(ClassSubject, pk=class_subject_id)
+
+    if request.method == 'POST':
+        form = ClassSubjectCreationForm(request.POST, instance=class_subject)
+        if form.is_valid():
+            form.save()
+            return redirect('academics:academics_landing')
+    else:
+        form = ClassSubjectCreationForm(instance=class_subject)
+
+    return render(request, 'academics/edit_class_subject.html', {'form': form, 'class_subject': class_subject})
+        
