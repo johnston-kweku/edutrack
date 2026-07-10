@@ -9,8 +9,8 @@ from django.http import HttpResponse
 from datetime import timedelta
 import csv
 from accounts.decorators import role_required
-from .forms import ClassCreationForm, SubjectCreationForm, ClassSubjectCreationForm
-from .models import Class, Subject, ClassSubject
+from .forms import ClassCreationForm, SubjectCreationForm, ClassSubjectCreationForm, TermForm, AcademicYearForm
+from .models import Class, Subject, ClassSubject, Term, AcademicYear
 User = get_user_model()
 # Create your views here.
 
@@ -233,20 +233,20 @@ def edit_class(request, class_id):
 
 
 
-
-def academics_landing(request):
-    subjects = Subject.objects.all().order_by('name')
-    class_subjects = (
-        ClassSubject.objects.select_related('subject', 'subject_class', 'teacher')
-        .all()
-        .order_by('subject_class__level', 'subject_class__stage', 'subject__name')
-    )
+@role_required('ADMIN')
+def academics_hub(request):
+    subjects = Subject.objects.all()
+    class_subjects = ClassSubject.objects.select_related('subject', 'subject_class', 'teacher').all()
+    current_term = Term.objects.filter(is_current=True).select_related('academic_year').first()
+    current_academic_year = AcademicYear.objects.filter(is_current=True).first()
 
     context = {
         'subjects': subjects,
         'class_subjects': class_subjects,
+        'current_term': current_term,
+        'current_academic_year': current_academic_year,
     }
-    return render(request, 'academics/academics_landing.html', context)
+    return render(request, 'academics/academics_hub.html', context)
 
 
 @role_required('ADMIN')
@@ -306,3 +306,54 @@ def edit_class_subject(request, class_subject_id):
 
     return render(request, 'academics/edit_class_subject.html', {'form': form, 'class_subject': class_subject})
         
+
+
+
+@role_required('ADMIN')
+def add_academic_year(request):
+    if request.method == 'POST':
+        form = AcademicYearForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('academics:academics_hub')
+    else:
+        form = AcademicYearForm()
+    return render(request, 'academics/academic_year_form.html', {'form': form, 'title': 'Add Academic Year'})
+
+
+@role_required('ADMIN')
+def edit_academic_year(request, pk):
+    academic_year = get_object_or_404(AcademicYear, pk=pk)
+    if request.method == 'POST':
+        form = AcademicYearForm(request.POST, instance=academic_year)
+        if form.is_valid():
+            form.save()
+            return redirect('academics:academics_hub')
+    else:
+        form = AcademicYearForm(instance=academic_year)
+    return render(request, 'academics/academic_year_form.html', {'form': form, 'title': 'Edit Academic Year'})
+
+
+@role_required('ADMIN')
+def add_term(request):
+    if request.method == 'POST':
+        form = TermForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('academics:academics_hub')
+    else:
+        form = TermForm()
+    return render(request, 'academics/term_form.html', {'form': form, 'title': 'Add Term'})
+
+
+@role_required('ADMIN')
+def edit_term(request, pk):
+    term = get_object_or_404(Term, pk=pk)
+    if request.method == 'POST':
+        form = TermForm(request.POST, instance=term)
+        if form.is_valid():
+            form.save()
+            return redirect('academics:academics_hub')
+    else:
+        form = TermForm(instance=term)
+    return render(request, 'academics/term_form.html', {'form': form, 'title': 'Edit Term'})

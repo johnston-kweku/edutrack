@@ -1,5 +1,5 @@
 from django import forms
-from .models import Class, Subject, ClassSubject
+from .models import Class, Subject, ClassSubject, Term, AcademicYear, Assessment, AssessmentRecord
 
 
 class ClassCreationForm(forms.ModelForm):
@@ -42,3 +42,27 @@ class ClassSubjectCreationForm(forms.ModelForm):
             })
         }
 
+
+
+
+
+class AcademicYearForm(forms.ModelForm):
+    class Meta:
+        model = AcademicYear
+        fields = ['start_year', 'end_year', 'is_current']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        start_year = cleaned_data.get('start_year')
+        end_year = cleaned_data.get('end_year')
+
+        if start_year and end_year and end_year != start_year + 1:
+            self.add_error('end_year', 'End year must be exactly one year after the start year.')
+
+        return cleaned_data
+
+
+class TermForm(forms.ModelForm):
+    class Meta:
+        model = Term
+        fields = ['term', 'academic_year', 'is_current']
