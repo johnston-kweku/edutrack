@@ -1,4 +1,9 @@
+from typing import Any, Mapping
+
 from django import forms
+from django.core.files.base import File
+from django.db.models.base import Model
+from django.forms.utils import ErrorList
 from .models import Class, Subject, ClassSubject, Term, AcademicYear, Assessment, AssessmentRecord
 
 
@@ -66,3 +71,29 @@ class TermForm(forms.ModelForm):
     class Meta:
         model = Term
         fields = ['term', 'academic_year', 'is_current']
+
+
+
+
+class AssessmentForm(forms.ModelForm):
+    class_subject = forms.ModelChoiceField(
+        queryset=ClassSubject.objects.none(), label='Class & Subject'
+    )
+    class Meta:
+        model = Assessment
+        fields = ['assessment_type', 'date', 'max_score', 'term', 'academic_year']
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if user is None:
+            raise ValueError('AssessmentForm requires a user to determine which ClassSubjects are available.')
+        self.fields['class_subject'].queryset = ClassSubject.objects.filter(teacher=user).select_related('teacher' ,'subject_class')
+
+
+    def save(self):
+        class_subject = self.cleaned_data['class_subject']
+        assessment = super().save(commit=False)
+        assessment.subject = class_subject.subject
+        assessment.student_class = class_subject.subject_class
+        assessment.save()
