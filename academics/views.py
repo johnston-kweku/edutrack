@@ -5,12 +5,13 @@ from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.utils import timezone
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.core.exceptions import PermissionDenied, ValidationError
 from datetime import timedelta
 import csv
 from accounts.decorators import role_required
-from .forms import ClassCreationForm, SubjectCreationForm, ClassSubjectCreationForm, TermForm, AcademicYearForm
-from .models import Class, Subject, ClassSubject, Term, AcademicYear
+from .forms import ClassCreationForm, SubjectCreationForm, ClassSubjectCreationForm, TermForm, AcademicYearForm, AssessmentForm
+from .models import Class, Subject, ClassSubject, Term, AcademicYear, Assessment, AssessmentRecord, Student
 User = get_user_model()
 # Create your views here.
 
@@ -357,3 +358,60 @@ def edit_term(request, pk):
     else:
         form = TermForm(instance=term)
     return render(request, 'academics/term_form.html', {'form': form, 'title': 'Edit Term'})
+
+
+
+
+@role_required('TEACHING_STAFF')
+def add_assessment(request):
+    if request.method == 'POST':
+        form = AssessmentForm(request.POST, user=request.user)
+        if form.is_valid():
+            assessment = form.save(commit=True)
+            return redirect('academics:record_class_assessment', assessment_id=assessment.id)
+    else:
+        form = AssessmentForm(user=request.user)
+
+    return render(request, 'academics/add_assessment.html', {'form': form})
+
+
+
+
+@role_required('TEACHING_STAFF')
+def record_class_assessment(request, assessment_id):
+    assessment = get_object_or_404(Assessment, id=assessment_id)
+    class_subject_record = ClassSubject.objects.filter(
+        subject_class=assessment.student_class,
+        teacher=request.user,
+        subject=assessment.subject
+    )
+    
+    if not class_subject_record.exists():
+        raise PermissionDenied("You do not have permission to record assessments for this class and subject.")
+
+    
+    if request.method == 'POST':   
+        student_id = int(request.POST.get('student_id'))
+        score = request.POST.get('score')
+
+        student = get_object_or_404(Student, id=student_id, student_class=assessment.student_class)
+
+        try:
+            assessment_record = AssessmentRecord.objects.update_or_create(
+                assessment=assessment,
+                student=student,
+                defaults={'score': score}
+            )
+        except ValidationError as e:
+            return JsonResponse({'error': str(e)}, status=400)
+        return JsonResponse({'message': 'Score recorded successfully.'})
+    
+    students = Student.objects.filter(student_class=assessment.student_class).select_related('parent')
+    existing_records = AssessmentRecord.objects.filter(assessment=assessment).values('student_id', 'score')
+    existing_records_dict = {record['student_id']: record['score'] for record in existing_records}
+
+    return render(request, 'academics/record_class_assessment.html', {
+        'assessment': assessment,
+        'students': students,
+        'existing_records': existing_records_dict,
+    })

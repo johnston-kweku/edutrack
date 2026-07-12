@@ -19,4 +19,6 @@ urlpatterns = [
     path('academic-years/<int:pk>/edit/', views.edit_academic_year, name='edit_academic_year'),
     path('terms/add/', views.add_term, name='add_term'),
     path('terms/<int:pk>/edit/', views.edit_term, name='edit_term'),
+    path('assessment/create/', views.add_assessment, name='add_assessment'),
+    path('record/assessment/<int:assessment_id>/', views.record_class_assessment, name='record_class_assessment'),
 ]

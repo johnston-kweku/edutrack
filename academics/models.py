@@ -203,7 +203,7 @@ class Assessment(models.Model):
     max_score = models.DecimalField(max_digits=5, decimal_places=2) 
 
     def __str__(self):
-        return f'{self.assessment_type} – {self.term} – {self.academic_year}'
+        return f'{self.assessment_type} – {self.subject} – {self.term} – {self.academic_year}'
 
 
 class AssessmentRecord(models.Model):
