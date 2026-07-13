@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Assessment{% endblock %}
+
+{% block content %}
+<div class="mx-auto max-w-3xl px-4 py-10">
+    <!-- Header -->
+    <div class="mb-8">
+        <nav class="mb-4 flex items-center gap-2 text-sm text-gray-500">
+            <a href="{% url 'academics:teacher_academics_hub' %}" class="hover:text-blue-600 transition-colors">Academics</a>
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-gray-900 font-medium">New Assessment</span>
+        </nav>
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Create Assessment</h1>
+                <p class="mt-2 text-base text-gray-600">Configure a new assessment for your class.</p>
+            </div>
+            <a href="{% url 'academics:teacher_academics_hub' %}" class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-50 hover:border-gray-400">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                Back to Hub
+            </a>
+        </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="rounded-2xl border border-gray-200 bg-white shadow-sm">
+        <!-- Card Header -->
+        <div class="border-b border-gray-100 bg-linear-to-r from-slate-50 to-white px-6 py-5">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-900">Assessment Details</h2>
+                    <p class="text-sm text-gray-500">Fill in the information below to create your assessment.</p>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" class="p-6 sm:p-8">
+            {% csrf_token %}
+
+            <!-- Non-field Errors -->
+            {% if form.non_field_errors %}
+                <div class="mb-6 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-4 text-sm text-red-700">
+                    <svg class="mt-0.5 h-5 w-5 shrink-0 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div>{{ form.non_field_errors }}</div>
+                </div>
+            {% endif %}
+
+            <!-- Form Fields Grid -->
+            <div class="space-y-6">
+                {% for field in form %}
+                    <div class="{% if field.name == 'class_subject' or field.name == 'assessment_type' or field.name == 'term' or field.name == 'year' or field.name == 'max_score' or field.name == 'passing_score' %}sm:col-span-1{% endif %}">
+                        <label for="{{ field.id_for_label }}" class="mb-2 block text-sm font-semibold text-gray-900">
+                            {{ field.label }}
+                            {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
+                        </label>
+                        
+                        <div class="relative">
+                            {{ field }}
+                        </div>
+                        
+                        {% if field.help_text %}
+                            <p class="mt-1.5 text-xs text-gray-500">{{ field.help_text }}</p>
+                        {% endif %}
+                        
+                        {% if field.errors %}
+                            <div class="mt-2 flex items-center gap-1.5 text-sm text-red-600">
+                                <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                {{ field.errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Divider -->
+            <div class="my-8 border-t border-gray-100"></div>
+
+            <!-- Actions -->
+            <div class="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <a href="{% url 'academics:teacher_academics_hub' %}" class="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-2.5 text-sm font-semibold text-gray-700 transition-all hover:bg-gray-50 hover:text-gray-900">
+                    Cancel
+                </a>
+                <button type="submit" class="group inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition-all hover:bg-blue-700 hover:shadow-blue-300 active:scale-[0.98]">
+                    <svg class="h-4 w-4 transition-transform group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                    Create Assessment
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Helper Text -->
+    <p class="mt-6 text-center text-xs text-gray-400">
+        Need help? Contact your administrator for assessment guidelines.
+    </p>
+</div>
+
+<!-- Form Input Styling -->
+<style>
+    form input, form select, form textarea {
+        display: block;
+        width: 100%;
+        border-radius: 0.75rem;
+        border: 1px solid #d1d5db;
+        background-color: #ffffff;
+        padding: 0.625rem 1rem;
+        font-size: 0.875rem;
+        color: #111827;
+        transition: all 0.2s;
+    }
+    form input:focus, form select:focus, form textarea:focus {
+        border-color: #3b82f6;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    form input::placeholder, form textarea::placeholder {
+        color: #9ca3af;
+    }
+    form select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.75rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+    }
+</style>
+{% endblock %}

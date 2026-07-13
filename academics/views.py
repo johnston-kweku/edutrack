@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import PermissionDenied, ValidationError
+from decimal import Decimal, InvalidOperation
 from datetime import timedelta
 import csv
 from accounts.decorators import role_required
@@ -375,7 +376,7 @@ def add_assessment(request):
     return render(request, 'academics/add_assessment.html', {'form': form})
 
 
-from decimal import Decimal, InvalidOperation
+
 
 @role_required('TEACHING_STAFF', 'ADMIN')
 def record_class_assessment(request, assessment_id):
@@ -419,3 +420,29 @@ def record_class_assessment(request, assessment_id):
         'students': students,
         'existing_records': existing_records_dict,
     })
+
+
+@role_required('TEACHING_STAFF')
+def teacher_academics_hub(request):
+    teacher = request.user
+    class_subjects = ClassSubject.objects.filter(teacher=teacher).select_related('subject', 'subject_class')
+    try:
+        class_assigned = Class.objects.get(class_teacher=teacher)
+    except Class.DoesNotExist:
+        class_assigned = None
+    current_term = Term.objects.filter(is_current=True).select_related('academic_year').first()
+    current_academic_year = AcademicYear.objects.filter(is_current=True).first()
+
+    assessments = Assessment.objects.filter(
+        recorded_by=teacher,
+    ).select_related('term', 'academic_year', 'subject', 'student_class')
+
+
+    context = {
+        'class_subjects': class_subjects,
+        'class_assigned': class_assigned,
+        'current_term': current_term,   
+        'current_academic_year': current_academic_year,
+        'assessments': assessments,
+    }
+    return render(request, 'academics/teacher_academics_hub.html', context)

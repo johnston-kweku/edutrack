@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}My Academics{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- Header -->
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-linear-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147a48.47 48.47 0 011.5-4.343m-1.5 4.343a12.081 12.081 0 01-4.5-.397m20.482.397a48.47 48.47 0 00-1.5-4.343m1.5 4.343a12.081 12.081 0 004.5-.397M12 6.375a12.075 12.075 0 00-1.5-4.343m1.5 4.343a12.075 12.075 0 011.5-4.343M12 12.75a4.5 4.5 0 100-9 4.5 4.5 0 000 9z"/>
+                </svg>
+            </div>
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-indigo-600">Academics</p>
+                <h1 class="text-3xl font-black text-gray-900">My Dashboard</h1>
+            </div>
+        </div>
+        <a href="{% url 'academics:add_assessment' %}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-200 transition-all hover:bg-indigo-700">
+            + New Assessment
+        </a>
+    </div>
+
+    <!-- Current term band -->
+    <div class="rounded-3xl border border-gray-200 bg-linear-to-br from-indigo-600 via-indigo-600 to-violet-600 p-6 sm:p-8 text-white shadow-lg shadow-indigo-500/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-indigo-200">Currently Active</p>
+        {% if current_term %}
+            <h2 class="mt-2 text-2xl font-black">Term {{ current_term.term }} · {{ current_term.academic_year }}</h2>
+        {% else %}
+            <h2 class="mt-2 text-2xl font-black">No term marked as current</h2>
+        {% endif %}
+    </div>
+
+    <!-- Homeroom + quick stats -->
+    <div class="grid gap-6 sm:grid-cols-2">
+        <div class="rounded-2xl border border-gray-200 bg-white px-6 py-5 flex items-center gap-4">
+            <div class="w-11 h-11 rounded-xl bg-violet-50 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+            </div>
+            <div>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Homeroom Class</p>
+                {% if class_assigned %}
+                    <p class="text-lg font-bold text-gray-900">{{ class_assigned }}</p>
+                {% else %}
+                    <p class="text-sm text-gray-400">Not assigned as a homeroom teacher</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="rounded-2xl border border-gray-200 bg-white px-6 py-5 flex items-center gap-4">
+            <div class="w-11 h-11 rounded-xl bg-indigo-50 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                </svg>
+            </div>
+            <div>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Subjects Taught</p>
+                <p class="text-lg font-bold text-gray-900">{{ class_subjects|length }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid gap-6 xl:grid-cols-2">
+
+        <!-- Subjects & classes taught -->
+        <div class="rounded-3xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+            <div class="border-b border-gray-100 bg-slate-50 px-6 py-5">
+                <h2 class="text-lg font-semibold text-gray-900">Your Subjects</h2>
+                <p class="text-sm text-gray-500">Classes and subjects you're assigned to teach.</p>
+            </div>
+            <div class="divide-y divide-gray-100 max-h-96 overflow-y-auto">
+                {% for cs in class_subjects %}
+                    <div class="flex items-center justify-between px-6 py-4">
+                        <div>
+                            <p class="font-semibold text-gray-900">{{ cs.subject.name }}</p>
+                            <p class="text-sm text-gray-500">{{ cs.subject_class }}</p>
+                        </div>
+                        <a href="{% url 'academics:add_assessment' %}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-700">New Assessment →</a>
+                    </div>
+                {% empty %}
+                    <div class="px-6 py-8 text-sm text-gray-500">You haven't been assigned any subjects yet.</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Your assessments -->
+        <div class="rounded-3xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+            <div class="border-b border-gray-100 bg-slate-50 px-6 py-5 flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-900">Your Assessments</h2>
+                    <p class="text-sm text-gray-500">Assessments you've created.</p>
+                </div>
+                <a href="{% url 'academics:add_assessment' %}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-700">+ New</a>
+            </div>
+            <div class="divide-y divide-gray-100 max-h-96 overflow-y-auto">
+                {% for assessment in assessments %}
+                    <a href="{% url 'academics:record_class_assessment' assessment.id %}" class="flex items-center justify-between px-6 py-4 hover:bg-gray-50/50 transition-colors">
+                        <div>
+                            <p class="font-semibold text-gray-900">{{ assessment.assessment_type }} · {{ assessment.subject }}</p>
+                            <p class="text-sm text-gray-500">{{ assessment.student_class }} · {{ assessment.term }} · {{ assessment.date|date:"M d, Y" }}</p>
+                        </div>
+                        <span class="text-indigo-600 text-sm font-semibold">Enter Scores →</span>
+                    </a>
+                {% empty %}
+                    <div class="px-6 py-8 text-sm text-gray-500">You haven't created any assessments yet.</div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

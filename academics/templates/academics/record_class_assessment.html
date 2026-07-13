@@ -20,9 +20,9 @@
             <p class="text-sm text-gray-500">{{ assessment.student_class }} · Max score: {{ assessment.max_score }}</p>
         </div>
 
-        <div id="roster" class="bg-white rounded-2xl border border-gray-200 shadow-sm divide-y divide-gray-100">
+        <div id="roster" class="w-full overflow-x-auto rounded-2xl border border-gray-200 bg-white shadow-sm divide-y divide-gray-100">
             {% for student in students %}
-            <div class="flex items-center gap-4 px-5 py-4" data-row-id="{{ student.id }}">
+            <div class="flex min-w-130 flex-nowrap items-center gap-4 px-5 py-4" data-row-id="{{ student.id }}">
                 <div class="flex-1 min-w-0">
                     <p class="text-sm font-semibold text-gray-900 truncate">{{ student.student_name }}</p>
                     <p class="text-xs text-gray-400">{{ student.student_id }}</p>
