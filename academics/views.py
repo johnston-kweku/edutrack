@@ -375,9 +375,9 @@ def add_assessment(request):
     return render(request, 'academics/add_assessment.html', {'form': form})
 
 
+from decimal import Decimal, InvalidOperation
 
-
-@role_required('TEACHING_STAFF')
+@role_required('TEACHING_STAFF', 'ADMIN')
 def record_class_assessment(request, assessment_id):
     assessment = get_object_or_404(Assessment, id=assessment_id)
     class_subject_record = ClassSubject.objects.filter(
@@ -385,27 +385,31 @@ def record_class_assessment(request, assessment_id):
         teacher=request.user,
         subject=assessment.subject
     )
-    
+
     if not class_subject_record.exists():
         raise PermissionDenied("You do not have permission to record assessments for this class and subject.")
 
-    
-    if request.method == 'POST':   
+    if request.method == 'POST':
         student_id = int(request.POST.get('student_id'))
-        score = request.POST.get('score')
+
+        try:
+            score = Decimal(request.POST.get('score'))
+        except (InvalidOperation, TypeError):
+            return JsonResponse({'error': 'Invalid score value.'}, status=400)
 
         student = get_object_or_404(Student, id=student_id, student_class=assessment.student_class)
 
         try:
-            assessment_record = AssessmentRecord.objects.update_or_create(
+            AssessmentRecord.objects.update_or_create(
                 assessment=assessment,
                 student=student,
                 defaults={'score': score}
             )
         except ValidationError as e:
             return JsonResponse({'error': str(e)}, status=400)
+
         return JsonResponse({'message': 'Score recorded successfully.'})
-    
+
     students = Student.objects.filter(student_class=assessment.student_class).select_related('parent')
     existing_records = AssessmentRecord.objects.filter(assessment=assessment).values('student_id', 'score')
     existing_records_dict = {record['student_id']: record['score'] for record in existing_records}
