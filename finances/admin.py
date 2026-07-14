@@ -10,4 +10,4 @@ class FeeAdmin(admin.ModelAdmin):
 class FeePaymentAdmin(admin.ModelAdmin):
     list_display = ['student', 'fee', 'amount_tendered', 'balance', 'paid_at', 'received_by']
     list_filter = ['paid_at']
-    search_fields = ['student__name']
+    search_fields = ['student__student_name']

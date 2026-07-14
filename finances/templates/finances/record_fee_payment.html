@@ -173,39 +173,6 @@
                             {% endif %}
                         </div>
 
-                        <!-- Received By Field -->
-                        <div class="space-y-2 sm:col-span-2">
-                            <label for="{{ form.received_by.id_for_label }}" class="block text-sm font-semibold text-gray-700">
-                                Received By <span class="text-red-500">*</span>
-                            </label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-                                    </svg>
-                                </div>
-                                <select 
-                                    name="{{ form.received_by.name }}" 
-                                    id="{{ form.received_by.id_for_label }}"
-                                    class="block w-full pl-10 pr-10 py-2.5 border {% if form.received_by.errors %}border-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-200 focus:ring-amber-500/20 focus:border-amber-500{% endif %} rounded-xl bg-gray-50/50 text-gray-900 focus:outline-none focus:ring-2 focus:bg-white transition-all sm:text-sm appearance-none cursor-pointer"
-                                >
-                                    <option value="" disabled {% if not form.received_by.value %}selected{% endif %}>Select staff member</option>
-                                    {% for choice in form.received_by.field.choices %}
-                                        {% if choice.0 %}
-                                        <option value="{{ choice.0 }}" {% if form.received_by.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
-                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            {% if form.received_by.errors %}
-                                <p class="text-xs text-red-600 mt-1">{{ form.received_by.errors.0 }}</p>
-                            {% endif %}
-                        </div>
                     </div>
 
                     <!-- Divider -->

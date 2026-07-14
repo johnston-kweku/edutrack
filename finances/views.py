@@ -164,7 +164,10 @@ def record_fee_payment(request):
     if request.method == 'POST':
         form = FeeRecordForm(request.POST)
         if form.is_valid():
-            form.save()
+            fee = form.save(commit=False)
+            fee.received_by = request.user
+            fee.save()
+            cache.delete('dashboard_summary')
             return redirect('finances:fee_payment')
         
     else:
