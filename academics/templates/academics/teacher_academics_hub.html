@@ -102,7 +102,7 @@
                     <div class="flex items-center justify-between px-6 py-4 hover:bg-gray-50/50 transition-colors">
                         
                         <!-- Clickable area for the main navigation -->
-                        <a href="{% url 'academics:record_class_assessment' assessment.id %}" class="flex-grow">
+                        <a href="{% url 'academics:record_class_assessment' assessment.id %}" class="grow">
                             <p class="font-semibold text-gray-900">{{ assessment.assessment_type }} · {{ assessment.subject }}</p>
                             <p class="text-sm text-gray-500">{{ assessment.student_class }} · {{ assessment.term }} · {{ assessment.date|date:"M d, Y" }}</p>
                         </a>
