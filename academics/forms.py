@@ -90,10 +90,11 @@ class AssessmentForm(forms.ModelForm):
             raise ValueError('AssessmentForm requires a user to determine which ClassSubjects are available.')
         self.fields['class_subject'].queryset = ClassSubject.objects.filter(teacher=user).select_related('teacher' ,'subject_class')
 
-
-    def save(self):
+    def save(self, commit=True):
         class_subject = self.cleaned_data['class_subject']
         assessment = super().save(commit=False)
         assessment.subject = class_subject.subject
         assessment.student_class = class_subject.subject_class
-        assessment.save()
+        if commit:
+            assessment.save()
+        return assessment

@@ -7,7 +7,7 @@
     <nav class="flex mb-4" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
             <li class="inline-flex items-center">
-                <a href="{% if request.user.is_admin %}{% url 'dashboards:admin_dashboard' %}{% elif request.user.is_teaching_staff %}{% url 'dashboards:teachers_dashboard' %}{% endif %}" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors">
+                <a href="{% if request.user.is_admin %}{% url 'dashboards:admin_dashboard' %}{% elif request.user.is_teaching_staff %}{% url 'academics:teacher_academics_hub' %}{% endif %}" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
@@ -38,7 +38,7 @@
             You are currently not assigned as a class teacher. Please contact the administration department to get a class assignment.
         </p>
         <div class="pt-4">
-            <a href="{% url 'dashboards:teachers_dashboard' %}" class="inline-flex items-center justify-center px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm rounded-xl transition-all">
+            <a href="{% url 'academics:teacher_academics_hub' %}" class="inline-flex items-center justify-center px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm rounded-xl transition-all">
                 Return to Dashboard
             </a>
         </div>
@@ -136,7 +136,7 @@
             <!-- Sticky/Floating Actions Bottom Bar -->
             {% if class_assigned.student.exists %}
             <div class="p-6 bg-gray-50/50 border-t border-gray-100 flex items-center justify-end gap-3">
-                <a href="{% url 'dashboards:teachers_dashboard' %}" class="px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-700 font-bold text-sm rounded-xl border border-gray-200 shadow-sm transition-all active:scale-95">
+                <a href="{% url 'academics:teacher_academics_hub' %}" class="px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-700 font-bold text-sm rounded-xl border border-gray-200 shadow-sm transition-all active:scale-95">
                     Cancel
                 </a>
                 <button type="submit" id="submit-btn" class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-100 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">

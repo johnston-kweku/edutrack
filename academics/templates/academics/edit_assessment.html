@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Create Assessment{% endblock %}
+{% block title %}Edit Assessment{% endblock %}
 
 {% block content %}
 <div class="mx-auto max-w-3xl px-4 py-10">
@@ -8,17 +8,26 @@
         <nav class="mb-4 flex items-center gap-2 text-sm text-gray-500">
             <a href="{% url 'academics:teacher_academics_hub' %}" class="hover:text-blue-600 transition-colors">Academics</a>
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            <span class="text-gray-900 font-medium">New Assessment</span>
+            <span class="text-gray-900 font-medium">Edit Assessment</span>
         </nav>
         <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Create Assessment</h1>
-                <p class="mt-2 text-base text-gray-600">Configure a new assessment for your class.</p>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Edit Assessment</h1>
+                <p class="mt-2 text-base text-gray-600">{{ assessment.assessment_type }} · {{ assessment.subject }} · {{ assessment.student_class }}</p>
             </div>
             <a href="{% url 'academics:teacher_academics_hub' %}" class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-50 hover:border-gray-400">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                 Back to Hub
             </a>
+        </div>
+    </div>
+
+    <!-- Caution strip: editing class_subject after scores exist can orphan records -->
+    <div class="mb-6 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-800">
+        <svg class="mt-0.5 h-5 w-5 shrink-0 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div>
+            <p class="font-semibold">Changing the class or subject may affect existing scores.</p>
+            <p class="mt-0.5 text-amber-700">If students have already been scored on this assessment, switching the class/subject combination can leave those records mismatched.</p>
         </div>
     </div>
 
@@ -30,7 +39,7 @@
                 </div>
                 <div>
                     <h2 class="text-lg font-semibold text-gray-900">Assessment Details</h2>
-                    <p class="text-sm text-gray-500">Fill in the information below to create your assessment.</p>
+                    <p class="text-sm text-gray-500">Update the information below.</p>
                 </div>
             </div>
         </div>
@@ -75,16 +84,12 @@
                     Cancel
                 </a>
                 <button type="submit" class="group inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition-all hover:bg-blue-700 hover:shadow-blue-300 active:scale-[0.98]">
-                    <svg class="h-4 w-4 transition-transform group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
-                    Create Assessment
+                    <svg class="h-4 w-4 transition-transform group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    Save Changes
                 </button>
             </div>
         </form>
     </div>
-
-    <p class="mt-6 text-center text-xs text-gray-400">
-        Need help? Contact your administrator for assessment guidelines.
-    </p>
 </div>
 
 <style>
@@ -103,9 +108,6 @@
         border-color: #3b82f6;
         outline: none;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-    form input::placeholder, form textarea::placeholder {
-        color: #9ca3af;
     }
     form select {
         appearance: none;

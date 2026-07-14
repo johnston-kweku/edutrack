@@ -18,7 +18,7 @@ def landing(request):
         elif request.user.is_parent():
             return redirect('dashboards:parents_dashboard')
         elif request.user.is_teaching_staff():
-            return redirect('dashboards:teachers_dashboard')
+            return redirect('academics:teacher_academics_hub')
             
     from academics.models import Student, Class
     context = {
@@ -35,7 +35,7 @@ def login_view(request):
         elif request.user.is_parent():
             return redirect('dashboards:parents_dashboard')
         elif request.user.is_teaching_staff():
-            return redirect('dashboards:teachers_dashboard')
+            return redirect('academics:teacher_academics_hub')
         
     if request.method == 'POST':
         try:
@@ -82,7 +82,7 @@ def login_view(request):
                     return JsonResponse({
                         'success': True,
                         'message': 'Login success',
-                        'redirect_url': reverse('dashboards:teachers_dashboard')
+                        'redirect_url': reverse('academics:teacher_academics_hub')
                     })
                 
 

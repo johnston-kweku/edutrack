@@ -22,4 +22,5 @@ urlpatterns = [
     path('assessment/create/', views.add_assessment, name='add_assessment'),
     path('record/assessment/<int:assessment_id>/', views.record_class_assessment, name='record_class_assessment'),
     path('teacher/academics/hub/', views.teacher_academics_hub, name='teacher_academics_hub'),
+    path('edit/assessment/<int:assessment_id>/', views.edit_assessment, name='edit_assessment'),
 ]

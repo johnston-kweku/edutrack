@@ -1,12 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.utils import timezone
 from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import PermissionDenied, ValidationError
+from django.db.models import Count, F, Case, When, BooleanField
 from decimal import Decimal, InvalidOperation
 from datetime import timedelta
 import csv
@@ -368,15 +368,36 @@ def add_assessment(request):
     if request.method == 'POST':
         form = AssessmentForm(request.POST, user=request.user)
         if form.is_valid():
-            assessment = form.save(commit=True)
+            assessment = form.save(commit=False)
+            assessment.recorded_by = request.user
+            assessment.save()
             return redirect('academics:record_class_assessment', assessment_id=assessment.id)
     else:
         form = AssessmentForm(user=request.user)
 
     return render(request, 'academics/add_assessment.html', {'form': form})
 
+@role_required('TEACHING_STAFF')
+def edit_assessment(request, assessment_id):
+    assessment = get_object_or_404(Assessment, id=assessment_id, recorded_by=request.user)
 
+    if request.method == 'POST':
+        form = AssessmentForm(request.POST, instance=assessment, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('academics:teacher_academics_hub')
+    else:
+        initial_class_subject = ClassSubject.objects.filter(
+            subject=assessment.subject,
+            subject_class=assessment.student_class,
+        ).first()
+        form = AssessmentForm(
+            instance=assessment,
+            user=request.user,
+            initial={'class_subject': initial_class_subject}
+        )
 
+    return render(request, 'academics/edit_assessment.html', {'form': form, 'assessment': assessment})
 
 @role_required('TEACHING_STAFF', 'ADMIN')
 def record_class_assessment(request, assessment_id):
@@ -433,10 +454,22 @@ def teacher_academics_hub(request):
     current_term = Term.objects.filter(is_current=True).select_related('academic_year').first()
     current_academic_year = AcademicYear.objects.filter(is_current=True).first()
 
-    assessments = Assessment.objects.filter(
-        recorded_by=teacher,
-    ).select_related('term', 'academic_year', 'subject', 'student_class')
+    
 
+
+
+    assessments = Assessment.objects.filter(
+        recorded_by=request.user
+    ).select_related('student_class', 'subject').annotate(
+        recorded_count=Count('assessmentrecord', distinct=True),
+        roster_size=Count('student_class__student', distinct=True)
+    ).annotate(
+        is_incomplete=Case(
+            When(recorded_count__lt=F('roster_size'), then=True),
+            default=False,
+            output_field=BooleanField()
+        )
+    ).order_by('-is_incomplete', '-date')
 
     context = {
         'class_subjects': class_subjects,
@@ -446,3 +479,5 @@ def teacher_academics_hub(request):
         'assessments': assessments,
     }
     return render(request, 'academics/teacher_academics_hub.html', context)
+
+
