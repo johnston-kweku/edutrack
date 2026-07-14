@@ -21,3 +21,12 @@ def parents_dashboard(request):
 
 
 
+def handle_404(request, exception):
+    return render(request, 'errors/404.html', status=404)
+
+
+def handle_500(request):
+    return render(request, 'errors/500.html', status=500)
+
+def handle_403(request, exception):
+    return render(request, 'errors/403.html', status=403)
