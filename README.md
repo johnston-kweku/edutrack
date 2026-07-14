@@ -18,26 +18,27 @@ EduTrack is a robust, enterprise-grade School Management System built with a **"
 ### 📚 Academic Administration
 - **High-Fidelity Record Management**: Custom-built interfaces for enrolling and editing students and classes, featuring real-time validation feedback.
 - **Intelligent Organization**: School structure organized into Levels (KG, Primary, JHS) and Stages with automated ID generation.
-- **Subject & Teacher Mapping**: Dynamic assignment of subjects to classes and educators.
+- **Subject & Teacher Mapping**: Dynamic assignment of subjects to classes and educators, with class/subject combinations scoped per teacher to prevent unauthorized scoring.
 
 ### 📊 Performance & Attendance
-- **Integrated Grading**: Seamless tracking of Class and Exam scores with automated total calculations.
-- **Daily Attendance**: Real-time attendance monitoring with historical tracking.
+- **Two-Step Assessment Flow**: Teachers create an assessment scoped to a `ClassSubject`, then record individual student scores via AJAX with live per-student feedback.
+- **Scoring Completion Tracking**: The teacher dashboard annotates each assessment with roster size vs. recorded scores, surfacing incomplete assessments first so nothing falls through the cracks.
+- **Daily Attendance**: Real-time attendance monitoring with historical tracking via a header/line-item pattern.
 
 ### 💰 Finance Management
-- **Automated Fee Tracking**: Class-based fee configuration with automated balance calculations and payment histories.
+- **Automated Fee Tracking**: Class-based fee configuration with automated, installment-aware balance calculations and payment histories.
 - **Financial Transparency**: Real-time status updates for parents and admins regarding payment progress.
 
 ### 🖥️ Interactive Dashboards
 - **Admin Command Center**: Holistic overview of school metrics and management tools.
-- **Teacher Workspace**: Streamlined access to class lists, attendance, and grading.
+- **Teacher Workspace**: A single hub showing assigned classes/subjects, homeroom assignment (if any), current term/year, and all assessments with live scoring completion status.
 - **Parent Portal**: Direct insight into student progress and financial status.
 
 ## 🛠️ Tech Stack
 
 - **Backend**: Django 6.x (Python)
 - **Frontend**: Tailwind CSS 4.x, Vanilla JavaScript
-- **Database**: SQLite (Default, configurable to PostgreSQL/MySQL)
+- **Database**: PostgreSQL (production and dev)
 - **Monitoring**: Sentry SDK
 - **Styling**: Modern CSS with Tailwind CLI
 
@@ -60,19 +61,19 @@ This section provides a detailed overview of each Django app within the EduTrack
    - **Key Models**:
      - `Class`: Represents academic classes with stages and levels (KG, Primary, JHS), and an optional `class_teacher`. Includes validation for valid stage/level combinations.
      - `Subject`: Defines academic subjects.
-     - `ClassSubject`: Maps subjects to specific classes and assigns a `teacher`.
-     - `AcademicYear`: Manages academic years, including tracking the current year.
-     - `Term`: Manages academic terms within an academic year, including tracking the current term.
+     - `ClassSubject`: Maps a subject to a class and assigns a `teacher`; unique per `subject` + `subject_class` pair.
+     - `AcademicYear`: Manages academic years, including tracking the current year via an `is_current` toggle.
+     - `Term`: Manages academic terms within an academic year, including tracking the current term via an `is_current` toggle.
      - `Student`: Stores student information, including ID generation, personal details, parent linkage, and an optional profile image (with image compression).
-     - `Assessment`: Defines different types of assessments (Quiz, Class Test, Exam, Exercise) with associated scores, subjects, terms, and classes.
-     - `AssessmentRecord`: Records individual student scores for specific assessments, with validation against `max_score`.
+     - `Assessment`: Defines an assessment (Quiz, Class Test, Exam, Exercise) scoped to a `ClassSubject`, with `subject` and `student_class` denormalized onto the model at save time so teachers can't submit a mismatched class/subject combination.
+     - `AssessmentRecord`: Records individual student scores for a specific assessment, with validation against `max_score`.
      - `Attendance`: Tracks daily attendance for a class, marked by a staff member.
      - `AttendanceRecord`: Records the presence or absence of individual students for a given attendance entry.
    - **Key Features**:
      - Hierarchical class structure.
      - Automated student ID generation.
      - Comprehensive academic year and term management.
-     - Robust assessment and grading system.
+     - Robust assessment and grading system with completion tracking (roster size vs. recorded scores) surfaced on the teacher dashboard.
      - Daily attendance tracking.
      - Image handling for student profiles with compression.
 
@@ -80,7 +81,7 @@ This section provides a detailed overview of each Django app within the EduTrack
    - **Purpose**: Handles financial aspects of the school, specifically fee management and payments.
    - **Key Models**:
      - `Fee`: Defines fees for specific classes and terms, including amount and description. Ensures unique fee configurations per class/term.
-     - `FeePayment`: Records student payments towards fees, calculating `amount_tendered`, `balance`, and tracking who received the payment. Automatically calculates balance based on previous payments.
+     - `FeePayment`: Records student payments towards fees, calculating `amount_tendered`, `balance`, and tracking who received the payment. Automatically calculates balance based on previous payments, supporting installments.
    - **Key Features**:
      - Class and term-specific fee configuration.
      - Automated calculation of outstanding balances.
@@ -91,7 +92,7 @@ This section provides a detailed overview of each Django app within the EduTrack
    - **Key Models**: (Likely minimal models, primarily focused on views/templates)
    - **Key Features**:
      - Centralized overview for administrators.
-     - Workspace for teachers to manage classes and students.
+     - Teacher workspace built around the `teacher_academics_hub`, combining assigned subjects, homeroom info, current term/year, and assessment completion status in one view.
      - Parent portal for tracking student progress and finances.
 
 ### 5. `students` App
@@ -108,6 +109,14 @@ This section provides a detailed overview of each Django app within the EduTrack
 - `students/`: Student-specific utilities and views.
 - `static/`: Global CSS and JavaScript assets.
 - `templates/`: Global HTML templates (base, navbar, sidebar).
+
+## 🗺️ Roadmap
+
+- Assessment reporting / performance dashboard (per class/subject/term breakdown)
+- Report cards (per-student summary across subjects, likely versioned/snapshotted)
+- CSV export for assessments (class-teacher scoped, full gradebook across subjects)
+- Multi-tenancy (deploy-per-tenant with a lightweight control plane)
+- Guard against orphaned `AssessmentRecord`s when `class_subject` is changed on an assessment that already has recorded scores
 
 ## 🤝 Contributing
 

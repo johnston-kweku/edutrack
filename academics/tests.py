@@ -24,7 +24,7 @@ class ResultsAndEditViewsTests(TestCase):
     def test_results_page_lists_subjects_and_class_subjects_with_edit_links(self):
         self.client.force_login(self.user)
 
-        response = self.client.get(reverse('academics:academics_landing'))
+        response = self.client.get(reverse('academics:academics_hub'))
 
         self.assertContains(response, self.subject.name)
         self.assertContains(response, str(self.student_class))
@@ -39,7 +39,7 @@ class ResultsAndEditViewsTests(TestCase):
             {'name': 'Mathematics'}
         )
 
-        self.assertRedirects(response, reverse('academics:academics_landing'))
+        self.assertRedirects(response, reverse('academics:academics_hub'))
         self.subject.refresh_from_db()
         self.assertEqual(self.subject.name, 'Mathematics')
 
@@ -55,6 +55,6 @@ class ResultsAndEditViewsTests(TestCase):
             }
         )
 
-        self.assertRedirects(response, reverse('academics:academics_landing'))
+        self.assertRedirects(response, reverse('academics:academics_hub'))
         self.class_subject.refresh_from_db()
         self.assertEqual(self.class_subject.teacher, self.user)

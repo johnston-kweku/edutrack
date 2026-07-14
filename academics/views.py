@@ -287,7 +287,7 @@ def edit_subject(request, subject_id):
         form = SubjectCreationForm(request.POST, instance=subject)
         if form.is_valid():
             form.save()
-            return redirect('academics:academics_landing')
+            return redirect('academics:academics_hub')
     else:
         form = SubjectCreationForm(instance=subject)
 
@@ -302,7 +302,7 @@ def edit_class_subject(request, class_subject_id):
         form = ClassSubjectCreationForm(request.POST, instance=class_subject)
         if form.is_valid():
             form.save()
-            return redirect('academics:academics_landing')
+            return redirect('academics:academics_hub')
     else:
         form = ClassSubjectCreationForm(instance=class_subject)
 
