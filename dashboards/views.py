@@ -7,6 +7,10 @@ User = get_user_model()
 # Create your views here.
 
 
+def catch_all_404(request, *args, **kwargs):
+    return render(request, 'errors/404.html', status=404)
+
+
 @login_required
 @role_required('ADMIN')
 def admin_dashboard(request):
