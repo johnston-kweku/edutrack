@@ -22,6 +22,7 @@ class Fee(models.Model):
     class Meta:
         unique_together = ['student_class', 'term']
 
+
 class FeePayment(models.Model):
     fee = models.ForeignKey(Fee, on_delete=models.PROTECT)
     student = models.ForeignKey(Student, on_delete=models.PROTECT)
@@ -29,6 +30,7 @@ class FeePayment(models.Model):
     paid_at = models.DateTimeField(default=timezone.now)
     received_by = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role__in': ['ADMIN', 'TEACHING_STAFF']})
     balance = models.DecimalField(max_digits=6, decimal_places=2, blank=True)
+    receipt_number = models.CharField(max_length=20, unique=True, blank=True, editable=False)
 
     def __str__(self):
         return f'{self.student.student_name} – {self.balance}'
@@ -40,6 +42,10 @@ class FeePayment(models.Model):
         ).exclude(pk=self.pk).aggregate(total=Sum('amount_tendered'))['total'] or 0
         self.balance = self.fee.amount - previous_payments - self.amount_tendered
 
-
+        is_new = self.pk is None
         super().save(*args, **kwargs)
+
+        if is_new:
+            self.receipt_number = f'RCT-{str(self.pk).zfill(5)}'
+            super().save(update_fields=['receipt_number'])
 

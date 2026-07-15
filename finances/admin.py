@@ -8,6 +8,6 @@ class FeeAdmin(admin.ModelAdmin):
 
 @admin.register(FeePayment)
 class FeePaymentAdmin(admin.ModelAdmin):
-    list_display = ['student', 'fee', 'amount_tendered', 'balance', 'paid_at', 'received_by']
+    list_display = ['student', 'fee', 'amount_tendered', 'balance', 'paid_at', 'received_by', 'receipt_number']
     list_filter = ['paid_at']
     search_fields = ['student__student_name']
