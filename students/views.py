@@ -3,7 +3,6 @@ from django.http import JsonResponse
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
 from django.utils import timezone
-from django.utils.dateparse import parse_date
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from academics.models import Student, Class, Attendance, AttendanceRecord
