@@ -156,12 +156,10 @@ def edit_student(request, student_id):
         if form.is_valid():
             cache.delete('dashboard_summary')
             form.save()
-            return redirect('academics:class', student.student_class.id )
-    
+            return redirect('academics:class', student.student_class.id )    
     else:
         form = StudentCreationForm(instance=student)
 
-    
     context = {
         'form' : form,
         'student': student
