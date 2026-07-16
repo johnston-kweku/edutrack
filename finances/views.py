@@ -32,14 +32,14 @@ def dashboard_summary(request):
 
     academic_year = current_term.academic_year
 
-    total_students = Student.objects.count()
+    total_students = Student.objects.filter(status=Student.Status.ENROLLED).count()
     total_teachers = User.objects.filter(role='TEACHING_STAFF').count()
     total_classes = Class.objects.count()
 
     fees_this_term = Fee.objects.filter(
         term=current_term
     ).select_related('student_class').annotate(
-        student_count=Count('student_class__student')
+        student_count=Count('student_class__student', filter=Q(student_class__student__status='ENROLLED'), distinct=True)
     )
 
     total_expected = sum(
@@ -58,7 +58,8 @@ def dashboard_summary(request):
     ) if total_expected > 0 else 0
 
     student_payment_summary = FeePayment.objects.filter(
-        fee__term=current_term
+        fee__term=current_term,
+        student__status=Student.Status.ENROLLED
     ).values('student', 'fee__amount').annotate(
         total_paid=Sum('amount_tendered')
     )
