@@ -125,6 +125,11 @@ class Student(models.Model):
         MALE = 'MALE', 'Male'
         FEMALE = 'FEMALE', 'Female'
 
+    class Status(models.TextChoices):
+        DISMISSED = 'DISMISSED', 'Dismissed'
+        TRANSFERRED = 'TRANSFERRED', 'Transferred'
+        ENROLLED = 'ENROLLED', 'Enrolled'
+
     student_id = models.CharField(max_length=50, unique=True, blank=True)
     student_name = models.CharField(max_length=500)
     student_class = models.ForeignKey(Class, on_delete=models.PROTECT, related_name='student')
@@ -133,6 +138,7 @@ class Student(models.Model):
     gender = models.CharField(max_length=20, choices=Gender.choices)
     parent = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role': 'PARENT'}, blank=True, null=True, related_name='student')
     image = models.ImageField(upload_to='student_images/', blank=True, null=True, validators=[FileExtensionValidator(allowed_extensions=['png', 'jpeg', 'jpg'])])
+    status = models.CharField(max_length=30, choices=Status.choices, default=Status.ENROLLED)
 
 
     def __str__(self):
