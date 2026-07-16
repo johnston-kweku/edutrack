@@ -52,7 +52,7 @@ def class_view(request, class_id):
 
     query = request.GET.get('query', '')
     class_requested = get_object_or_404(Class.objects.select_related('class_teacher'),id=class_id)
-    students = class_requested.student.all().select_related('parent')
+    students = class_requested.student.all().filter(status=Student.Status.ENROLLED).select_related('parent')
 
     if query:
         students = students.filter(student_name__icontains=query)

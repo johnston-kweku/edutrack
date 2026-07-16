@@ -27,8 +27,8 @@ class TermAdmin(admin.ModelAdmin):
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ['student_id', 'student_name', 'student_class', 'gender', 'parent']
-    list_filter = ['student_class', 'gender']
+    list_display = ['student_id', 'student_name', 'student_class', 'gender', 'status', 'parent']
+    list_filter = ['student_class', 'gender', 'status', 'status']
     search_fields = ['student_name', 'student_id']
 
 

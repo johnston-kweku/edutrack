@@ -150,7 +150,6 @@ class Student(models.Model):
         if is_new:
             # Save initially to populate self.pk
             super().save(*args, **kwargs)
-            
 
             self.student_id = f'STU-{str(self.pk).zfill(5)}'
             # Save the student_id back to the instance
@@ -166,8 +165,6 @@ class Student(models.Model):
                 image_changed = True
 
             if image_changed:
-                
-
                 img = Image.open(self.image)
                 if img.mode != 'RGB':
                     img = img.convert('RGB')
@@ -181,13 +178,12 @@ class Student(models.Model):
 
                 name = os.path.splitext(os.path.basename(self.image.name))[0] + '.jpg'
                 self.image = ContentFile(buffer.read(), name=name)
-                
-                # If it's not a new instance, we need to make sure this gets saved
-                if not is_new:
-                    super().save(*args, **kwargs)
+
+                super().save(*args, **kwargs)
+                return
 
         # Fallback save for standard updates (if not already handled)
-        if not is_new and not 'image_changed' in locals():
+        if not is_new:
             super().save(*args, **kwargs)
 
 

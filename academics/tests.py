@@ -1,8 +1,12 @@
+from io import BytesIO
+
+from PIL import Image
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
-from .models import Class, ClassSubject, Subject
+from .models import Class, ClassSubject, Student, Subject
 
 
 class ResultsAndEditViewsTests(TestCase):
@@ -58,3 +62,43 @@ class ResultsAndEditViewsTests(TestCase):
         self.assertRedirects(response, reverse('academics:academics_hub'))
         self.class_subject.refresh_from_db()
         self.assertEqual(self.class_subject.teacher, self.user)
+
+    def test_edit_student_updates_status_when_existing_image_is_present(self):
+        self.client.force_login(self.user)
+        parent = get_user_model().objects.create_user(
+            username='parentuser',
+            password='secret123',
+            full_name='Parent User',
+            role='PARENT'
+        )
+
+        image = Image.new('RGB', (1, 1), color='red')
+        buffer = BytesIO()
+        image.save(buffer, format='PNG')
+        buffer.seek(0)
+
+        student = Student.objects.create(
+            student_name='Jane Doe',
+            student_class=self.student_class,
+            date_of_birth='2008-01-01',
+            gender=Student.Gender.FEMALE,
+            parent=parent,
+            image=SimpleUploadedFile('student.png', buffer.read(), content_type='image/png'),
+            status=Student.Status.ENROLLED,
+        )
+
+        response = self.client.post(
+            reverse('students:edit_student', args=[student.pk]),
+            {
+                'student_name': student.student_name,
+                'student_class': self.student_class.pk,
+                'date_of_birth': student.date_of_birth,
+                'gender': student.gender,
+                'parent': parent.pk,
+                'status': Student.Status.DISMISSED,
+            }
+        )
+
+        self.assertEqual(response.status_code, 302)
+        student.refresh_from_db()
+        self.assertEqual(student.status, Student.Status.DISMISSED)
