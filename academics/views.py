@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import PermissionDenied, ValidationError
-from django.db.models import Count, F, Case, When, BooleanField
+from django.db.models import Count, F, Case, When, BooleanField, Q
 from decimal import Decimal, InvalidOperation
 from datetime import timedelta
 import csv
@@ -20,7 +20,7 @@ User = get_user_model()
 @login_required
 @role_required('ADMIN')
 def classes_list(request):
-    classes = Class.objects.all().select_related('class_teacher').annotate(students_count=Count('student'))
+    classes = Class.objects.all().select_related('class_teacher').annotate(students_count=Count('student', filter=Q(student__status='ENROLLED')))
     class_segregagtion = {
         'kindergarten': [],
         'lower_primary': [],
@@ -462,7 +462,11 @@ def teacher_academics_hub(request):
         recorded_by=request.user
     ).select_related('student_class', 'subject').annotate(
         recorded_count=Count('assessmentrecord', distinct=True),
-        roster_size=Count('student_class__student', distinct=True)
+        roster_size=Count(
+            'student_class__student',
+            filter=Q(student_class__student__status='ENROLLED'),
+            distinct=True
+        )
     ).annotate(
         is_incomplete=Case(
             When(recorded_count__lt=F('roster_size'), then=True),
