@@ -126,9 +126,9 @@ class Student(models.Model):
         FEMALE = 'FEMALE', 'Female'
 
     class Status(models.TextChoices):
+        ENROLLED = 'ENROLLED', 'Enrolled'
         DISMISSED = 'DISMISSED', 'Dismissed'
         TRANSFERRED = 'TRANSFERRED', 'Transferred'
-        ENROLLED = 'ENROLLED', 'Enrolled'
 
     student_id = models.CharField(max_length=50, unique=True, blank=True)
     student_name = models.CharField(max_length=500)
