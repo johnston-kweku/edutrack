@@ -124,6 +124,35 @@
                             {% endif %}
                         </div>
 
+                        <!-- Payment Method Field -->
+                        <div class="space-y-2">
+                            <label for="{{ form.payment_method.id_for_label }}" class="block text-sm font-semibold text-gray-700">
+                                Payment Method <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <select
+                                    name="{{ form.payment_method.name }}"
+                                    id="{{ form.payment_method.id_for_label }}"
+                                    class="block w-full pl-4 pr-10 py-2.5 border {% if form.payment_method.errors %}border-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-200 focus:ring-amber-500/20 focus:border-amber-500{% endif %} rounded-xl bg-gray-50/50 text-gray-900 focus:outline-none focus:ring-2 focus:bg-white transition-all sm:text-sm appearance-none cursor-pointer"
+                                >
+                                    <option value="" disabled {% if not form.payment_method.value %}selected{% endif %}>Select payment method</option>
+                                    {% for choice in form.payment_method.field.choices %}
+                                        {% if choice.0 %}
+                                        <option value="{{ choice.0 }}" {% if form.payment_method.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            {% if form.payment_method.errors %}
+                                <p class="text-xs text-red-600 mt-1">{{ form.payment_method.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
                         <!-- Amount Tendered Field -->
                         <div class="space-y-2">
                             <label for="{{ form.amount_tendered.id_for_label }}" class="block text-sm font-semibold text-gray-700">

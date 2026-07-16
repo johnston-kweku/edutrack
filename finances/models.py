@@ -24,6 +24,10 @@ class Fee(models.Model):
 
 
 class FeePayment(models.Model):
+    class PaymentMethod(models.TextChoices):
+        CASH = 'CASH', 'Cash'
+        MOBILE_MONEY = 'MOBILE_MONEY', 'Mobile Money'
+
     fee = models.ForeignKey(Fee, on_delete=models.PROTECT)
     student = models.ForeignKey(Student, on_delete=models.PROTECT)
     amount_tendered = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(1)])
@@ -31,6 +35,7 @@ class FeePayment(models.Model):
     received_by = models.ForeignKey(User, on_delete=models.PROTECT, limit_choices_to={'role__in': ['ADMIN', 'TEACHING_STAFF']})
     balance = models.DecimalField(max_digits=6, decimal_places=2, blank=True)
     receipt_number = models.CharField(max_length=20, unique=True, blank=True, editable=False)
+    payment_method = models.CharField(max_length=50, blank=True, choices=PaymentMethod.choices, default=PaymentMethod.CASH)
 
     def __str__(self):
         return f'{self.student.student_name} – {self.balance}'

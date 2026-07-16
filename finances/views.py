@@ -169,7 +169,7 @@ def record_fee_payment(request):
             fee.received_by = request.user
             fee.save()
             cache.delete('dashboard_summary')
-            return redirect('finances:fee_payment')
+            return redirect('finances:receipt', feepayment_id=fee.id)
         
     else:
         form = FeeRecordForm()

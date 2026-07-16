@@ -16,7 +16,7 @@ class FeeCreationForm(forms.ModelForm):
 class FeeRecordForm(forms.ModelForm):
     class Meta:
         model = FeePayment
-        fields = ['fee', 'student', 'amount_tendered', 'paid_at']
+        fields = ['fee', 'student', 'amount_tendered', 'paid_at', 'payment_method']
         widgets = {
             'paid_at': DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
         }
