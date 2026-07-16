@@ -24,7 +24,7 @@ roles.forEach(role => {
             if (roleText) roleText.classList.remove('text-blue-700');
         });
         
-        role.classList.add('border-blue-600', 'bg-blue-50', 'ring-4', 'ring-blue-50/50', 'shadow-sm');
+        role.classList.add('border-blue-600', 'bg-blue-50', 'ring-4', 'ring-blue-500/50', 'shadow-sm');
         const iconContainer = role.querySelector('div');
         if (iconContainer) iconContainer.classList.add('shadow-blue-100', 'scale-110');
         const roleText = role.querySelector('p.font-bold');
