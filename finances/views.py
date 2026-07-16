@@ -13,6 +13,7 @@ from .forms import FeeCreationForm, FeeRecordForm
 from finances.models import Fee, FeePayment
 from accounts.models import User
 from accounts.decorators import role_required
+from .helpers import render_to_pdf
 
 
 @login_required
@@ -273,3 +274,21 @@ def class_fee_detail(request, fee_id):
     ).select_related('parent').order_by('student_name')
 
     return render(request, 'finances/class_fee_detail.html', {'fee': fee, 'students': students})
+
+
+@role_required('ADMIN')
+def generate_receipt(request, feepayment_id):
+    feepayment = get_object_or_404(FeePayment.objects.select_related('fee', 'student', 'received_by', 'student__parent'), id=feepayment_id)
+
+    format = request.GET.get('format', '')
+
+    if format:
+        pdf_bytes = render_to_pdf('finances/receipt_pdf.html', {'feepayment': feepayment})
+
+        response = HttpResponse(pdf_bytes, content_type='application/pdf')
+        response['Content-Disposition'] = f'inline; filename="{feepayment.receipt_number}.pdf"'
+
+        return response
+    
+    return render(request, 'finances/receipt.html', {'feepayment': feepayment})
+

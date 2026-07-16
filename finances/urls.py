@@ -12,7 +12,8 @@ urlpatterns = [
     path('finances/', views.finances_view, name='finances'),
     path('fee/payment/', views.record_fee_payment, name='fee_payment'),
     path('api/students-by-fee/', views.get_students_by_fee, name='get_students_by_fee'),
-    path('fee/class/<int:fee_id>/',  views.class_fee_detail, name='class_detail')
+    path('fee/class/<int:fee_id>/',  views.class_fee_detail, name='class_detail'),
+    path('view/receipt/<int:feepayment_id>/', views.generate_receipt, name='receipt')
 ]
 
 if settings.DEBUG:

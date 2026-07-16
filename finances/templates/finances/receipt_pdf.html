@@ -1,0 +1,154 @@
+<html>
+<head>
+<style>
+    @page {
+        size: A5;
+        margin: 1.5cm;
+    }
+    body {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 11px;
+        color: #1a1a1a;
+    }
+    .header {
+        text-align: center;
+        border-bottom: 2px solid #1a1a1a;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+    .header h1 {
+        font-size: 16px;
+        margin: 0;
+    }
+    .header p {
+        font-size: 10px;
+        color: #555555;
+        margin: 2px 0 0 0;
+    }
+    .meta-table {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .meta-table td {
+        padding: 2px 0;
+        font-size: 10px;
+    }
+    .meta-table .label {
+        color: #555555;
+        width: 40%;
+    }
+    .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 15px;
+    }
+    .details-table th {
+        text-align: left;
+        background-color: #f0f0f0;
+        border: 1px solid #cccccc;
+        padding: 6px 8px;
+        font-size: 10px;
+    }
+    .details-table td {
+        border: 1px solid #cccccc;
+        padding: 6px 8px;
+        font-size: 10px;
+    }
+    .amount-row td {
+        font-weight: bold;
+    }
+    .balance-row td {
+        font-weight: bold;
+        background-color: #f9f9f9;
+    }
+    .footer {
+        margin-top: 30px;
+        font-size: 9px;
+        color: #777777;
+    }
+    .signature-line {
+        margin-top: 40px;
+        border-top: 1px solid #999999;
+        width: 200px;
+        text-align: center;
+        font-size: 9px;
+        padding-top: 4px;
+    }
+</style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>EduTrack School</h1>
+        <p>Official Payment Receipt</p>
+    </div>
+
+    <table class="meta-table">
+        <tr>
+            <td class="label">Receipt No.</td>
+            <td>{{ feepayment.receipt_number }}</td>
+        </tr>
+        <tr>
+            <td class="label">Date</td>
+            <td>{{ feepayment.paid_at|date:"F j, Y, g:i A" }}</td>
+        </tr>
+        <tr>
+            <td class="label">Student</td>
+            <td>{{ feepayment.student.student_name }} ({{ feepayment.student.student_id }})</td>
+        </tr>
+        <tr>
+            <td class="label">Class</td>
+            <td>{{ feepayment.fee.student_class }}</td>
+        </tr>
+        <tr>
+            <td class="label">Term</td>
+            <td>{{ feepayment.fee.term }}</td>
+        </tr>
+    </table>
+
+    <table class="details-table">
+        <colgroup>
+            <col style="width: 65%;">
+            <col style="width: 35%;">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Amount (GHS)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ feepayment.fee.description|default:"Fee" }}</td>
+                <td>{{ feepayment.fee.amount }}</td>
+            </tr>
+            <tr class="amount-row">
+                <td>Amount Tendered</td>
+                <td>{{ feepayment.amount_tendered }}</td>
+            </tr>
+            <tr class="balance-row">
+                <td>Balance Remaining</td>
+                <td>{{ feepayment.balance }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="meta-table">
+        <tr>
+            <td class="label">Received By</td>
+            <td>{{ feepayment.received_by.full_name }}</td>
+        </tr>
+        <tr>
+            <td class="label">Payment Method</td>
+            <td>{{ feepayment.payment_method|default:"Cash" }}</td>
+        </tr>
+    </table>
+
+    <div class="signature-line">Authorized Signature</div>
+
+    <div class="footer">
+        This is a computer-generated receipt. Retain for your records.
+    </div>
+
+</body>
+</html>
