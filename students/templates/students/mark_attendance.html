@@ -107,7 +107,7 @@
             {% csrf_token %}
             <div id="student-list" class="divide-y divide-gray-100">
                 {% for student in class_assigned.student.all %}
-                <div class="student-row flex items-center justify-between p-4 sm:px-6 hover:bg-gray-50/50 transition-colors" data-name="{{ student.name|lower }}">
+                <div class="student-row flex items-center justify-between p-4 sm:px-6 hover:bg-gray-50/50 transition-colors" data-name="{{ student.student_name|lower }}">
                     <div class="flex items-center gap-3">
                         <!-- Profile Initial Avatar -->
                         <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white avatar-bg" data-seed="{{ student.id }}">
