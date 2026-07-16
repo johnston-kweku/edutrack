@@ -6,6 +6,7 @@ from django.core.cache import cache
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.db.models.functions import Coalesce
+from django.db.models import Q
 from datetime import timedelta
 from decimal import Decimal
 from academics.models import Student, Term, Class
