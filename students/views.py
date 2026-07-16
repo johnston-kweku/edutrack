@@ -156,7 +156,6 @@ def edit_student(request, student_id):
         if form.is_valid():
             cache.delete('dashboard_summary')
             form.save()
-            print(f'Files:{form.instance}')
             return redirect('academics:class', student.student_class.id )
     
     else:
