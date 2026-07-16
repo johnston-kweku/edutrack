@@ -139,6 +139,25 @@
                         {% endif %}
                     </div>
 
+                    <div class="space-y-2">
+                        <label for="{{ form.status.id_for_label }}" class="text-xs font-bold text-gray-400 ml-1">Status</label>
+                        <div class="relative">
+                            <select name="{{ form.status.name }}" id="{{ form.status.id_for_label }}" class="block w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-bold appearance-none transition-all cursor-pointer outline-none">
+                                {% for value, label in form.status.field.choices %}
+                                    <option value="{{ value }}" {% if form.status.value == value %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                        {% if form.status.errors %}
+                            <p class="text-xs text-red-500 font-bold mt-1 ml-1">{{ form.status.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
                     <!-- Parent -->
                     <div class="space-y-2">
                         <label for="{{ form.parent.id_for_label }}" class="text-xs font-bold text-gray-400 ml-1">Parent / Guardian</label>
