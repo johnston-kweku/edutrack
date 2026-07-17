@@ -219,7 +219,13 @@ def finances_view(request):
 
     # Stat cards data
     total_fees = fees.count()
-    fees_with_counts = fees.annotate(student_count=Count('student_class__student', distinct=True))
+    fees_with_counts = fees.annotate(
+        student_count=Count(
+            'student_class__student',
+            filter=Q(student_class__student__status='ENROLLED'),
+            distinct=True
+        )
+    )
     total_funds_expected = sum(f.amount * f.student_count for f in fees_with_counts)
 
     total_fees_collected = FeePayment.objects.filter(fee__term__is_current=True).aggregate(
