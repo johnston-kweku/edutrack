@@ -22,7 +22,7 @@ def landing(request):
             
     from academics.models import Student, Class
     context = {
-        'student_count': Student.objects.count(),
+        'student_count': Student.objects.filter(status=Student.Status.ENROLLED).count(),
         'class_count': Class.objects.count(),
     }
     return render(request, 'accounts/landing.html', context)
