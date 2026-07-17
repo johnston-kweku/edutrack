@@ -242,7 +242,11 @@ def finances_view(request):
         percent_of_target = 0.0
 
     # Classes with completion rate (Option B: two decoupled queries)
-    total_paid_per_fee = FeePayment.objects.filter(fee__in=fees).values('fee').annotate(total_paid=Sum('amount_tendered'))
+    total_paid_per_fee = FeePayment.objects.filter(
+        fee__in=fees,
+        student__status=Student.Status.ENROLLED
+    ).values('fee').annotate(total_paid=Sum('amount_tendered'))
+    
     total_paid_map = {entry['fee']: entry['total_paid'] for entry in total_paid_per_fee}
 
     fees_with_stats = []
