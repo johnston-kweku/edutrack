@@ -432,7 +432,7 @@ def record_class_assessment(request, assessment_id):
 
         return JsonResponse({'message': 'Score recorded successfully.'})
 
-    students = Student.objects.filter(student_class=assessment.student_class).select_related('parent')
+    students = Student.objects.filter(student_class=assessment.student_class, status=Student.Status.ENROLLED).select_related('parent')
     existing_records = AssessmentRecord.objects.filter(assessment=assessment).values('student_id', 'score')
     existing_records_dict = {record['student_id']: record['score'] for record in existing_records}
 
