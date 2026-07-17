@@ -114,6 +114,40 @@
                         </span>
                         Invites
                     </a>
+                    <a href="#" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+                        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 5h16"></path>
+                                <path d="M7 3v4"></path>
+                                <path d="M17 3v4"></path>
+                                <path d="M4 9h16"></path>
+                                <path d="M4 13h16"></path>
+                            </svg>
+                        </span>
+                        Reports
+                    </a>
+                    <a href="{% url 'finances:finances' %}" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+                        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 7h18"></path>
+                                <path d="M7 3v18"></path>
+                                <path d="M17 3v18"></path>
+                                <path d="M3 17h18"></path>
+                            </svg>
+                        </span>
+                        Finance
+                    </a>
+                    <a href="{% url 'students:attendance_list' %}" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+                        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                                <path d="M8 2v4"></path>
+                                <path d="M16 2v4"></path>
+                                <path d="M3 10h18"></path>
+                            </svg>
+                        </span>
+                        Attendance
+                    </a>
                 </div>
             </div>
             {% endif %}
