@@ -55,7 +55,7 @@ def mark_attendance(request, class_id):
         defaults={'marked_by': request.user}
     )
 
-    for student in class_to_mark.student.all():
+    for student in class_to_mark.student.filter(status=Student.Status.ENROLLED):
         AttendanceRecord.objects.update_or_create(
             attendance=attendance,
             student=student,
