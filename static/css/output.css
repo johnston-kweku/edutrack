@@ -106,6 +106,8 @@
     --color-gray-800: oklch(27.8% 0.033 256.848);
     --color-gray-900: oklch(21% 0.034 264.665);
     --color-gray-950: oklch(13% 0.028 261.692);
+    --color-mauve-300: oklch(86.5% 0.012 325.68);
+    --color-mauve-900: oklch(21.2% 0.019 322.12);
     --color-white: #fff;
     --spacing: 0.25rem;
     --container-xs: 20rem;
@@ -818,6 +820,17 @@
   .resize-y {
     resize: vertical;
   }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-thumb-mauve-300 {
+    --tw-scrollbar-thumb: var(--color-mauve-300);
+    scrollbar-color: var(--tw-scrollbar-thumb) var(--tw-scrollbar-track);
+  }
+  .scrollbar-thumb-mauve-900 {
+    --tw-scrollbar-thumb: var(--color-mauve-900);
+    scrollbar-color: var(--tw-scrollbar-thumb) var(--tw-scrollbar-track);
+  }
   .appearance-none {
     appearance: none;
   }
@@ -1012,6 +1025,9 @@
   }
   .overflow-y-auto {
     overflow-y: auto;
+  }
+  .scroll-auto {
+    scroll-behavior: auto;
   }
   .rounded {
     border-radius: 0.25rem;
@@ -3584,6 +3600,16 @@
   syntax: "*";
   inherits: false;
 }
+@property --tw-scrollbar-thumb {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-scrollbar-track {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
 @property --tw-space-y-reverse {
   syntax: "*";
   inherits: false;
@@ -3859,6 +3885,8 @@
       --tw-rotate-z: initial;
       --tw-skew-x: initial;
       --tw-skew-y: initial;
+      --tw-scrollbar-thumb: #0000;
+      --tw-scrollbar-track: #0000;
       --tw-space-y-reverse: 0;
       --tw-space-x-reverse: 0;
       --tw-divide-x-reverse: 0;
