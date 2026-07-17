@@ -72,7 +72,7 @@
         <div class="grid grid-cols-3 border-b border-gray-100 bg-gray-50/30 text-center divide-x divide-gray-100">
             <div class="py-4">
                 <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Class Size</p>
-                <p class="text-2xl font-black text-gray-900 mt-1" id="total-count">{{ class_assigned.student.count }}</p>
+                <p class="text-2xl font-black text-gray-900 mt-1" id="total-count">{{ enrolled_students.count }}</p>
             </div>
             <div class="py-4">
                 <p class="text-xs font-bold text-green-500 uppercase tracking-widest">Present</p>
@@ -106,7 +106,7 @@
         <form id="attendance-form" method="POST" class="divide-y divide-gray-100">
             {% csrf_token %}
             <div id="student-list" class="divide-y divide-gray-100">
-                {% for student in class_assigned.student.all %}
+                {% for student in enrolled_students %}
                 <div class="student-row flex items-center justify-between p-4 sm:px-6 hover:bg-gray-50/50 transition-colors" data-name="{{ student.student_name|lower }}">
                     <div class="flex items-center gap-3">
                         <!-- Profile Initial Avatar -->
@@ -134,7 +134,7 @@
             </div>
 
             <!-- Sticky/Floating Actions Bottom Bar -->
-            {% if class_assigned.student.exists %}
+            {% if enrolled_students %}
             <div class="p-6 bg-gray-50/50 border-t border-gray-100 flex items-center justify-end gap-3">
                 <a href="{% url 'academics:teacher_academics_hub' %}" class="px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-700 font-bold text-sm rounded-xl border border-gray-200 shadow-sm transition-all active:scale-95">
                     Cancel
