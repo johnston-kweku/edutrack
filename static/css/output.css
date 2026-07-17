@@ -522,9 +522,6 @@
   .ml-14 {
     margin-left: calc(var(--spacing) * 14);
   }
-  .ml-16 {
-    margin-left: calc(var(--spacing) * 16);
-  }
   .block {
     display: block;
   }
@@ -2150,17 +2147,11 @@
   .ring-amber-200 {
     --tw-ring-color: var(--color-amber-200);
   }
-  .ring-blue-50 {
-    --tw-ring-color: var(--color-blue-50);
-  }
   .ring-blue-50\/50 {
     --tw-ring-color: color-mix(in srgb, oklch(97% 0.014 254.604) 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       --tw-ring-color: color-mix(in oklab, var(--color-blue-50) 50%, transparent);
     }
-  }
-  .ring-blue-500 {
-    --tw-ring-color: var(--color-blue-500);
   }
   .ring-blue-500\/50 {
     --tw-ring-color: color-mix(in srgb, oklch(62.3% 0.214 259.815) 50%, transparent);
