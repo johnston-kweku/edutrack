@@ -108,7 +108,6 @@ def attendance_list(request):
     }
     return render(request, 'students/attendance_list.html', context)
 
-
 @role_required('TEACHING_STAFF', 'ADMIN')
 def mark_attendance_form(request):
     try:
@@ -116,14 +115,21 @@ def mark_attendance_form(request):
     except Class.DoesNotExist:
         class_assigned = None
 
+    enrolled_students = None
+    attendance_today = None
+
     if class_assigned:
-        attendance_today = Attendance.objects.filter(class_marked=class_assigned, date=timezone.now().date())
-    
+        enrolled_students = class_assigned.student.filter(
+            status=Student.Status.ENROLLED
+        ).select_related('parent')
+        attendance_today = Attendance.objects.filter(
+            class_marked=class_assigned, date=timezone.now().date()
+        )
 
     context = {
         'class_assigned': class_assigned,
-        'attendance_today': attendance_today if class_assigned else None
-
+        'enrolled_students': enrolled_students,
+        'attendance_today': attendance_today,
     }
     return render(request, 'students/mark_attendance.html', context)
 
