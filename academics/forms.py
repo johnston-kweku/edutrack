@@ -1,10 +1,8 @@
-from typing import Any, Mapping
-
 from django import forms
-from django.core.files.base import File
-from django.db.models.base import Model
-from django.forms.utils import ErrorList
 from .models import Class, Subject, ClassSubject, Term, AcademicYear, Assessment, AssessmentRecord
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class ClassCreationForm(forms.ModelForm):
@@ -13,6 +11,13 @@ class ClassCreationForm(forms.ModelForm):
         fields = [
             'level', 'stage', 'class_teacher'
         ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['class_teacher'].queryset = User.objects.filter(
+            role__in=['TEACHING_STAFF', 'ADMIN'],
+            is_active=True
+        )
 
 
 class SubjectCreationForm(forms.ModelForm):
@@ -46,6 +51,13 @@ class ClassSubjectCreationForm(forms.ModelForm):
                 'class': 'block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium appearance-none transition-all outline-none cursor-pointer'
             })
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['teacher'].queryset = User.objects.filter(
+            role__in=['TEACHING_STAFF', 'ADMIN'],
+            is_active=True
+        )
 
 
 
