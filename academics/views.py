@@ -45,14 +45,26 @@ def classes_list(request):
     }
     return render(request, 'academics/classes_list.html', context)
 
-
 @login_required
 @role_required('ADMIN', 'TEACHING_STAFF')
-def class_view(request, class_id): 
+def class_view(request, class_id):
 
     query = request.GET.get('query', '')
-    class_requested = get_object_or_404(Class.objects.select_related('class_teacher').annotate(students_count=Count('student', filter=Q(student__status='ENROLLED'))), id=class_id)
-    students = class_requested.student.all().filter(status=Student.Status.ENROLLED).select_related('parent')
+    status_filter = request.GET.get('status', Student.Status.ENROLLED)
+
+    class_requested = get_object_or_404(
+        Class.objects.select_related('class_teacher').annotate(
+            students_count=Count('student', filter=Q(student__status='ENROLLED'))
+        ),
+        id=class_id
+    )
+
+    students = class_requested.student.all().select_related('parent')
+
+    valid_statuses = {choice[0] for choice in Student.Status.choices}
+    if status_filter in valid_statuses:
+        students = students.filter(status=status_filter)
+    # else: status_filter == 'ALL' (or anything unrecognized) → no filter applied
 
     if query:
         students = students.filter(student_name__icontains=query)
@@ -64,11 +76,12 @@ def class_view(request, class_id):
     context = {
         'class': class_requested,
         'page_obj': page_obj,
-        'query': query
+        'query': query,
+        'status_filter': status_filter,
+        'status_choices': Student.Status.choices,
     }
 
     return render(request, 'academics/class.html', context)
-
 
 
 
