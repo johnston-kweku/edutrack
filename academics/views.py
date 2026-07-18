@@ -48,7 +48,9 @@ def classes_list(request):
 @login_required
 @role_required('ADMIN', 'TEACHING_STAFF')
 def class_view(request, class_id):
-
+    if request.user.is_teaching_staff():
+        if not Class.objects.filter(id=class_id, class_teacher=request.user).exists():
+            raise PermissionDenied("You do not have permission to view this class.")
     query = request.GET.get('query', '')
     status_filter = request.GET.get('status', Student.Status.ENROLLED)
 
