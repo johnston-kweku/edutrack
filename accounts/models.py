@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.utils import timezone
 from django.core.files.base import ContentFile
+from django.urls import reverse
 import os
 from PIL import Image
 from io import BytesIO
@@ -40,9 +41,6 @@ class User(AbstractUser):
     
     def is_parent(self):
         return self.role == self.Roles.PARENT
-    
-
-    
 
 
 def default_expiry():

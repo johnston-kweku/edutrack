@@ -4,11 +4,18 @@ from django.contrib.auth import authenticate, login as auth_login, logout, get_u
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from .decorators import role_required
-from .models import Invitation
-from .forms import UserCreationForm, ProfileEditForm
+from django.http import JsonResponse
+from .helpers import get_dashboard_url_for_user
 import json
-User = get_user_model()
+from .decorators import role_required
+from .models import User
+from .models import Invitation
+
+
+
+
+from .forms import UserCreationForm, ProfileEditForm
+
 # Create your views here.
 
 def landing(request):
@@ -28,15 +35,13 @@ def landing(request):
     return render(request, 'accounts/landing.html', context)
 
 
+
+
+
 def login_view(request):
     if request.user.is_authenticated:
-        if request.user.is_admin():
-            return redirect('dashboards:admin_dashboard')
-        elif request.user.is_parent():
-            return redirect('dashboards:parents_dashboard')
-        elif request.user.is_teaching_staff():
-            return redirect('academics:teacher_academics_hub')
-        
+        return redirect(get_dashboard_url_for_user(request.user))
+
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
@@ -46,66 +51,38 @@ def login_view(request):
                 'message': 'Invalid JSON data'
             }, status=400)
 
-        username = data.get('username', '') 
+        username = data.get('username', '')
         password = data.get('password', '')
-        role = data.get('role', '')
 
-        try:
-            user_obj = User.objects.get(username=username)
-            if not user_obj.is_active:
-                return JsonResponse({
-                    'success': False,
-                    'message': 'Account Deactivated. Please contact admin'
-                })
-        except User.DoesNotExist:
-            pass
+        # Give deactivated users a specific, honest message rather than
+        # a misleading "invalid credentials" — Django's ModelBackend
+        # silently refuses to authenticate inactive users either way,
+        # so without this check they'd get the generic error below instead.
+        user_obj = User.objects.filter(username=username).first()
+        if user_obj and not user_obj.is_active:
+            return JsonResponse({
+                'success': False,
+                'message': 'Account deactivated. Please contact admin for support.'
+            })
 
         user = authenticate(request, username=username, password=password)
-        if user is not None:
-            if user.role == role:
-                if not user.is_active:
-                    return JsonResponse({
-                        'success': False,
-                        'message': 'Account deactivated. Contact admin for support'
-                    })
-                
-                auth_login(request, user)
 
-                if user.is_admin():
-                    return JsonResponse({
-                        'success': True,
-                        'message': 'Login success',
-                        'redirect_url': reverse('dashboards:admin_dashboard')
-                    })
-                
-                elif user.is_teaching_staff():
-                    return JsonResponse({
-                        'success': True,
-                        'message': 'Login success',
-                        'redirect_url': reverse('academics:teacher_academics_hub')
-                    })
-                
-
-                elif user.is_parent():
-                    return JsonResponse({
-                        'success': True,
-                        'message': 'Login success',
-                        'redirect_url': reverse('dashboards:parents_dashboard')
-                    })
-            
-            else:
-                return JsonResponse({
-                    'success': False,
-                    'message': 'Invalid role selected'
-                })
-            
-        else: 
+        if user is None:
             return JsonResponse({
                 'success': False,
                 'message': 'Invalid username/password'
             })
-    
+
+        auth_login(request, user)
+        return JsonResponse({
+            'success': True,
+            'message': 'Login success',
+            'redirect_url': get_dashboard_url_for_user(user)
+        })
+
     return render(request, 'accounts/login.html')
+
+
 
 
 @login_required

@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'academics',
     'finances',
     'students',
-    'dashboards'
+    'dashboards',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -104,6 +106,10 @@ CACHES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -166,3 +172,20 @@ LOGOUT_URL = 'accounts:landing'
 #     # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
 #     send_default_pii=True,
 # )
+
+from datetime import timedelta
+
+AXES_FAILURE_LIMIT = 5
+AXES_LOCKOUT_PARAMETERS = [['username', 'ip_address']]
+AXES_HANDLER = 'axes.handlers.database.AxesDatabaseHandler'
+
+
+def axes_cooloff_callable(failures):
+    if failures <= 5:
+        return timedelta(minutes=5)
+    elif failures <= 10:
+        return timedelta(minutes=10)
+    return timedelta(minutes=30)
+
+
+AXES_COOLOFF_TIME = axes_cooloff_callable
