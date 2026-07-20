@@ -409,6 +409,7 @@ def edit_assessment(request, assessment_id):
         form = AssessmentForm(request.POST, instance=assessment, user=request.user)
         if form.is_valid():
             form.save()
+            messages.success(request, "Assessment updated successfully.")
             return redirect('academics:teacher_academics_hub')
     else:
         initial_class_subject = ClassSubject.objects.filter(
