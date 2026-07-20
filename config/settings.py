@@ -178,13 +178,36 @@ from datetime import timedelta
 AXES_FAILURE_LIMIT = 5
 AXES_LOCKOUT_PARAMETERS = [['username', 'ip_address']]
 AXES_HANDLER = 'axes.handlers.database.AxesDatabaseHandler'
-
+AXES_LOCKOUT_CALLABLE = 'config.axes_handler.axes_lockout_response'  
 
 def axes_cooloff_callable(failures):
     if failures <= 5:
         return timedelta(minutes=5)
     elif failures <= 10:
         return timedelta(minutes=10)
+    return timedelta(minutes=30)
+# settings.py
+
+from axes.helpers import get_client_username, get_client_ip_address
+
+
+def axes_cooloff_callable(request):
+    from axes.models import AccessAttempt
+
+    username = get_client_username(request, credentials=None)
+    ip_address = get_client_ip_address(request)
+
+    attempt = AccessAttempt.objects.filter(
+        username=username,
+        ip_address=ip_address
+    ).first()
+
+    failures = attempt.failures_since_start if attempt else 0
+
+    if failures <= 5:
+        return timedelta(minutes=5)
+    elif failures <= 10:
+        return timedelta(minutes=15)
     return timedelta(minutes=30)
 
 
