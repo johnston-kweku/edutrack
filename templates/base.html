@@ -12,10 +12,20 @@
         {% include 'navbar.html' %}
         {% include 'sidebar.html' %}
     {% endif %}
+
+
+
+    <div id="django-messages" data-messages='[
+    {% for message in messages %}
+        {"message": "{{ message|escapejs }}", "tags": "{{ message.tags|default:"success" }}"}{% if not forloop.last %},{% endif %}
+    {% endfor %}
+    ]'></div>
     
     <div class="toast-container px-3 py-3 fixed top-18 z-100 right-6 rounded-lg"></div>
+
     <script src="{% static 'js/base.js' %}"></script>
     <script src="{% static 'js/utils/toastManager.js' %}"></script>
+    <script src="{% static 'js/utils/messages.js' %}"></script>
     <script src="{% static 'js/sidebar.js'%}"></script>
     <script src="{% static 'js/htmx.min.js' %}" integrity="sha384-..." crossorigin="anonymous"></script>
     

@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.db.models import Count, F, Case, When, BooleanField, Q
+from django.contrib import messages
 from decimal import Decimal, InvalidOperation
 from datetime import timedelta
 import csv
@@ -286,6 +287,7 @@ def add_class_subject(request):
         form = ClassSubjectCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Class subject added successfully.")
             return redirect('academics:add_class_subject')
         
     else:
@@ -302,6 +304,7 @@ def edit_subject(request, subject_id):
         form = SubjectCreationForm(request.POST, instance=subject)
         if form.is_valid():
             form.save()
+            messages.success(request, "Subject updated successfully.")
             return redirect('academics:academics_hub')
     else:
         form = SubjectCreationForm(instance=subject)
@@ -317,6 +320,7 @@ def edit_class_subject(request, class_subject_id):
         form = ClassSubjectCreationForm(request.POST, instance=class_subject)
         if form.is_valid():
             form.save()
+            messages.success(request, "Class subject updated successfully.")
             return redirect('academics:academics_hub')
     else:
         form = ClassSubjectCreationForm(instance=class_subject)
@@ -332,6 +336,7 @@ def add_academic_year(request):
         form = AcademicYearForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Academic year added successfully.")
             return redirect('academics:academics_hub')
     else:
         form = AcademicYearForm()
@@ -345,6 +350,7 @@ def edit_academic_year(request, pk):
         form = AcademicYearForm(request.POST, instance=academic_year)
         if form.is_valid():
             form.save()
+            messages.success(request, "Academic year updated successfully.")
             return redirect('academics:academics_hub')
     else:
         form = AcademicYearForm(instance=academic_year)
@@ -357,6 +363,7 @@ def add_term(request):
         form = TermForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Term added successfully.")
             return redirect('academics:academics_hub')
     else:
         form = TermForm()
@@ -370,6 +377,7 @@ def edit_term(request, pk):
         form = TermForm(request.POST, instance=term)
         if form.is_valid():
             form.save()
+            messages.success(request, "Term updated successfully.")
             return redirect('academics:academics_hub')
     else:
         form = TermForm(instance=term)
@@ -386,6 +394,7 @@ def add_assessment(request):
             assessment = form.save(commit=False)
             assessment.recorded_by = request.user
             assessment.save()
+            messages.success(request, "Assessment added successfully. You can continue to record marks right away")
             return redirect('academics:record_class_assessment', assessment_id=assessment.id)
     else:
         form = AssessmentForm(user=request.user)
