@@ -1,6 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
+from .reset import EduTrackPasswordResetConfirmView
 
 
 app_name = 'accounts'
@@ -33,10 +34,7 @@ urlpatterns = [
          name='password_reset_done'),
 
     path('reset/<uidb64>/<token>/',
-         auth_views.PasswordResetConfirmView.as_view(
-             template_name='email_and_reset/password_reset_confirm.html',
-             success_url='/reset/done/'
-         ),
+         EduTrackPasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),
 
     path('reset/done/',
