@@ -56,7 +56,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Expected</p>
-                        <p class="text-2xl font-bold text-gray-900 mt-1">${{ total_funds_expected|floatformat:2 }}</p>
+                        <p class="text-2xl font-bold text-gray-900 mt-1">¢{{ total_funds_expected|floatformat:2 }}</p>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
                         <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,7 +71,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Collected</p>
-                        <p class="text-2xl font-bold text-emerald-600 mt-1">${{ total_fees_collected|floatformat:2 }}</p>
+                        <p class="text-2xl font-bold text-emerald-600 mt-1">¢{{ total_fees_collected|floatformat:2 }}</p>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center">
                         <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,7 +95,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Outstanding</p>
-                        <p class="text-2xl font-bold text-red-600 mt-1">${{ outstanding|floatformat:2 }}</p>
+                        <p class="text-2xl font-bold text-red-600 mt-1">¢{{ outstanding|floatformat:2 }}</p>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
                         <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -141,7 +141,7 @@
                         <div class="flex items-center justify-between mb-2">
                             <div>
                                 <div class="text-sm font-semibold text-gray-900">{{ fee.student_class }}</div>
-                                <div class="text-xs text-gray-400">{{ fee.student_count }} students · ${{ fee.amount|floatformat:2 }} each</div>
+                                <div class="text-xs text-gray-400">{{ fee.student_count }} students · ¢{{ fee.amount|floatformat:2 }} each</div>
                             </div>
                             <div class="text-right">
                                 {% if fee.completion_rate >= 100 %}
@@ -159,7 +159,7 @@
                             </div>
                             <span class="text-xs font-medium text-gray-600 w-12 text-right">{{ fee.completion_rate }}%</span>
                         </div>
-                        <div class="text-xs text-gray-400 mt-1">${{ fee.total_paid|floatformat:2 }} / ${{ fee.expected_amount|floatformat:2 }}</div>
+                        <div class="text-xs text-gray-400 mt-1">¢{{ fee.total_paid|floatformat:2 }} / ¢{{ fee.expected_amount|floatformat:2 }}</div>
                     </a>
                     {% empty %}
                     <div class="px-5 py-8 text-center text-sm text-gray-400">No fees created for the current term yet.</div>
@@ -198,9 +198,9 @@
                                 </div>
                             </div>
                             <div class="text-right shrink-0">
-                                <div class="text-sm font-semibold text-emerald-600">${{ payment.amount_tendered|floatformat:2 }}</div>
+                                <div class="text-sm font-semibold text-emerald-600">¢{{ payment.amount_tendered|floatformat:2 }}</div>
                                 {% if payment.balance > 0 %}
-                                    <div class="text-xs text-red-500">${{ payment.balance|floatformat:2 }} left</div>
+                                    <div class="text-xs text-red-500">¢{{ payment.balance|floatformat:2 }} left</div>
                                 {% else %}
                                     <div class="text-xs text-emerald-500">Paid</div>
                                 {% endif %}
