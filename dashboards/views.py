@@ -20,7 +20,13 @@ def admin_dashboard(request):
 @login_required
 @role_required('PARENT')
 def parents_dashboard(request):
-    return render(request, 'dashboards/parents_dashboard.html')
+    parent = request.user
+    wards = Student.objects.filter(parent=parent).select_related('student_class', 'student_class__class_teacher')
+
+    context = {
+        'wards': wards
+    }
+    return render(request, 'dashboards/parents_dashboard.html', context)
 
 
 
