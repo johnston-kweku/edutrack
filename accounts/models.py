@@ -23,11 +23,16 @@ class User(AbstractUser):
         INACTIVE = 'INACTIVE', 'Inactive'
         ON_LEAVE = 'ON LEAVE', 'On Leave'
 
+    class Gender(models.TextChoices):
+        MALE = 'MALE', 'Male'
+        FEMALE = 'FEMALE', 'Female'
+
     full_name = models.CharField(max_length=100)
     title = models.CharField(max_length=50, blank=True)
     role = models.CharField(max_length=50, choices=Roles.choices)
     contact = models.CharField(max_length=15, blank=True)
     picture = models.ImageField(upload_to='user_pictures/', null=True, blank=True) 
+    gender = models.CharField(max_length=10, choices=Gender.choices, blank=True)
 
 
     def __str__(self):
