@@ -108,7 +108,7 @@ class Term(models.Model):
         unique_together = ['term', 'academic_year']
 
     def __str__(self):
-        return f'TERM: {self.term}'
+        return f'TERM: {self.term} - {self.academic_year}'
     
 
     def save(self, *args, **kwargs):
