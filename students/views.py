@@ -26,24 +26,48 @@ def student_detail(request, student_id):
 
     return render(request, 'students/student_detail.html', context)
         
-
 @role_required('PARENT')
 def per_student_attendance(request, student_id):
+    student = get_object_or_404(
+        Student.objects.select_related('student_class'),
+        student_id=student_id,
+        parent=request.user
+    )
 
-    student = get_object_or_404(Student.objects.select_related('student_class'), student_id=student_id)
+    attendance = None
+    attendance_record = None
+    error = None
+
     if request.method == 'POST':
         date = request.POST.get('date')
-        attendance_record = get_object_or_404(AttendanceRecord, student=student, attendance__date=date)
+
+        if not date:
+            error = 'Please select a date.'
+        else:
+            attendance = Attendance.objects.filter(
+                date=date,
+                class_marked=student.student_class
+            ).first()
+
+            if attendance:
+                attendance_record = AttendanceRecord.objects.filter(
+                    attendance=attendance,
+                    student=student
+                ).first()
+
+                if not attendance_record:
+                    error = 'No attendance record found for this student on that date.'
+            else:
+                error = 'No attendance was marked for this class on that date.'
 
     context = {
-        'attendance': attendance_record,
         'student_name': student.student_name,
-        'is_present': attendance_record.is_present,
-        'image_url': student.image.url if attendance_record.student.image else None,
-        'student_class': student.student_class
+        'student_class': student.student_class,
+        'image_url': student.image.url if student.image else None,
+        'attendance_record': attendance_record,
+        'error': error,
     }
-    return render(request, 'student/per_student_attendance.html', context)
-
+    return render(request, 'students/per_student_attendance.html', context)
 
 @require_POST
 @role_required('ADMIN', 'TEACHING_STAFF')
