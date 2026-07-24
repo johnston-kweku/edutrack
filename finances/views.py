@@ -304,3 +304,17 @@ def generate_receipt(request, feepayment_id):
     
     return render(request, 'finances/receipt.html', {'feepayment': feepayment})
 
+
+
+@role_required('PARENT')
+def per_student_fee_history(request, student_id):
+    student = get_object_or_404(Student, student_id=student_id)
+    if request.method == 'POST':
+        term = request.POST.get('term')
+        # academic_year = request.POST.get('academic_year')
+
+        fee = get_object_or_404(Fee, term=term)
+    context = ...
+    return render(request, 'finances/per_student_fee_history.html', context)
+    
+

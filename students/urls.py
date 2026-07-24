@@ -11,5 +11,5 @@ urlpatterns = [
     path('attendance/list/', views.attendance_list, name='attendance_list'),
     path('student/add/', views.add_student, name='add_student'),
     path('attendance/form/', views.mark_attendance_form, name='attendance_form'),
-    path('student/attendance/<str:student_id>/', views.student_attendance, name='student_attendance'),
+    path('student/attendance/<str:student_id>/', views.per_student_attendance, name='student_attendance'),
 ]
