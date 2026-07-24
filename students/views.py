@@ -27,6 +27,22 @@ def student_detail(request, student_id):
     return render(request, 'students/student_detail.html', context)
         
 
+@role_required('PARENT')
+def per_student_attendance(request, student_id):
+
+    student = get_object_or_404(Student.objects.select_related('student_class'), student_id=student_id)
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        attendance_record = get_object_or_404(AttendanceRecord, student=student, attendance__date=date)
+
+    context = {
+        'attendance': attendance_record,
+        'student_name': student.student_name,
+        'is_present': attendance_record.is_present,
+        'image_url': student.image.url if attendance_record.student.image else None,
+        'student_class': student.student_class
+    }
+    return render(request, 'student/per_student_attendance.html', context)
 
 
 @require_POST
