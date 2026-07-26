@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-8 space-y-8">
+
+    <!-- Header -->
+    <div class="flex items-center gap-4">
+        {% if image_url %}
+            <img src="{{ image_url }}" alt="" class="w-12 h-12 rounded-full object-cover">
+        {% else %}
+            <div class="w-12 h-12 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-sm">
+                {{ student_name|slice:":2"|upper }}
+            </div>
+        {% endif %}
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ student_name }}</h1>
+            <p class="text-sm text-gray-500">{{ student_class.get_level_display }} {{ student_class.stage }} · Attendance</p>
+        </div>
+    </div>
+
+    <!-- Filter Form -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <form method="POST" class="flex flex-col sm:flex-row gap-4">
+            {% csrf_token %}
+
+            <div class="flex-1 space-y-1.5">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-widest">Date</label>
+                <input type="date" name="date" value="{{ request.POST.date|default:'' }}" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:border-blue-600 focus:bg-white text-gray-900 font-medium transition-all outline-none">
+            </div>
+
+            <div class="flex items-end">
+                <button type="submit" class="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 focus:ring-4 focus:ring-blue-50 focus:outline-none transition-all">
+                    Check Attendance
+                </button>
+            </div>
+        </form>
+        {% if error %}
+            <div class="mt-4 p-4 bg-red-50 border border-red-100 rounded-2xl text-sm text-red-700 font-medium">
+                {{ error }}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Results -->
+    {% if request.method == 'POST' %}
+        {% if attendance_record %}
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center space-y-4">
+                {% if attendance_record.is_present %}
+                    <div class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center mx-auto">
+                        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-lg text-green-700">Present</p>
+                        <p class="text-sm text-gray-400 mt-1">{{ attendance_record.attendance.date|date:'D, d M Y' }}</p>
+                    </div>
+                {% else %}
+                    <div class="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mx-auto">
+                        <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-lg text-red-600">Absent</p>
+                        <p class="text-sm text-gray-400 mt-1">{{ attendance_record.attendance.date|date:'D, d M Y' }}</p>
+                    </div>
+                {% endif %}
+                <div class="pt-4 border-t border-gray-100 text-xs text-gray-400">
+                    Marked by {{ attendance_record.attendance.marked_by.full_name }}
+                </div>
+            </div>
+        {% elif not error %}
+            <!-- Fallback, shouldn't normally render since a missing record sets `error` -->
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12 text-center space-y-3">
+                <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto">
+                    <svg class="w-7 h-7 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <p class="font-bold text-gray-700">No record found</p>
+                <p class="text-sm text-gray-400">No attendance was found for this date.</p>
+            </div>
+        {% endif %}
+    {% else %}
+        <!-- Initial Empty State -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12 text-center space-y-3">
+            <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto">
+                <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            <p class="font-bold text-gray-700">Select a date</p>
+            <p class="text-sm text-gray-400">Pick a date above to check {{ student_name }}'s attendance.</p>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock content %}

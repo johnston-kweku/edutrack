@@ -26,6 +26,9 @@ def student_detail(request, student_id):
 
     return render(request, 'students/student_detail.html', context)
         
+
+
+        
 @role_required('PARENT')
 def per_student_attendance(request, student_id):
     student = get_object_or_404(
@@ -68,6 +71,10 @@ def per_student_attendance(request, student_id):
         'error': error,
     }
     return render(request, 'students/per_student_attendance.html', context)
+
+
+
+
 
 @require_POST
 @role_required('ADMIN', 'TEACHING_STAFF')
@@ -231,9 +238,4 @@ def delete_student(request, student_id):
 
 
 
-def student_profile(request, student_id):
-    student = get_object_or_404(Student.objects.select_related('parent', 'student_class'), id=student_id)
-    context = {
-        'student': student
-    }
-    return render(request, 'students/student_profile.html', context)
+
