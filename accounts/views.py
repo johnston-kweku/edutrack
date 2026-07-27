@@ -233,3 +233,19 @@ def user_profile(request, user_id):
     }
     
     return render(request, 'accounts/user_profile.html', context)
+
+
+
+
+@login_required
+def contact_administration(request):
+    """
+    Simple read-only admin contact info page for parents.
+    No messaging, just displays admin(s) phone/email.
+    """
+    admins = User.objects.filter(role=User.Roles.ADMIN, is_active=True).order_by('full_name')
+
+    context = {
+        'admins': admins,
+    }
+    return render(request, 'accounts/contact_administration.html', context)

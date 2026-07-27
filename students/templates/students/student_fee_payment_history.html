@@ -1,5 +1,103 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{total_fees_paid}}
-{% endblock content %}
+<div class="max-w-3xl mx-auto mt-10 px-4">
+
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">Fee Payment History</h1>
+        <p class="text-gray-500 mt-1">{{ student.student_name|default:student.student_id }} — {{ student.student_class }}</p>
+    </div>
+
+    <!-- Warning banner: only shows when balance is owed -->
+    {% if balance > 0 %}
+    <div class="mb-6 flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl p-4">
+        <svg class="w-5 h-5 text-red-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <div>
+            <p class="text-sm font-semibold text-red-800">Outstanding balance for {{ term }}</p>
+            <p class="text-sm text-red-700 mt-0.5">
+                GHS {{ balance }} is still owed. Please settle this with the school administration.
+            </p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Term switcher -->
+    <form method="get" class="mb-6 flex items-center gap-3">
+        <label for="term" class="text-sm font-medium text-gray-700">Term:</label>
+        <select
+            name="term"
+            id="term"
+            onchange="this.form.submit()"
+            class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+            {% for t in all_terms %}
+                <option value="{{ t.id }}" {% if t.id == term.id %}selected{% endif %}>
+                    {{ t }}
+                </option>
+            {% endfor %}
+        </select>
+        <noscript><button type="submit" class="text-sm text-blue-600">Go</button></noscript>
+    </form>
+
+    <!-- Summary cards -->
+    <div class="grid grid-cols-3 gap-4 mb-8">
+        <div class="border border-gray-200 rounded-xl p-4 bg-white">
+            <p class="text-xs text-gray-500 uppercase tracking-wide">Expected</p>
+            <p class="text-xl font-semibold text-gray-900 mt-1">GHS {{ total_fees_expected }}</p>
+        </div>
+        <div class="border border-gray-200 rounded-xl p-4 bg-white">
+            <p class="text-xs text-gray-500 uppercase tracking-wide">Paid</p>
+            <p class="text-xl font-semibold text-green-600 mt-1">GHS {{ total_fees_paid }}</p>
+        </div>
+
+        <!-- Balance card: escalates visually when owed -->
+        <div class="rounded-xl p-4 {% if balance > 0 %}bg-red-50 border-2 border-red-300{% else %}border border-gray-200 bg-white{% endif %}">
+            <p class="text-xs uppercase tracking-wide {% if balance > 0 %}text-red-600 font-semibold{% else %}text-gray-500{% endif %}">
+                Balance
+            </p>
+            <p class="text-xl font-semibold mt-1 {% if balance > 0 %}text-red-700{% else %}text-gray-900{% endif %}">
+                GHS {{ balance }}
+            </p>
+        </div>
+    </div>
+
+    <!-- Payment history table -->
+    {% if not fee %}
+        <div class="text-center py-16 border border-dashed border-gray-300 rounded-xl">
+            <p class="text-gray-500">No fee has been set up for {{ student.student_class }} in {{ term }}.</p>
+        </div>
+    {% elif payments %}
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                    <tr>
+                        <th class="text-left px-4 py-3 font-medium text-gray-600">Receipt No.</th>
+                        <th class="text-left px-4 py-3 font-medium text-gray-600">Date</th>
+                        <th class="text-left px-4 py-3 font-medium text-gray-600">Method</th>
+                        <th class="text-right px-4 py-3 font-medium text-gray-600">Amount</th>
+                        <th class="text-right px-4 py-3 font-medium text-gray-600">Received By</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for payment in payments %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-4 py-3 text-gray-900 font-medium">{{ payment.receipt_number }}</td>
+                        <td class="px-4 py-3 text-gray-600">{{ payment.paid_at|date:"M d, Y" }}</td>
+                        <td class="px-4 py-3 text-gray-600">{{ payment.get_payment_method_display }}</td>
+                        <td class="px-4 py-3 text-right text-gray-900">GHS {{ payment.amount_tendered }}</td>
+                        <td class="px-4 py-3 text-right text-gray-900">{{ payment.received_by.full_name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="text-center py-16 border border-dashed border-gray-300 rounded-xl">
+            <p class="text-gray-500">No payments recorded yet for {{ term }}.</p>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -225,36 +225,47 @@ def edit_student(request, student_id):
 
 
 
-
 @role_required('ADMIN', 'TEACHING_STAFF', 'PARENT')
 def student_fee_payment_history(request, student_id):
-    student = get_object_or_404(Student.objects.select_related('parent', 'student_class'), student_id=student_id)
-    if request.user.role == User.Roles.PARENT:
-        if student.parent != request.user:
-            raise PermissionDenied('You are not allowed here')  
+    student = get_object_or_404(
+        Student.objects.select_related('parent', 'student_class'),
+        student_id=student_id
+    )
 
-    term = request.POST.get('term')
+    if request.user.role == User.Roles.PARENT and student.parent != request.user:
+        raise PermissionDenied('You are not allowed here')
 
-    if not term:
+    term_id = request.GET.get('term')
+    if term_id:
+        term = get_object_or_404(Term, pk=term_id)
+    else:
         term = get_object_or_404(Term, is_current=True)
-    fee = Fee.objects.filter(student_class=student.student_class).first()
 
-    total_fees_paid = FeePayment.objects.filter(
-        fee=fee,
-        student=student
-    ).aggregate(
-        total_paid=Sum('amount_tendered')
-    )['total_paid'] or Decimal('0.00')
-
-    total_fees_expected = fee
-
-    fees_paid = FeePayment.objects.filter(
-        fee=fee
+    fee = Fee.objects.filter(
+        student_class=student.student_class,
+        term=term,
     ).first()
+
+    payments = (
+        FeePayment.objects.filter(fee=fee, student=student).order_by('-paid_at') 
+        if fee else FeePayment.objects.none()
+    )
+
+    total_paid = payments.aggregate(total=Sum('amount_tendered'))['total'] or Decimal('0.00')
+    total_expected = fee.amount if fee else Decimal('0.00')
+    balance = total_expected - total_paid
+
+    all_terms = Term.objects.order_by('-id')  # adjust field names to match your schema
 
     context = {
         'student': student,
-        'total_fees_paid': total_fees_paid
-    }      
+        'term': term,
+        'all_terms': all_terms,
+        'fee': fee,
+        'payments': payments,
+        'total_fees_paid': total_paid,
+        'total_fees_expected': total_expected,
+        'balance': balance,
+    }
 
     return render(request, 'students/student_fee_payment_history.html', context)
