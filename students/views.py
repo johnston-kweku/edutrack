@@ -5,7 +5,10 @@ from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
-from academics.models import Student, Class, Attendance, AttendanceRecord
+from django.db.models import Sum
+from decimal import Decimal
+from academics.models import Student, Class, Attendance, AttendanceRecord, Term, AcademicYear
+from finances.models import  Fee, FeePayment
 from accounts.decorators import role_required
 from .forms import StudentCreationForm
 from accounts.models import User
@@ -223,3 +226,35 @@ def edit_student(request, student_id):
 
 
 
+@role_required('ADMIN', 'TEACHING_STAFF', 'PARENT')
+def student_fee_payment_history(request, student_id):
+    student = get_object_or_404(Student.objects.select_related('parent', 'student_class'), student_id=student_id)
+    if request.user.role == User.Roles.PARENT:
+        if student.parent != request.user:
+            raise PermissionDenied('You are not allowed here')  
+
+    term = request.POST.get('term')
+
+    if not term:
+        term = get_object_or_404(Term, is_current=True)
+    fee = Fee.objects.filter(student_class=student.student_class).first()
+
+    total_fees_paid = FeePayment.objects.filter(
+        fee=fee,
+        student=student
+    ).aggregate(
+        total_paid=Sum('amount_tendered')
+    )['total_paid'] or Decimal('0.00')
+
+    total_fees_expected = fee
+
+    fees_paid = FeePayment.objects.filter(
+        fee=fee
+    ).first()
+
+    context = {
+        'student': student,
+        'total_fees_paid': total_fees_paid
+    }      
+
+    return render(request, 'students/student_fee_payment_history.html', context)

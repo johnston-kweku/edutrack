@@ -11,4 +11,5 @@ urlpatterns = [
     path('student/add/', views.add_student, name='add_student'),
     path('attendance/form/', views.mark_attendance_form, name='attendance_form'),
     path('student/attendance/<str:student_id>/', views.per_student_attendance, name='per_student_attendance'),
+    path('student/fee/history/<str:student_id>/', views.student_fee_payment_history, name='fee_payment_history'),
 ]
