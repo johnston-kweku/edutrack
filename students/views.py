@@ -223,19 +223,3 @@ def edit_student(request, student_id):
 
 
 
-@require_POST
-@login_required
-@role_required('ADMIN')
-def delete_student(request, student_id):
-    student = get_object_or_404(Student, id=student_id)
-    cache.delete('dashboard_summary')
-    student.delete()
-
-    return JsonResponse({
-        'success': True,
-        'message': 'Student deleted successfully'
-    })
-
-
-
-
