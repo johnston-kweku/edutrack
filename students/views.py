@@ -247,7 +247,7 @@ def student_fee_payment_history(request, student_id):
     ).first()
 
     payments = (
-        FeePayment.objects.filter(fee=fee, student=student).order_by('-paid_at') 
+        FeePayment.objects.filter(fee=fee, student=student).select_related('received_by').order_by('-paid_at') 
         if fee else FeePayment.objects.none()
     )
 
