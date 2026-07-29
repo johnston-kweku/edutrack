@@ -183,7 +183,7 @@ def toggle_active_state(request, user_id):
 
     user.is_active = not user.is_active
     user.save()
-
+    print('Something')
     message = f'User has been toggled {'active' if user.is_active else 'inactive'}'
     status = 'Active' if user.is_active else 'Inactive'
 
@@ -200,9 +200,6 @@ def my_profile(request):
 @login_required
 def user_profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    if request.method == 'POST':
-        user.is_active = not user.is_active
-        user.save()
     
     context = {
         'profile_user': user,
