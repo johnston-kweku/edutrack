@@ -195,7 +195,7 @@
                 </div>
 
                 <!-- Quick Actions -->
-                {% if request.user.role == 'ADMIN' or request.user.role == 'TEACHING_STAFF' %}
+                {% if request.user.is_admin %}
                 <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
                     <h3 class="text-sm font-semibold text-gray-900 mb-4">Actions</h3>
                     <div class="flex flex-wrap gap-3">
