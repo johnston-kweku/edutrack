@@ -237,7 +237,7 @@ def user_profile(request, user_id):
 
 
 
-@login_required
+
 def contact_administration(request):
     """
     Simple read-only admin contact info page for parents.
