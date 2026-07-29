@@ -107,7 +107,7 @@
                         <div class="flex items-center justify-between text-gray-600">
                             <span class="text-gray-500 font-medium">Class Teacher:</span>
                             {% if ward.student_class.class_teacher %}
-                                <span class="font-semibold text-gray-800">{{ ward.student_class.class_teacher }}</span>
+                                <span class="font-semibold text-gray-800">{{ ward.student_class.class_teacher.full_name }}</span>
                             {% else %}
                                 <span class="text-xs italic text-gray-400 bg-gray-50 px-2 py-0.5 rounded">Not Assigned</span>
                             {% endif %}
@@ -116,7 +116,7 @@
                 </div>
 
 
-                <div class="mt-6 pt-4 border-t border-gray-100 grid grid-cols-3 gap-2">
+                <div class="mt-6 pt-4 border-t border-gray-100 grid grid-cols-1 gap-2">
                     <a href="{% url 'students:student_detail' ward.student_id %}" class="py-2 px-2 bg-gray-50 hover:bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg transition-colors text-center">
                         Academic Profile
                     </a>
