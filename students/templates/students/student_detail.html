@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            {% if request.user.role == 'ADMIN' or request.user.role == 'TEACHING_STAFF' %}
+            {% if request.user.is_admin %}
             <div class="flex items-center gap-3">
                 <a href="{% url 'students:edit_student' student.id %}" class="group inline-flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-200 shadow-lg shadow-violet-600/25 hover:shadow-violet-600/40 hover:-translate-y-0.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
