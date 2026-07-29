@@ -20,12 +20,8 @@ from .forms import UserCreationForm, ProfileEditForm
 
 def landing(request):
     if request.user.is_authenticated:
-        if request.user.is_admin():
-            return redirect('dashboards:admin_dashboard')
-        elif request.user.is_parent():
-            return redirect('dashboards:parents_dashboard')
-        elif request.user.is_teaching_staff():
-            return redirect('academics:teacher_academics_hub')
+            return redirect(get_dashboard_url_for_user(request.user))
+
             
     from academics.models import Student, Class
     context = {
