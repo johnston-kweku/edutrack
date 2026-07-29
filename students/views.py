@@ -273,9 +273,11 @@ def student_fee_payment_history(request, student_id):
 
     return render(request, 'students/student_fee_payment_history.html', context)
 
-
+@login_required
 def student_assessment(request, student_id):
     student = get_object_or_404(Student, student_id=student_id)
+    if request.user.is_parent and student.parent != request.user:
+        raise PermissionDenied('You are not allowed here')
     assessment = None
     assessment_record = None
 

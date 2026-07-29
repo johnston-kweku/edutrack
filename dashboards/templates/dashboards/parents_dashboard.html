@@ -120,7 +120,7 @@
                     <a href="{% url 'students:student_detail' ward.student_id %}" class="py-2 px-2 bg-gray-50 hover:bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg transition-colors text-center">
                         Academic Profile
                     </a>
-                    <a href="#" class="py-2 px-2 bg-gray-50 hover:bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg transition-colors text-center">
+                    <a href="{% url 'students:student_assessment' ward.student_id %}" class="py-2 px-2 bg-gray-50 hover:bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg transition-colors text-center">
                         View Assessment Performance
                     </a>
                     <a href="{% url 'students:per_student_attendance' ward.student_id %}" class="py-2 px-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-lg transition-colors text-center">
