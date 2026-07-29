@@ -186,6 +186,10 @@
                                 <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Time Since Enrollment</dt>
                                 <dd class="text-sm font-medium text-gray-900">{{ student.enrollment_date|timesince }}</dd>
                             </div>
+                            <div class="space-y-1">
+                                <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Class Teacher</dt>
+                                <dd class="text-sm font-medium text-gray-900">{{ student.student_class.class_teacher.full_name }}</dd>
+                            </div>
                         </dl>
                     </div>
                 </div>
