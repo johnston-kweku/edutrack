@@ -23,8 +23,11 @@ def student_detail(request, student_id):
         if student.parent != request.user:
             raise PermissionDenied('You are not allowed here')  
 
+    student_age = timezone.now().year - student.date_of_birth.year
+
     context = {
-        'student': student
+        'student': student,
+        'student_age': student_age
     }      
 
     return render(request, 'students/student_detail.html', context)

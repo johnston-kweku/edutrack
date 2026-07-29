@@ -157,10 +157,7 @@
                             <div class="space-y-1">
                                 <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Age</dt>
                                 <dd class="text-sm font-medium text-gray-900">
-                                    {% now "Y" as current_year %}
-                                    {% with birth_year=student.date_of_birth.year %}
-                                        {{ current_year|add:"-"|add:birth_year }} years old
-                                    {% endwith %}
+                                        {{student_age}} years old
                                 </dd>
                             </div>
                         </dl>
