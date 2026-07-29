@@ -120,27 +120,7 @@ def generate_invite_link(request):
     return render(request, 'accounts/invite_link.html')
 
 
-@role_required('ADMIN')
-def delete_user(request, username):
-    if request.method == 'POST':
-        user = get_object_or_404(User, username=username)
-        if user.role == 'ADMIN':
-            return JsonResponse({
-                'success':False,
-                'message': 'Cannot delete this type of user'
-            })
-        
-        user.delete()
 
-        return JsonResponse({
-            'success': True,
-            'message': 'User deleted successfully'
-        })
-    
-    return JsonResponse({
-        'success': False,
-        'message': 'Invalid request method'
-    }, status=405)
 
 
 def register(request):
