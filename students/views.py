@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.db.models import Sum
 from decimal import Decimal
-from academics.models import Student, Class, Attendance, AttendanceRecord, Term, AcademicYear
+from academics.models import Student, Class, Attendance, AttendanceRecord, Term, Assessment, AssessmentRecord
 from finances.models import  Fee, FeePayment
 from accounts.decorators import role_required
 from .forms import StudentCreationForm
@@ -272,3 +272,13 @@ def student_fee_payment_history(request, student_id):
     }
 
     return render(request, 'students/student_fee_payment_history.html', context)
+
+
+def student_assessment(request, student_id):
+    student = get_object_or_404(Student, student_id=student_id)
+    assessment = None
+    assessment_record = None
+
+    if request.method == 'POST':
+        pass
+    return render(request, 'students/student_assessment.html')
