@@ -212,29 +212,31 @@
                 </div>
 
                 <!-- Actions -->
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                    <h3 class="text-sm font-semibold text-gray-900 mb-4">Actions</h3>
-                    <div class="flex flex-wrap gap-3">
-                        {% if profile_user != request.user %}
-                            <form method="post">
-                                {% csrf_token %}
-                                <button type="submit" class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium {% if profile_user.is_active %} text-red-700 bg-red-50 border border-red-200 hover:bg-red-100 {% else %}text-green-700 bg-green-50 border-green-200 hover:bg-green-100 {% endif %} rounded-xl transition-all">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
-                                    </svg>
-                                    {% if profile_user.is_active %}
-                                        Deactivate
-                                    {% else %}
-                                        Activate
-                                    {% endif %}
-                                </button>
-                            </form>
-                        {% endif %}
+                {% if not profile_user.is_parent %}
+                    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+                        <h3 class="text-sm font-semibold text-gray-900 mb-4">Actions</h3>
+                        <div class="flex flex-wrap gap-3">
+                            {% if profile_user != request.user %}
+                                <form method="post" class="active-toggle" data-user-id="{{profile_user.id}}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="inline-flex active-btn items-center gap-2 px-4 py-2.5 text-sm font-medium {% if profile_user.is_active %} text-red-700 bg-red-50  border-red-200 hover:bg-red-100 {% else %}text-green-700 bg-green-50 border-green-200 hover:bg-green-100 {% endif %}border rounded-xl transition-all">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+                                        </svg>
+                                        {% if profile_user.is_active %}
+                                            Deactivate
+                                        {% else %}
+                                            Activate
+                                        {% endif %}
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
+<script src="{% static 'js/accounts/changeActiveState.js' %}"></script>
 {% endblock %}

@@ -178,16 +178,27 @@ def edit_my_profile(request):
 @require_POST
 @role_required('ADMIN')
 def toggle_active_state(request, user_id):
-
-    user = get_object_or_404(User, id=user_id)
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        return JsonResponse({
+            'success': False,
+            'message': 'The requested user does not exist'
+        })
 
     user.is_active = not user.is_active
     user.save()
-    print('Something')
     message = f'User has been toggled {'active' if user.is_active else 'inactive'}'
     status = 'Active' if user.is_active else 'Inactive'
+    action = 'Activate' if not user.is_active else 'Deactivate'
 
-    return JsonResponse({'is_active': user.is_active, 'message': message, 'status': status})
+    return JsonResponse({
+            'success': True,
+            'is_active': user.is_active,
+            'message': message,
+            'status': status,
+            'action': action
+        })
 
 
 @login_required
