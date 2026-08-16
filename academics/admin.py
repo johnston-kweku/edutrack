@@ -3,7 +3,7 @@ from .models import Class, Subject, ClassSubject, AcademicYear, Term, Student, A
 
 @admin.register(Class)
 class ClassAdmin(admin.ModelAdmin):
-    list_display = ['level', 'stage', 'class_teacher']
+    list_display = ['level', 'stage', 'class_teacher', 'next_class']
     list_filter = ['level']
 
 @admin.register(Subject)

@@ -10,6 +10,7 @@ import os
 User = get_user_model()
 
 # Create your models here.
+
 class Class(models.Model):
     class Stage(models.TextChoices):
         ONE = '1', '1'
@@ -29,6 +30,10 @@ class Class(models.Model):
     level = models.CharField(max_length=20, choices=Level.choices)
     class_teacher = models.OneToOneField(User, on_delete=models.PROTECT, null=True, blank=True, limit_choices_to={'role__in': ['TEACHING_STAFF', 'ADMIN']}, related_name='class_assigned')
     is_active = models.BooleanField(default=False)
+    next_class = models.ForeignKey(
+        'self', null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='previous_class'
+    )
 
     def __str__(self):
         return f'{self.level} {self.stage}'
