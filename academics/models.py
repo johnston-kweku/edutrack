@@ -134,6 +134,7 @@ class Student(models.Model):
         ENROLLED = 'ENROLLED', 'Enrolled'
         DISMISSED = 'DISMISSED', 'Dismissed'
         TRANSFERRED = 'TRANSFERRED', 'Transferred'
+        GRADUATED = 'GRADUATED', 'Graduated'
 
     student_id = models.CharField(max_length=50, unique=True, blank=True)
     student_name = models.CharField(max_length=500)
@@ -265,3 +266,27 @@ class AttendanceRecord(models.Model):
     class Meta:
         unique_together = ['student', 'attendance'] 
 
+
+
+class StudentClassHistory(models.Model):
+    class Decision(models.TextChoices):
+        PROMOTED = 'PROMOTED', 'Promoted'
+        REPEATED = 'REPEATED', 'Repeated'
+        GRADUATED = 'GRADUATED', 'Graduated'
+
+    student = models.ForeignKey(Student, on_delete=models.PROTECT, related_name='class_history')
+    academic_year = models.ForeignKey(AcademicYear, on_delete=models.PROTECT)
+    from_class = models.ForeignKey(Class, on_delete=models.PROTECT, related_name='promotions_from')
+    to_class = models.ForeignKey(Class, on_delete=models.PROTECT, related_name='promotions_to', null=True, blank=True)
+    decision = models.CharField(max_length=20, choices=Decision.choices)
+    remarks = models.TextField(blank=True)
+    processed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    processed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'Student class histories'
+        unique_together = ['student', 'academic_year']  # prevents double-promotion in the same year
+        ordering = ['-processed_at']
+
+    def __str__(self):
+        return f'{self.student} – {self.from_class} → {self.to_class} ({self.academic_year})'
