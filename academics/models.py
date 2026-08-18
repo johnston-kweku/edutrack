@@ -290,3 +290,16 @@ class StudentClassHistory(models.Model):
 
     def __str__(self):
         return f'{self.student} – {self.from_class} → {self.to_class} ({self.academic_year})'
+
+    def clean(self):
+        if self.decision == self.Decision.GRADUATED and self.to_class is not None:
+            raise ValidationError('Graduated students should not have a to_class.')
+        if self.decision == self.Decision.PROMOTED and self.to_class is None:
+            raise ValidationError('Promoted students must have a to_class.')
+        if self.decision == self.Decision.REPEATED and self.to_class != self.from_class:
+            raise ValidationError('Repeated students must stay in the same class.')
+        return super().clean()
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
